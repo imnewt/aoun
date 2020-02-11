@@ -10,6 +10,8 @@ import BookDetailScreen from "./screens/BookDetail"
 
 import CartScreen from "./screens/Cart"
 
+import OrdersScreen from "./screens/Orders"
+
 import SettingsScreen from "./screens/Settings"
 
 //import { CartProvider } from "./contexts/Cart"
@@ -38,6 +40,16 @@ function CartStackScreen() {
   );
 }
 
+// ORDERS TAB
+const OrderStack = createStackNavigator();
+
+function OrderStackScreen() {
+  return (
+    <OrderStack.Navigator initialRouteName="Order">
+      <OrderStack.Screen name="Order" component={OrdersScreen} />
+    </OrderStack.Navigator>
+  );
+}
 
 // SETTING TAB
 const SettingsStack = createStackNavigator();
@@ -65,21 +77,22 @@ export default function App() {
               iconName = 'md-home';
             } else if (route.name === 'Cart') {
                 iconName = 'ios-cart';
+            } else if (route.name === 'Orders') {
+              iconName = 'ios-wallet';
             } else if (route.name === 'Settings') {
                 iconName = 'ios-list';
             }
-
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: '#147efb',
           inactiveTintColor: 'gray',
         }}
       >
         <Tab.Screen name="Home" component={HomeStackScreen} />
         <Tab.Screen name="Cart" component={CartStackScreen} />
+        <Tab.Screen name="Orders" component={OrderStackScreen} />
         <Tab.Screen name="Settings" component={SettingsStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
