@@ -12,22 +12,35 @@ import axios from "axios"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import Aoun from "../images/aoun.jpg"
+import { FlatList } from 'react-native-gesture-handler';
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            greeting: ''
+            data: []
         }
     }
 
     componentDidMount() {
-        axios.get('/api/helloworld')
-            .then(res => this.setState({greeting: res.data.sayHi}))
+        fetch('http://192.168.1.9:3000/api/books', {
+            method: 'GET'
+            //Request Type 
+        })
+        .then((response) => response.json())
+        //If response is in json then in success
+        .then((responseJson) => {
+            //Success 
+            this.setState({data: responseJson})
+            // alert(JSON.stringify(responseJson));
+            console.log(responseJson[1]);
+        })
+        .catch(error => console.error(error));
     }
 
     render() {
         const { navigation } = this.props
+        const { data } = this.state 
         return (
             <View style={styles.container}>
                 <Image source={Aoun} />
@@ -37,7 +50,16 @@ export default class Home extends Component {
                     title="to book list"
                     onPress={() => navigation.navigate('BookList')}
                 />
-                <Text>{this.state.greeting}</Text>
+                {/* <Button
+                    title="test server data"
+                    onPress={this.getDataUsingGet}
+                /> */}
+                {/* <Text>{data}</Text> */}
+                <FlatList
+                    data={data}
+                    renderItem={({ item }) => <Text>{item.name}</Text>}
+                    keyExtractor={(item) => `${item.id}`}
+                />
             </View>
         )
     }
