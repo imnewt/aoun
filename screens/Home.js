@@ -3,16 +3,29 @@ import {
   View,
   Image,
   Text,
-  StatusBar,
   Button,
   StyleSheet
 } from 'react-native';
+
+import axios from "axios"
 
 import Icon from "react-native-vector-icons/Ionicons"
 
 import Aoun from "../images/aoun.jpg"
 
 export default class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            greeting: ''
+        }
+    }
+
+    componentDidMount() {
+        axios.get('/api/helloworld')
+            .then(res => this.setState({greeting: res.data.sayHi}))
+    }
+
     render() {
         const { navigation } = this.props
         return (
@@ -24,6 +37,7 @@ export default class Home extends Component {
                     title="to book list"
                     onPress={() => navigation.navigate('BookList')}
                 />
+                <Text>{this.state.greeting}</Text>
             </View>
         )
     }
