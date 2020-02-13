@@ -22,7 +22,7 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator initialRouteName = "Home" >
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
       <HomeStack.Screen name="BookList" component={BookListScreen} />
       {/* <HomeStack.Screen name="BookDetail" component={BookDetailScreen} /> */}
     </HomeStack.Navigator>
