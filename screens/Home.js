@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, SafeAreaView, Image, Text, Button, StyleSheet } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { View, ScrollView, SafeAreaView, Image, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Logo from "../images/logo.png"
 import History from "../images/history.jpg"
@@ -9,7 +8,6 @@ import Life from "../images/life.jpg"
 import Romance from "../images/romance.jpg"
 import Guide from "../images/guide.jpg"
 import Design from "../images/design.jpg"
-//import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default class Home extends Component {
     constructor(props) {
@@ -41,7 +39,7 @@ export default class Home extends Component {
                     img: Design
                 },
             ],
-            data: []
+            allBooks: []
         }
     }
 
@@ -51,14 +49,20 @@ export default class Home extends Component {
         })
         .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({data: responseJson})
+            this.setState({allBooks: responseJson})
         })
         .catch(error => console.error(error));
     }
 
+    _handlePressToBookList = (bookGenre) => {
+        const { allBooks } = this.state;
+        const { navigation } = this.props;
+        const bookList = allBooks.filter(book => book.category === bookGenre)
+        navigation.navigate("BookList", { filteredBooks: bookList })
+    }
+
     render() {
-        const { navigation } = this.props
-        const { data, bookGenres } = this.state 
+        const { bookGenres } = this.state 
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
@@ -67,18 +71,17 @@ export default class Home extends Component {
                         <FlatList
                             data={bookGenres}
                             renderItem={({ item }) => (
-                                <View style={styles.bookGenreCtn}>
+                                <TouchableOpacity 
+                                    style={styles.bookGenreCtn}
+                                    onPress={() => this._handlePressToBookList(item.name)}    
+                                >
                                     <Image source={item.img} style={styles.bookGenreImg} />
                                     <Text style={styles.bookGenreName}>{item.name}</Text>
-                                </View>
+                                </TouchableOpacity>
                             )}
                             keyExtractor={(item) => item.name}
                             horizontal={false}
                             numColumns={2}
-                        />
-                        <Button
-                            title="to book list"
-                            onPress={() => navigation.navigate('BookList')}
                         />
                     </View>
                 </ScrollView>
@@ -90,24 +93,28 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 20
+        paddingVertical: 20,
+        backgroundColor: "#eaeaea",
     },
     content: {
-        alignItems: "center"
+        alignItems: "center",
     },
     logo: {
+        height: 180,
+        width: 180
     },
     bookGenreCtn: {
         alignItems: "center",
-        paddingHorizontal: 20,
-        paddingBottom: 20
+        marginTop: 20,
+        marginHorizontal: 20,
     },
     bookGenreName: {
-        paddingTop: 10,
+        paddingTop: 5,
         fontSize: 20
     },
     bookGenreImg: {
         height: 200,
-        width: 150
+        width: 150,
+        borderRadius: 10
     }
 });
