@@ -57,7 +57,7 @@ export default class Home extends Component {
     _handlePressToBookList = (bookGenre) => {
         const { allBooks } = this.state;
         const { navigation } = this.props;
-        const bookList = allBooks.filter(book => book.category === bookGenre)
+        const bookList = allBooks.filter(book => book.genre === bookGenre)
         navigation.navigate("BookList", { filteredBooks: bookList })
     }
 
