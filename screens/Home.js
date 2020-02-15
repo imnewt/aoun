@@ -68,6 +68,7 @@ export default class Home extends Component {
                 <ScrollView>
                     <View style={styles.content}>
                         <Image source={Logo} style={styles.logo}/>
+                        <Text style={styles.sayHi}>Hi there! Which books do you want for today?</Text>
                         <FlatList
                             data={bookGenres}
                             renderItem={({ item }) => (
@@ -93,28 +94,40 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingVertical: 20,
-        backgroundColor: "#eaeaea",
+        backgroundColor: "#FFF",
     },
     content: {
-        alignItems: "center",
+        paddingVertical: 20,
+        alignItems: "center"
     },
     logo: {
-        height: 180,
-        width: 180
+        height: 150,
+        width: 150
+    },
+    sayHi: {
+        marginTop: 10,
+        marginHorizontal: 20,
+        textAlign: "center",
+        fontSize: 20,
     },
     bookGenreCtn: {
-        alignItems: "center",
-        marginTop: 20,
+        marginTop: 30,
         marginHorizontal: 20,
+        alignItems: "center",
+        backgroundColor: "#C0E0DE",
+        borderRadius: 10,
+        overflow: "hidden"
     },
     bookGenreName: {
-        paddingTop: 5,
-        fontSize: 20
+        paddingVertical: 5,
+        textAlign: "center",
+        width: "100%",
+        fontSize: 20,
+        fontStyle: "italic",
+        fontWeight: "300"
     },
     bookGenreImg: {
         height: 200,
-        width: 150,
-        borderRadius: 10
+        width: 150
     }
 });
