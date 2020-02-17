@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import * as firebase from "firebase";
 
 import HomeScreen from "./screens/Home"
 import BookListScreen from "./screens/BookList"
@@ -13,8 +14,25 @@ import CartScreen from "./screens/Cart"
 import OrdersScreen from "./screens/Orders"
 
 import SettingsScreen from "./screens/Settings"
+import LoadingScreen from "./screens/Loading"
+import LoginScreen from "./screens/Login"
+import RegisterScreen from "./screens/Register"
+import MainScreen from "./screens/Main"
 
 //import { CartProvider } from "./contexts/Cart"
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAcD_b5Z3GWIJpYl4ZJKGy--2QerLDeivg",
+  authDomain: "aoun-27f28.firebaseapp.com",
+  databaseURL: "https://aoun-27f28.firebaseio.com",
+  projectId: "aoun-27f28",
+  storageBucket: "aoun-27f28.appspot.com",
+  messagingSenderId: "182184946839",
+  appId: "1:182184946839:web:e945961e6c433a685b0dd2",
+  measurementId: "G-Z1Y8JF7ZNM"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 // HOME TAB
 const HomeStack = createStackNavigator();
@@ -56,8 +74,11 @@ const SettingsStack = createStackNavigator();
 
 function SettingsStackScreen() {
   return (
-    <SettingsStack.Navigator initialRouteName="Settings">
-      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+    <SettingsStack.Navigator initialRouteName="Loading">
+      <SettingsStack.Screen name="Loading" component={LoadingScreen} />
+      <SettingsStack.Screen name="Login" component={LoginScreen} />
+      <SettingsStack.Screen name="Main" component={MainScreen} />
+      <SettingsStack.Screen name="Register" component={RegisterScreen} />
     </SettingsStack.Navigator>
   );
 }
