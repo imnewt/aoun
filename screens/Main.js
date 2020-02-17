@@ -19,14 +19,15 @@ export default class Login extends Component {
         this.setState({ email, displayName })
     }
 
-    handleSignOut = () => {
-        firebase.auth().signOut();
+    handleSignOut = async () => {
+        await firebase.auth().signOut();
+        await this.setState({email: "", displayName: ""})
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.greeting}>Hi {this.state.displayName}</Text>
+                <Text style={styles.greeting}>Hi {this.state.email}</Text>
                 
                 <TouchableOpacity style={{ marginTop: 32 }} onPress={this.handleSignOut}>
                     <Text style={{ color: "#414959", fontSize: 13 }}>

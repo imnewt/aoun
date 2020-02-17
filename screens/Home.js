@@ -44,7 +44,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.1.57:3000/api/books', {
+        fetch('http://192.168.1.10:3000/api/books', {
             method: 'GET'
         })
         .then((response) => response.json())
@@ -58,7 +58,7 @@ export default class Home extends Component {
         const { allBooks } = this.state;
         const { navigation } = this.props;
         const bookList = allBooks.filter(book => book.genre === bookGenre)
-        navigation.navigate("BookList", { filteredBooks: bookList })
+        navigation.navigate("BookList", { filteredBooks: bookList, name: bookGenre })
     }
 
     render() {
@@ -68,7 +68,7 @@ export default class Home extends Component {
                 <ScrollView>
                     <View style={styles.content}>
                         <Image source={Logo} style={styles.logo}/>
-                        <Text style={styles.sayHi}>Hi there! Which books do you want for today?</Text>
+                        <Text style={styles.sayHi}>Hi there. Let's pick a book for today!</Text>
                         <FlatList
                             data={bookGenres}
                             renderItem={({ item }) => (
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginHorizontal: 20,
         alignItems: "center",
-        backgroundColor: "#C0E0DE",
+        backgroundColor: "#1E99CF",
         borderRadius: 10,
         overflow: "hidden"
     },

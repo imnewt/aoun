@@ -39,10 +39,21 @@ const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator initialRouteName = "Home" >
-      <HomeStack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-      <HomeStack.Screen name="BookList" component={BookListScreen} />
-      <HomeStack.Screen name="BookDetail" component={BookDetailScreen} />
+    <HomeStack.Navigator 
+      initialRouteName = "Home" 
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#147EFB',
+        },
+        headerTintColor: '#FFF',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    >
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+      <HomeStack.Screen name="BookList" component={BookListScreen} options={({ route }) => ({ title: `${route.params.name } Books` })}/>
+      <HomeStack.Screen name="BookDetail" component={BookDetailScreen} options={{ title: "Details" }}/>
     </HomeStack.Navigator>
   );
 }
@@ -107,7 +118,7 @@ export default function App() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: '#147efb',
+          activeTintColor: '#147EFB',
           inactiveTintColor: 'gray',
         }}
       >

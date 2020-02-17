@@ -1,21 +1,38 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
-  StatusBar,
+  Image,
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
 
-export default class BookList extends Component {
+export default class BookDetail extends Component {
+
+    
+
     render() {
+        const { book } = this.props.route.params;
         return (
-            <Text style={{fontSize: 20}}>BookDetail</Text>
+            <SafeAreaView style={styles.container}>
+                <View>
+                    <Text>{book.description}</Text>
+                </View>
+            </SafeAreaView>
         )
     }
+    
 }
 
 const styles = StyleSheet.create({
-  
+    container: {
+        flex: 1,
+        alignItems: "center"
+    },
+    bookImage: {
+        
+    }
 });
