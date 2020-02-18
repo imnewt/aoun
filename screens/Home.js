@@ -94,7 +94,7 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFF",
+        backgroundColor: "#F6F2F9"
     },
     content: {
         paddingVertical: 20,
@@ -112,22 +112,28 @@ const styles = StyleSheet.create({
     },
     bookGenreCtn: {
         marginTop: 30,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
+        width: 160,
+        height: 200,
         alignItems: "center",
-        backgroundColor: "#1E99CF",
+        justifyContent: "center",
+        backgroundColor: "#FFF",
         borderRadius: 10,
-        overflow: "hidden"
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 0 },
+        elevation: 1
     },
     bookGenreName: {
-        paddingVertical: 5,
+        paddingTop: 15,
         textAlign: "center",
-        width: "100%",
         fontSize: 20,
-        fontStyle: "italic",
-        fontWeight: "300"
+        fontWeight: "600"
     },
     bookGenreImg: {
-        height: 200,
-        width: 150
+        height: 120,
+        width: 120,
+        borderRadius: 99
     }
 });

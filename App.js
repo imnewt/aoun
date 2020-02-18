@@ -43,12 +43,12 @@ function HomeStackScreen() {
       initialRouteName = "Home" 
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#147EFB',
+          backgroundColor: '#FF5562',
         },
         headerTintColor: '#FFF',
         headerTitleStyle: {
           fontWeight: 'bold',
-        },
+        }
       }}
     >
       <HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
@@ -115,10 +115,10 @@ export default function App() {
                 iconName = 'ios-list';
             }
             return <Ionicons name={iconName} size={size} color={color} />;
-          },
+          }
         })}
         tabBarOptions={{
-          activeTintColor: '#147EFB',
+          activeTintColor: '#FF5562',
           inactiveTintColor: 'gray',
         }}
       >

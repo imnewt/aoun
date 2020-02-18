@@ -25,8 +25,8 @@ export default class BookList extends Component {
                     <FlatList
                         data={filteredBooks}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.handlePressToBookDetail(item)}>
-                                <Image style={styles.bookImage}source={{uri: item.imageUrl}} />
+                            <TouchableOpacity style={styles.bookImageCtn} onPress={() => this.handlePressToBookDetail(item)}>
+                                <Image style={styles.bookImage} source={{uri: item.imageUrl}} />
                             </TouchableOpacity>
                         )}
                         keyExtractor={(item) => item.name}
@@ -43,14 +43,17 @@ export default class BookList extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#F6F2F9"
+    },
+    bookImageCtn: {
+        margin: 5,
+        borderRadius: 5,
+        borderColor: "#DDD",
+        borderWidth: 1
     },
     bookImage: {
         height: 200,
-        width: 120,
-        marginHorizontal: 5,
-        marginVertical: 5,
-        borderColor: "#225560",
-        borderWidth: 1
+        width: 120
     }
 });
