@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { Rating } from "react-native-elements"
 
+import { CartContext } from "../contexts/Cart"
+
 export default class BookDetail extends Component {
 
     
@@ -39,18 +41,13 @@ export default class BookDetail extends Component {
                             {/* <Text style={styles.bookGenre}>GENRE: {book.genre}</Text> */}
                             <Text style={styles.bookDescription}>   {book.description}</Text>
                         </View>
-                            {/* <CartContext.Consumer>
-                                {({ addToCart }) => (
-                                    <Button
-                                        title="Chọn mua"
-                                        color="red" 
-                                        onPress={() => addToCart(data)}>
-                                    </Button>
-                                )}
-                            </CartContext.Consumer> */}
-                        <TouchableOpacity style={styles.button} onPress={() => {}}>
-                            <Text style={styles.add}>Add to cart</Text>
-                        </TouchableOpacity>
+                        <CartContext.Consumer>
+                            {({ addToCart }) => (
+                                <TouchableOpacity style={styles.button} onPress={() => addToCart(book)}>
+                                    <Text style={styles.add}>Add to cart</Text>
+                                </TouchableOpacity>
+                            )}
+                        </CartContext.Consumer>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -85,7 +82,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 0 },
-        elevation: 1
+        // elevation: 1
     },
     bookMainInfo: {
         flex: 1,

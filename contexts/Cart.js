@@ -7,67 +7,67 @@ export class CartProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cartItems: [],
-      totalAmount: 2,
-      totalMoney: 0
+        cartItems: [],
+        totalAmount: 0,
+        totalMoney: 0
     }
-    // this.addToCart = this.addToCart.bind(this);
-    // this.increase = this.increase.bind(this);
-    // this.decrease = this.decrease.bind(this);
-  }
+    this.addToCart = this.addToCart.bind(this);
+    this.increaseAmount = this.increaseAmount.bind(this);
+    this.decreaseAmount = this.decreaseAmount.bind(this);
+    }
 
-//   addToCart = async (product) => {
-//     let check = this.state.cartItems.find(item => item.id === product.id);
-//     if(!check) {
-//       const productWithQuantity = { ...product, quantity: 1 };
-//       this.setState({
-//           cartItems: [...this.state.cartItems, productWithQuantity],
-//           totalAmount: this.state.totalAmount + 1,
-//           totalMoney: this.state.totalMoney += parseFloat(product.price.split('.').join(''))
-//       });
-//       this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
-//     } else {
-//         this.increase(product);
-//     }
-//   }
+    addToCart = (book) => {
+        let check = this.state.cartItems.find(item => item._id === book._id);
+        if(!check) {
+            const bookWithQuantity = { ...book, quantity: 1 };
+            this.setState({
+                cartItems: [...this.state.cartItems, bookWithQuantity],
+                totalAmount: this.state.totalAmount + 1,
+                totalMoney: this.state.totalMoney += parseFloat(book.price)
+            });
+        // this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
+        } else {
+            this.increaseAmount(book);
+        }
+    }
 
-//   increase = async (product) => {
-//     await this.setState({
-//         cartItems: this.state.cartItems.map(item => {
-//             if (item.id === product.id) {
-//               item.quantity = item.quantity + 1;
-//             }
-//             return item;
-//         }),
-//         totalAmount: this.state.totalAmount + 1,
-//         totaltotalMoney: this.state.totalMoney += parseFloat(product.price.split('.').join(''))
-//     });
-//     await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
-//   }
+    increaseAmount = (book) => {
+        this.setState({
+            cartItems: this.state.cartItems.map(item => {
+                if (item._id === book._id) {
+                    item.quantity = item.quantity + 1;
+                }
+                return item;
+            }),
+            totalAmount: this.state.totalAmount + 1,
+            totaltotalMoney: this.state.totalMoney += parseFloat(book.price)
+        });
+        //await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
+    }
 
-//   decrease = async (product) => {
-//     if (product.quantity > 1) {
-//       await this.setState({
-//         cartItems: this.state.cartItems.map(item => {
-//           if (item.id === product.id) {
-//             item.quantity = item.quantity - 1;
-//           }
-//           return item;
-//         }),
-//         totalAmount: this.state.totalAmount - 1,
-//         totalMoney: this.state.totalMoney -= parseFloat(product.price.split('.').join(''))
-//       });
-//       await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
-//     }
-//     else {
-//       await this.setState({
-//         cartItems: this.state.cartItems.filter(item => item.id !== product.id),
-//         totalAmount: this.state.totalAmount - 1,
-//         totalMoney: this.state.totalMoney -= parseFloat(product.price.split('.').join(''))
-//       })
-//       await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
-//     }
-//   }
+    decreaseAmount = (book) => {
+        if (book.quantity > 1) {
+            this.setState({
+                cartItems: this.state.cartItems.map(item => {
+                if (item._id === book._id) {
+                    item.quantity = item.quantity - 1;
+                }
+                return item;
+                }),
+                totalAmount: this.state.totalAmount - 1,
+                totalMoney: this.state.totalMoney -= parseFloat(book.price)
+            });
+        //await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
+        }
+        else {
+            this.setState({
+                cartItems: this.state.cartItems.filter(item => item._id !== book._id),
+                totalAmount: this.state.totalAmount - 1,
+                totalMoney: this.state.totalMoney -= parseFloat(book.price)
+            })
+        //await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
+        }
+    }
 
 //   _saveDataToAsyncStorage = async (cartItems, totalAmount, totalMoney) => {
 //     await AsyncStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -96,10 +96,10 @@ export class CartProvider extends Component {
         value={{
             totalAmount: this.state.totalAmount,
             totalMoney: this.state.totalMoney,
-            // cartItems: this.state.cartItems,
-            // addToCart: this.addToCart,
-            // increase: this.increase,
-            // decrease: this.decrease
+            cartItems: this.state.cartItems,
+            addToCart: this.addToCart,
+            increaseAmount: this.increaseAmount,
+            decreaseAmount: this.decreaseAmount
         }}
       >
         {this.props.children}

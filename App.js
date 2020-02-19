@@ -22,7 +22,7 @@ import MainScreen from "./screens/Main"
 
 import { CartProvider } from "./contexts/Cart"
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyAcD_b5Z3GWIJpYl4ZJKGy--2QerLDeivg",
   authDomain: "aoun-27f28.firebaseapp.com",
   databaseURL: "https://aoun-27f28.firebaseio.com",
@@ -43,12 +43,14 @@ function HomeStackScreen() {
     <HomeStack.Navigator 
       initialRouteName = "Home" 
       screenOptions={{
+        title: "HOME",
         headerStyle: {
-          backgroundColor: '#FF5562',
+          backgroundColor: "#FF5562",
         },
-        headerTintColor: '#FFF',
+        headerTitleAlign: "center",
+        headerTintColor: "#FFF",
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: "bold"
         }
       }}
     >
@@ -64,7 +66,20 @@ const CartStack = createStackNavigator();
 
 function CartStackScreen() {
   return (
-    <CartStack.Navigator initialRouteName="Cart">
+    <CartStack.Navigator 
+      initialRouteName="Cart"
+      screenOptions={{
+        title: "MY CART",
+        headerStyle: {
+          backgroundColor: "#FF5562",
+        },
+        headerTitleAlign: "center",
+        headerTintColor: "#FFF",
+        headerTitleStyle: {
+          fontWeight: "bold"
+        }
+      }}
+    >
       <CartStack.Screen name="Cart" component={CartScreen} />
     </CartStack.Navigator>
   );
