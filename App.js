@@ -101,7 +101,21 @@ const SettingsStack = createStackNavigator();
 
 function SettingsStackScreen() {
   return (
-    <SettingsStack.Navigator initialRouteName="Loading">
+    <SettingsStack.Navigator 
+      initialRouteName="Settings"
+      screenOptions={{
+        title: "SETTINGS",
+        headerStyle: {
+          backgroundColor: "#FF5562",
+        },
+        headerTitleAlign: "center",
+        headerTintColor: "#FFF",
+        headerTitleStyle: {
+          fontWeight: "bold"
+        }
+      }}
+      >
+      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
       <SettingsStack.Screen name="Loading" component={LoadingScreen} />
       <SettingsStack.Screen name="Login" component={LoginScreen} />
       <SettingsStack.Screen name="Main" component={MainScreen} />

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, SafeAreaView, ScrollView, Image, StyleSheet, Text, TouchableOpacity} from "react-native"
+//import { vh, vw } from "react-native-viewport-units"
 import { CartContext } from "../contexts/Cart"
 import CartItem from "../components/CartItem"
 
@@ -25,7 +26,6 @@ export default class CartScreen extends Component {
                     {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount }) =>  !totalAmount    
                     ?   <View style={styles.emptyCart}>
                             <Image source={EmptyCart} style={{height: "100%"}} />
-                            {/* // <Text style={styles.emptyText}>Nothing here!</Text> */}
                         </View> 
                     :   <ScrollView>
                             <View style={styles.content}>
