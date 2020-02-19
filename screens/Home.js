@@ -44,7 +44,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.1.10:3000/api/books', {
+        fetch('http://192.168.1.57:3000/api/books', {
             method: 'GET'
         })
         .then((response) => response.json())
@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
         fontWeight: "600"
     },
     bookGenreImg: {
-        height: 120,
-        width: 120,
+        height: 110,
+        width: 110,
         borderRadius: 99
     }
 });

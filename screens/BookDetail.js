@@ -62,8 +62,7 @@ const styles = StyleSheet.create({
     },
     bookImg: {
         flex: 2,
-        height: 300,
-        width: "100%",
+        height: 250,
         borderColor: "#DDD",
         borderWidth: 1
     },
