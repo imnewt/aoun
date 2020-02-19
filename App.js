@@ -1,15 +1,16 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from "react-native-vector-icons/Ionicons";
-import * as firebase from "firebase";
+import * as React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import Ionicons from "react-native-vector-icons/Ionicons"
+import * as firebase from "firebase"
 
 import HomeScreen from "./screens/Home"
 import BookListScreen from "./screens/BookList"
 import BookDetailScreen from "./screens/BookDetail"
 
 import CartScreen from "./screens/Cart"
+import CartIconWithBadge from "./components/CartIconWithBadge"
 
 import OrdersScreen from "./screens/Orders"
 
@@ -19,7 +20,7 @@ import LoginScreen from "./screens/Login"
 import RegisterScreen from "./screens/Register"
 import MainScreen from "./screens/Main"
 
-//import { CartProvider } from "./contexts/Cart"
+import { CartProvider } from "./contexts/Cart"
 
 var firebaseConfig = {
   apiKey: "AIzaSyAcD_b5Z3GWIJpYl4ZJKGy--2QerLDeivg",
@@ -99,34 +100,40 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === 'Home') {
-              iconName = 'md-home';
-            } else if (route.name === 'Cart') {
-                iconName = 'ios-cart';
-            } else if (route.name === 'Orders') {
-              iconName = 'ios-wallet';
-            } else if (route.name === 'Settings') {
-                iconName = 'ios-list';
+    <CartProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let iconName;
+              if (route.name === 'Home') {
+                iconName = 'md-home';
+              } else if (route.name === 'Cart') {
+                return (
+                  <CartIconWithBadge
+                    name="ios-cart"
+                    size={size}
+                    color={color}
+                  />)
+              } else if (route.name === 'Orders') {
+                iconName = 'ios-wallet';
+              } else if (route.name === 'Settings') {
+                  iconName = 'ios-list';
+              }
+              return <Ionicons name={iconName} size={size} color={color} />;
             }
-            return <Ionicons name={iconName} size={size} color={color} />;
-          }
-        })}
-        tabBarOptions={{
-          activeTintColor: '#FF5562',
-          inactiveTintColor: 'gray',
-        }}
-      >
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Cart" component={CartStackScreen} />
-        <Tab.Screen name="Orders" component={OrderStackScreen} />
-        <Tab.Screen name="Settings" component={SettingsStackScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+          })}
+          tabBarOptions={{
+            activeTintColor: '#FF5562',
+            inactiveTintColor: 'gray',
+          }}
+        >
+          <Tab.Screen name="Home" component={HomeStackScreen} />
+          <Tab.Screen name="Cart" component={CartStackScreen} />
+          <Tab.Screen name="Orders" component={OrderStackScreen} />
+          <Tab.Screen name="Settings" component={SettingsStackScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </CartProvider>
   );
 }

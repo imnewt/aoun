@@ -6,9 +6,10 @@ import {
   View,
   Text,
   Image,
-  FlatList,
+  Button,
   TouchableOpacity
 } from 'react-native';
+import { Rating } from "react-native-elements"
 
 export default class BookDetail extends Component {
 
@@ -19,29 +20,38 @@ export default class BookDetail extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
-                    <View style={styles.bookDetail}>
-                        <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}} />
-                        <View style={styles.bookMainInfo}>
-                            <Text style={styles.bookName}>{book.name}</Text>
-                            <Text style={styles.bookAuthor}>{book.author}</Text>
+                    <View style={styles.content}>
+                        <View style={styles.bookDetail}>
+                            <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}} />
+                            <View style={styles.bookMainInfo}>
+                                <Text style={styles.bookName}>{book.name}</Text>
+                                <Text style={styles.bookAuthor}>{book.author}</Text>
+                                <Text style={styles.bookPrice}>${book.price}</Text>
+                                <Rating 
+                                    imageSize={20}
+                                    readonly
+                                    startingValue={book.rating}
+                                    style={styles.bookRating}
+                                />
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.bookDescription}>
-                        <Text style={styles.description}>{book.description}</Text>
-                    </View>
-                        {/* <View style={styles.priceContainer}>
-                            <Text style={styles.phonePrice}>$ {book.price}</Text>
+                        <View style={styles.bookAbout}>
+                            {/* <Text style={styles.bookGenre}>GENRE: {book.genre}</Text> */}
+                            <Text style={styles.bookDescription}>   {book.description}</Text>
                         </View>
-                        {/* <CartContext.Consumer>
-                            {({ addToCart }) => (
-                                <Button
-                                    title="Chọn mua"
-                                    color="red" 
-                                    onPress={() => addToCart(data)}>
-                                </Button>
-                            )}
-                        </CartContext.Consumer> */}
-                        
+                            {/* <CartContext.Consumer>
+                                {({ addToCart }) => (
+                                    <Button
+                                        title="Chọn mua"
+                                        color="red" 
+                                        onPress={() => addToCart(data)}>
+                                    </Button>
+                                )}
+                            </CartContext.Consumer> */}
+                        <TouchableOpacity style={styles.button} onPress={() => {}}>
+                            <Text style={styles.add}>Add to cart</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
             </SafeAreaView>
         )
@@ -51,23 +61,35 @@ export default class BookDetail extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F6F2F9",
-        margin: 10
+        backgroundColor: "#F6F2F9"
+    },
+    content: {
+        margin: 20,
+        backgroundColor: "#FFF",
+        borderRadius: 15,
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 0 },
+        elevation: 1
     },
     bookDetail: {
         flexDirection: "row",
-        paddingBottom: 20,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: "#8A8F9E"
+        margin: 20,
     },
     bookImg: {
-        flex: 2,
+        flex: 1,
         height: 250,
-        borderColor: "#DDD",
-        borderWidth: 1
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 0 },
+        elevation: 1
     },
     bookMainInfo: {
-        flex: 3,
+        flex: 1,
+        justifyContent: "center",
         marginLeft: 20,
     },
     bookName: {
@@ -75,11 +97,37 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     bookAuthor: {
-        marginTop: 10,
+        marginTop: 15,
         fontSize: 18,
         color: "gray"
     },
+    bookPrice: {
+        marginTop: 15,
+        fontSize: 18
+    },
+    bookRating: {
+        alignSelf: "flex-start",
+        marginTop: 15
+    },
+    bookAbout: {
+        margin: 20,
+        // borderTopWidth: StyleSheet.hairlineWidth,
+        // borderTopColor: "#8A8F9E"
+    },
     bookDescription: {
-        marginTop: 20
+        fontSize: 18
+    },
+    button: {
+        height: 60,
+        margin: 20,
+        backgroundColor: "#FF5562",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10
+    },
+    add: {
+        color: "#FFF",
+        textTransform: "uppercase",
+        fontWeight: "700"
     }
 });

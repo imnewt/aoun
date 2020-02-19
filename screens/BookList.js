@@ -38,6 +38,7 @@ export default class BookList extends Component {
                                                 readonly
                                                 startingValue={item.rating}
                                                 style={styles.bookRating}
+                                                imageSize={25}
                                             />
                                         </View>
                                     </View>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     },
     bookImage: {
         flex: 1,
-        height: 250,
+        height: 300,
         borderRadius: 10,
         borderRadius: 5,
         borderColor: "#DDD",
@@ -77,11 +78,10 @@ const styles = StyleSheet.create({
     },
     bookMainInfoCtn: {
         flex: 1,
-        width: 200,
         justifyContent: "center",
     },
     bookMainInfo: {
-        paddingVertical: 30,
+        paddingVertical: 50,
         backgroundColor: "#FFF",
         borderRadius: 10,
         borderTopLeftRadius: 0,
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
     },
     bookName: {
         marginLeft: 15,
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: "700",
         color: "#FF5562"
     },
     bookAuthor: {
         marginLeft: 15,
         marginTop: 15,
-        fontSize: 16,
+        fontSize: 18,
         color: "gray"
     },
     bookRating: {
