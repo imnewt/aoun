@@ -30,7 +30,7 @@ export default class Settings extends Component {
                                 uri:
                                 'https://acrossmag.com/wp-content/uploads/2018/11/image3-6.jpg',
                             }}
-                            showEditButton
+                            //showEditButton
                         />
                     </View>
                 </ScrollView>
