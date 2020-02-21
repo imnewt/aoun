@@ -10,6 +10,7 @@ import BookListScreen from "./screens/BookList"
 import BookDetailScreen from "./screens/BookDetail"
 
 import CartScreen from "./screens/Cart"
+import PayConfirmScreen from "./screens/PayConfirm"
 import CartIconWithBadge from "./components/CartIconWithBadge"
 
 import OrdersScreen from "./screens/Orders"
@@ -43,7 +44,6 @@ function HomeStackScreen() {
     <HomeStack.Navigator 
       initialRouteName = "Home" 
       screenOptions={{
-        title: "HOME",
         headerStyle: {
           backgroundColor: "#FF5562",
         },
@@ -55,8 +55,8 @@ function HomeStackScreen() {
       }}
     >
       <HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
-      <HomeStack.Screen name="BookList" component={BookListScreen} options={({ route }) => ({ title: `${route.params.name } Books` })}/>
-      <HomeStack.Screen name="BookDetail" component={BookDetailScreen} options={{ title: "Details" }}/>
+      <HomeStack.Screen name="BookList" component={BookListScreen} options={({ route }) => ({ title: `${route.params.name} Books` })}/>
+      <HomeStack.Screen name="BookDetail" component={BookDetailScreen} options={{ title: "DETAILS" }}/>
     </HomeStack.Navigator>
   );
 }
@@ -69,7 +69,6 @@ function CartStackScreen() {
     <CartStack.Navigator 
       initialRouteName="Cart"
       screenOptions={{
-        title: "MY CART",
         headerStyle: {
           backgroundColor: "#FF5562",
         },
@@ -80,7 +79,10 @@ function CartStackScreen() {
         }
       }}
     >
-      <CartStack.Screen name="Cart" component={CartScreen} />
+      <CartStack.Screen name="Cart" component={CartScreen} options={{ title: "MY CART"}}/>
+      <CartStack.Screen name="PayConfirm" component={PayConfirmScreen} options={{ title: "RECHECK"}}/>
+      <CartStack.Screen name="Login" component={LoginScreen} />
+      <CartStack.Screen name="Register" component={RegisterScreen} />
     </CartStack.Navigator>
   );
 }
@@ -90,8 +92,8 @@ const OrderStack = createStackNavigator();
 
 function OrderStackScreen() {
   return (
-    <OrderStack.Navigator initialRouteName="Order">
-      <OrderStack.Screen name="Order" component={OrdersScreen} />
+    <OrderStack.Navigator initialRouteName="Orders">
+      <OrderStack.Screen name="Orders" component={OrdersScreen} />
     </OrderStack.Navigator>
   );
 }

@@ -9,6 +9,12 @@ import Romance from "../images/romance.jpg"
 import Guide from "../images/guide.jpg"
 import Design from "../images/design.jpg"
 
+import { YellowBox } from 'react-native'
+
+YellowBox.ignoreWarnings([
+  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+])
+
 export default class Home extends Component {
     constructor(props) {
         super(props);
@@ -44,7 +50,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.1.57:3000/api/books', {
+        fetch('http://192.168.1.52:3000/api/books', {
             method: 'GET'
         })
         .then((response) => response.json())

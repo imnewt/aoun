@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { View, SafeAreaView, ScrollView, Image, StyleSheet, Text, TouchableOpacity} from "react-native"
-//import { vh, vw } from "react-native-viewport-units"
+import firebase from "firebase"
+
 import { CartContext } from "../contexts/Cart"
 import CartItem from "../components/CartItem"
 
 import EmptyCart from "../images/empty-cart.png"
 
-export default class CartScreen extends Component {
+export default class Cart extends Component {
 
     roundTo(n, digits) {
         if (digits === undefined) {
@@ -17,6 +18,17 @@ export default class CartScreen extends Component {
         n = parseFloat((n * multiplicator).toFixed(11));
         var test =(Math.round(n) / multiplicator);
         return +(test.toFixed(digits));
+    }
+
+    handleCheckOut = (cartItems) => {
+        const { navigation } = this.props;
+        const user = firebase.auth().currentUser;
+        if (user) {
+            navigation.navigate("PayConfirm", { cartItems: cartItems });
+        }
+        else {
+            navigation.navigate("Login", { from: "Cart"});
+        }
     }
 
     render() {
@@ -39,7 +51,7 @@ export default class CartScreen extends Component {
                                 <View style={styles.moneyCtn}>
                                     <Text style={styles.money}>Total: ${this.roundTo(totalMoney,2)}</Text>
                                 </View>
-                                <TouchableOpacity style={styles.pay}>
+                                <TouchableOpacity style={styles.pay} onPress={() => this.handleCheckOut(cartItems)}>
                                     <Text style={styles.payText}>Check out</Text>
                                 </TouchableOpacity>
                             </View>
@@ -81,15 +93,15 @@ const styles = StyleSheet.create({
     },
     pay: {
         margin: 20,
-        height: 50,
+        padding: 15,
         borderRadius: 10,
-        justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#FF5562"
     },
     payText: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: "700",
+        textTransform: "uppercase",
         color: "#FFF"
     }
 }) 

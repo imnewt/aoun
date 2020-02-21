@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  Image,
-  Button,
-  TouchableOpacity
-} from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Rating } from "react-native-elements"
 
 import { CartContext } from "../contexts/Cart"
 
 export default class BookDetail extends Component {
-
-    
-
     render() {
         const { book } = this.props.route.params;
         return (
@@ -115,16 +103,16 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     button: {
-        height: 60,
         margin: 20,
+        padding: 15,
         backgroundColor: "#FF5562",
-        justifyContent: "center",
         alignItems: "center",
         borderRadius: 10
     },
     add: {
         color: "#FFF",
         textTransform: "uppercase",
-        fontWeight: "700"
+        fontWeight: "700",
+        fontSize: 18
     }
 });
