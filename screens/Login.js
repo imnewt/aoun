@@ -17,8 +17,14 @@ export default class Login extends Component {
 
     handleLogIn = () => {
         const { email, password } = this.state;
+        const { from } = this.props.route.params;
         firebase.auth().signInWithEmailAndPassword(email, password).catch(error => this.setState({ errorMessage: error.message }));
-        this.props.navigation.goBack()
+        if (from === "Welcome"){
+            this.props.navigation.navigate("HomeTabs")
+        }
+        else {
+            this.props.navigation.goBack()
+        }
     }
 
     render() {

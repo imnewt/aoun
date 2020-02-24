@@ -5,6 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from "react-native-vector-icons/Ionicons"
 import * as firebase from "firebase"
 
+import WelcomeScreen from "./screens/Welcome"
+
 import HomeScreen from "./screens/Home"
 import BookListScreen from "./screens/BookList"
 import BookDetailScreen from "./screens/BookDetail"
@@ -129,10 +131,9 @@ function SettingsStackScreen() {
 // BOTTOM TAB NAVIGATION
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+function HomeTabs() {
   return (
     <CartProvider>
-      <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ color, size }) => {
@@ -164,7 +165,20 @@ export default function App() {
           <Tab.Screen name="Orders" component={OrderStackScreen} />
           <Tab.Screen name="Settings" component={SettingsStackScreen} />
         </Tab.Navigator>
-      </NavigationContainer>
     </CartProvider>
+  );
+}
+
+const RootStack = createStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <RootStack.Navigator initialRouteName="Welcome">
+        <RootStack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+        <RootStack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
+        <RootStack.Screen name="Login" component={LoginScreen}/>
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 }
