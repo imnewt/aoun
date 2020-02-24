@@ -21,11 +21,11 @@ export default class Settings extends Component {
         //avatar: ""
     }
 
-    componentDidMount() {
-        const { email, displayName} = firebase.auth().currentUser;
-        console.log(email, displayName)
-        this.setState({ email, displayName })
-    }
+    // componentDidMount() {
+    //     const { email, displayName} = firebase.auth().currentUser;
+    //     console.log(email, displayName)
+    //     this.setState({ email, displayName })
+    // }
 
     handleSignOut = () => {
         firebase.auth().signOut();

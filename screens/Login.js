@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  Image,
   Text,
   TextInput,
   TouchableOpacity
 } from 'react-native';
 import * as firebase from "firebase";
+
+import Logo from "../images/logo.png"
 
 export default class Login extends Component {
     state = {
@@ -17,20 +20,25 @@ export default class Login extends Component {
 
     handleLogIn = () => {
         const { email, password } = this.state;
+        const { navigation } = this.props;
         const { from } = this.props.route.params;
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(error => this.setState({ errorMessage: error.message }));
-        if (from === "Welcome"){
-            this.props.navigation.navigate("HomeTabs")
-        }
-        else {
-            this.props.navigation.goBack()
-        }
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(res => {
+            if (from === "Welcome"){
+                navigation.navigate("HomeTabs")
+            }
+            else {
+                navigation.goBack()
+            }
+        })
+        .catch(error => this.setState({ errorMessage: error.message }));
+        
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.greeting}>Login Screen</Text>
+                <Image source={Logo} style={styles.logo}/>
                 <View style={styles.errorMessage}>
                     { this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
                 </View>
@@ -55,11 +63,11 @@ export default class Login extends Component {
                         />
                     </View>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={this.handleLogIn}>
-                    <Text style={{ color: "#FFF" }}>Sign In</Text>
+                <TouchableOpacity style={styles.logInBtn} onPress={this.handleLogIn}>
+                    <Text style={styles.logInText}>Log In</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ alignSelf: "center", marginTop: 32 }} onPress={()  => this.props.navigation.navigate("Register")}>
-                    <Text style={{ color: "#414959", fontSize: 13 }}>
+                <TouchableOpacity style={styles.signUpBtn} onPress={()  => this.props.navigation.navigate("Register")}>
+                    <Text style={styles.signUpText}>
                         New to Aoun? <Text style={{ color: "#E9446A" }}>Sign up</Text>
                     </Text>
                 </TouchableOpacity>
@@ -70,28 +78,31 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#F6F2F9",
+        marginTop: 70
     },
-    greeting: {
-        marginTop: 32,
-        fontSize: 18,
-        fontWeight: "400",
-        textAlign: "center"
+    logo: {
+        height: 150,
+        width: 150,
+        alignSelf: "center"
     },
     errorMessage: {
-        height: 72,
+        height: 48,
         alignItems: "center",
         justifyContent: "center",
-        marginHorizontal: 30
+        marginHorizontal: 30,
+    },
+    error: {
+        color: "#F00",
+        fontSize: 16
     },
     form: {
-        marginBottom: 48,
-        marginHorizontal: 30
+        margin: 30,
     },
     inputTitle: {
-        color: "#8A8F9E",
         textTransform: "uppercase",
-        fontSize: 10
+        fontSize: 14
     },
     input: {
         borderBottomColor: "#8A8F9E",
@@ -100,12 +111,27 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: "#161F3D"
     },
-    button: {
+    logInBtn: {
+        marginVertical: 20,
         marginHorizontal: 30,
-        backgroundColor: "#E9446A",
-        borderRadius: 4,
-        height: 52,
+        backgroundColor: "tomato",
+        borderRadius: 15,
+        padding: 18,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        
+    },
+    logInText: {
+        color: "#FFF",
+        textTransform: "uppercase",
+        fontSize: 18,
+        fontWeight: "700"
+    },
+    signUpBtn: {
+        alignSelf: "center", 
+        marginTop: 20
+    },
+    signUpText: {
+        fontSize: 16,
     }
 });

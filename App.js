@@ -24,6 +24,7 @@ import RegisterScreen from "./screens/Register"
 import MainScreen from "./screens/Main"
 
 import { CartProvider } from "./contexts/Cart"
+import Login from './screens/Login'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAcD_b5Z3GWIJpYl4ZJKGy--2QerLDeivg",
@@ -88,6 +89,7 @@ function CartStackScreen() {
     </CartStack.Navigator>
   );
 }
+
 
 // ORDERS TAB
 const OrderStack = createStackNavigator();
@@ -177,7 +179,17 @@ export default function App() {
       <RootStack.Navigator initialRouteName="Welcome">
         <RootStack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
         <RootStack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
-        <RootStack.Screen name="Login" component={LoginScreen}/>
+        <RootStack.Screen name="Login" component={LoginScreen} 
+          options={{
+            headerTitle: "LOGIN",
+            headerTransparent: true,
+            headerTitleAlign: "center",
+            headerTintColor: "#36413E",
+            headerTitleStyle: {
+              fontWeight: "bold"
+            },
+            headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
+          }}/>
       </RootStack.Navigator>
     </NavigationContainer>
   );
