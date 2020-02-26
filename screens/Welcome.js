@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         borderWidth: 1
     },
     sayHi: {
-        marginTop: 40,
+        marginTop: 30,
         fontSize: 32,
         fontWeight: "700"
     },
