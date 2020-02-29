@@ -74,7 +74,7 @@ export default class Home extends Component {
                 <ScrollView>
                     <View style={styles.content}>
                         <Image source={Logo} style={styles.logo}/>
-                        <Text style={styles.sayHi}>Hi there. Let's pick a book for today!</Text>
+                        <Text style={styles.sayHi}>Hey, what would you like to read today?</Text>
                         <FlatList
                             data={bookGenres}
                             renderItem={({ item }) => (
