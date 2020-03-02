@@ -181,7 +181,7 @@ export default function App() {
         <RootStack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
         <RootStack.Screen name="Login" component={LoginScreen} 
           options={{
-            headerTitle: "LOGIN",
+            headerTitle: null,
             headerTransparent: true,
             headerTitleAlign: "center",
             headerTintColor: "#36413E",
