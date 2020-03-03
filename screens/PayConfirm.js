@@ -61,7 +61,7 @@ export default class PayConfirm extends Component {
                             </View>
                         </View>
                         <TouchableOpacity style={styles.button} onPress={() => this.handleConfirm(this.state.cartItems)}>
-                            <Text style={styles.buttonText}>Confirm</Text>
+                            <Text style={styles.buttonText}>Confirm Order</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

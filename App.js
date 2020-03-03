@@ -24,7 +24,6 @@ import RegisterScreen from "./screens/Register"
 import MainScreen from "./screens/Main"
 
 import { CartProvider } from "./contexts/Cart"
-import Login from './screens/Login'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAcD_b5Z3GWIJpYl4ZJKGy--2QerLDeivg",
@@ -75,16 +74,23 @@ function CartStackScreen() {
         headerStyle: {
           backgroundColor: "#FF5562",
         },
-        headerTitleAlign: "center",
-        headerTintColor: "#FFF",
+        headerTintColor: "blue",
         headerTitleStyle: {
           fontWeight: "bold"
-        }
+        },
+        headerTransparent: true,
+        headerTitleAlign: "center",
+        headerTintColor: "#36413E",
+        headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
       }}
     >
-      <CartStack.Screen name="Cart" component={CartScreen} options={{ title: "MY CART"}}/>
+      <CartStack.Screen name="Cart" component={CartScreen} options={{ headerShown: false }}/>
       <CartStack.Screen name="PayConfirm" component={PayConfirmScreen} options={{ title: "RECHECK"}}/>
-      <CartStack.Screen name="Login" component={LoginScreen} />
+      <CartStack.Screen name="Login" component={LoginScreen} 
+        options={{
+          headerTitle: null,
+        }}
+      />
       <CartStack.Screen name="Register" component={RegisterScreen} />
     </CartStack.Navigator>
   );
@@ -146,7 +152,7 @@ function HomeTabs() {
                 return (
                   <CartIconWithBadge
                     name="ios-cart"
-                    size={size}
+                    size={25}
                     color={color}
                   />)
               } else if (route.name === 'Orders') {
@@ -154,12 +160,18 @@ function HomeTabs() {
               } else if (route.name === 'Settings') {
                   iconName = 'ios-list';
               }
-              return <Ionicons name={iconName} size={size} color={color} />;
+              return <Ionicons name={iconName} size={25} color={color} />;
             }
           })}
+
           tabBarOptions={{
-            activeTintColor: '#FF5562',
+            activeTintColor: 'tomato',
             inactiveTintColor: 'gray',
+            style: { height: 60 },
+            labelStyle: {
+              fontSize: 14,
+              paddingBottom: 3
+            }
           }}
         >
           <Tab.Screen name="Home" component={HomeStackScreen} />
@@ -183,11 +195,7 @@ export default function App() {
           options={{
             headerTitle: null,
             headerTransparent: true,
-            headerTitleAlign: "center",
             headerTintColor: "#36413E",
-            headerTitleStyle: {
-              fontWeight: "bold"
-            },
             headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
           }}/>
       </RootStack.Navigator>

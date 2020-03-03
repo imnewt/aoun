@@ -1,31 +1,34 @@
-import React, { Component } from 'react';
-import { View, SafeAreaView, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { 
+    View, 
+    SafeAreaView, 
+    Image, Text, 
+    TouchableOpacity, 
+    StyleSheet 
+} from 'react-native';
 
+import { useNavigation } from "@react-navigation/native"
 import WelcomeImg from "../images/welcome.jpg"
 
-export default class Welcome extends Component {
-
-    render() {
-        const { navigate } = this.props.navigation
-        return (
-            <SafeAreaView style={styles.container}>
-                    <Image resizeMode="stretch" source={WelcomeImg} style={styles.welcomeImg}/>
-                    <View style={styles.content}>
-                        <Text style={styles.sayHi}>Welcome to Aoun</Text>
-                        <Text style={styles.present}>Join our community to approach huge collections of books and enjoy the world's best books with no effort.</Text>
-                        <View style={styles.navBlock}> 
-                            <TouchableOpacity style={styles.btn} onPress={() => navigate("HomeTabs")}>
-                                <Text style={styles.btnText}>Get started</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.btn, {backgroundColor: "#FF6253"}]} onPress={() => navigate("Login", { from: "Welcome" })}>
-                                <Text style={[styles.btnText, {color: "#FFF"}]}>Log in</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
-            </SafeAreaView>
-        )
-    }
+export default function Welcome() {
+    const navigation = useNavigation();
+    return (
+        <SafeAreaView style={styles.container}>
+            <Image resizeMode="stretch" source={WelcomeImg} style={styles.welcomeImg}/>
+            <View style={styles.content}>
+                <Text style={styles.sayHi}>Welcome to Aoun</Text>
+                <Text style={styles.present}>Join our community to approach huge collections of books and enjoy the world's best books with no effort.</Text>
+                <View style={styles.navBlock}> 
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("HomeTabs")}>
+                        <Text style={styles.btnText}>Get started</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.btn, {backgroundColor: "#FF6253"}]} onPress={() => navigation.navigate("Login", { from: "Welcome" })}>
+                        <Text style={[styles.btnText, {color: "#FFF"}]}>Log in</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({

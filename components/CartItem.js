@@ -1,32 +1,28 @@
-import React, { Component } from 'react'
-import { View, StyleSheet, Image, Text, TouchableOpacity, Button } from "react-native"
+import React from 'react'
+import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
-export default class CartItem extends Component {
-    render() {
-        const { book, increaseAmount, decreaseAmount } = this.props;
-        return (
-            <View style={styles.container}>
-                <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}}/>
-                <View style={styles.bookInfo}>
-                    <Text style={styles.bookName}>{book.name}</Text>
-                    <Text style={styles.bookAuthor}>{book.author}</Text>
-                    <Text style={styles.bookPrice}>
-                        <Text style={styles.textTranslate}>$</Text>{book.price}
-                    </Text>   
-                    <View style={styles.quantityBlock}>
-                        <TouchableOpacity style={styles.changeAmount} onPress={() => decreaseAmount(book)}>
-                            <Ionicons name="md-remove" size={25}/>
-                        </TouchableOpacity>
-                        <Text style={styles.quantity}>{book.quantity}</Text>
-                        <TouchableOpacity style={styles.changeAmount} onPress={() => increaseAmount(book)}>
-                            <Ionicons name="md-add" size={25}/>
-                        </TouchableOpacity>
-                    </View>
+export default function CartItem(props) {
+    const { book, increaseAmount, decreaseAmount } = props;
+    return (
+        <View style={styles.container}>
+            <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}}/>
+            <View style={styles.bookInfo}>
+                <Text style={styles.bookName}>{book.name}</Text>
+                <Text style={styles.bookAuthor}>{book.author}</Text>
+                <Text style={styles.bookPrice}>${book.price}</Text>   
+                <View style={styles.quantityBlock}>
+                    <TouchableOpacity style={styles.changeAmount} onPress={() => decreaseAmount(book)}>
+                        <Ionicons name="md-remove" size={25}/>
+                    </TouchableOpacity>
+                    <Text style={styles.quantity}>{book.quantity}</Text>
+                    <TouchableOpacity style={styles.changeAmount} onPress={() => increaseAmount(book)}>
+                        <Ionicons name="md-add" size={25}/>
+                    </TouchableOpacity>
                 </View>
             </View>
-        )
-    }
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -58,11 +54,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         fontSize: 22,
         fontWeight: "700"
-    },
-    textTranslate: {
-        // transform: [
-        //     { rotate: '90deg'}
-        // ]
     },
     quantityBlock: {
         marginTop: 15,

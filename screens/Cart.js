@@ -37,7 +37,7 @@ export default class Cart extends Component {
                 <CartContext.Consumer>
                     {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount }) =>  !totalAmount    
                     ?   <View style={styles.emptyCart}>
-                            <Image source={EmptyCart} style={{height: "100%"}} />
+                            <Image resizeMode="contain" source={EmptyCart} style={{height: 300, width: 400}} />
                         </View> 
                     :   <ScrollView>
                             <View style={styles.content}>
@@ -69,9 +69,8 @@ const styles = StyleSheet.create({
     },
     emptyCart: {
         flex: 1,
-        height: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     content: {
         margin: 20,
@@ -92,16 +91,19 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     pay: {
-        margin: 20,
+        marginHorizontal: 50,
+        marginTop: 40,
+        marginBottom: 20,
+        backgroundColor: "tomato",
+        borderRadius: 30,
         padding: 15,
-        borderRadius: 10,
         alignItems: "center",
-        backgroundColor: "#FF5562"
+        justifyContent: "center",
     },
     payText: {
-        fontSize: 18,
-        fontWeight: "700",
+        color: "#FFF",
         textTransform: "uppercase",
-        color: "#FFF"
+        fontSize: 18,
+        fontWeight: "700"
     }
 }) 
