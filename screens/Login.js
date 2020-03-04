@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import * as firebase from "firebase";
 
 import Logo from "../images/logo.png"
@@ -59,9 +60,11 @@ export default class Login extends Component {
                 <View style={styles.errorMessage}>
                     { this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
                 </View>
-                <TouchableOpacity style={styles.logInBtn} onPress={this.handleLogIn}>
-                    <Text style={styles.logInText}>Log In</Text>
-                </TouchableOpacity>
+                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
+                    <TouchableOpacity style={styles.btn} onPress={this.handleLogIn}>
+                        <Text style={styles.logInText}>Log In</Text>
+                    </TouchableOpacity>
+                </LinearGradient>
                 <TouchableOpacity style={styles.signUpBtn} onPress={() => this.props.navigation.navigate("Register")}>
                     <Text style={styles.signUpText}>
                         New to Aoun? <Text style={{ color: "#E9446A" }}>Sign up</Text>
@@ -111,13 +114,15 @@ const styles = StyleSheet.create({
         color: "#F00",
         fontSize: 16
     },
-    logInBtn: {
+    linearBtn: {
         marginHorizontal: 50,
-        backgroundColor: "tomato",
         borderRadius: 30,
-        padding: 18,
+    },
+    btn: {
+        flex: 1,
+        padding: 28,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
     },
     logInText: {
         color: "#FFF",

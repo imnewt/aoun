@@ -9,16 +9,20 @@ export default function CartItem(props) {
             <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}}/>
             <View style={styles.bookInfo}>
                 <Text style={styles.bookName}>{book.name}</Text>
-                <Text style={styles.bookAuthor}>{book.author}</Text>
-                <Text style={styles.bookPrice}>${book.price}</Text>   
-                <View style={styles.quantityBlock}>
-                    <TouchableOpacity style={styles.changeAmount} onPress={() => decreaseAmount(book)}>
-                        <Ionicons name="md-remove" size={25}/>
-                    </TouchableOpacity>
-                    <Text style={styles.quantity}>{book.quantity}</Text>
-                    <TouchableOpacity style={styles.changeAmount} onPress={() => increaseAmount(book)}>
-                        <Ionicons name="md-add" size={25}/>
-                    </TouchableOpacity>
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.bookAuthor}>{book.author}</Text>
+                        <Text style={styles.bookPrice}>${book.price}</Text>
+                    </View>
+                    <View style={styles.quantityBlock}>
+                        <TouchableOpacity style={styles.changeAmount} onPress={() => decreaseAmount(book)}>
+                            <Ionicons name="md-remove" size={25}/>
+                        </TouchableOpacity>
+                        <Text style={styles.quantity}>{book.quantity}</Text>
+                        <TouchableOpacity style={styles.changeAmount} onPress={() => increaseAmount(book)}>
+                            <Ionicons name="md-add" size={25}/>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
@@ -27,38 +31,49 @@ export default function CartItem(props) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        margin: 20,
-        height: 250,
-        flexDirection: "row"
+        marginTop: 15,
+        marginHorizontal: 15,
+        height: 180,
+        flexDirection: "row",
+        backgroundColor: "#FFF",
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 0 },
+        elevation: 1
     },
     bookImg: {
         flex: 1,
+        width: 90,
+        marginVertical: 10,
+        marginHorizontal: 15,
         borderRadius: 10
     },
     bookInfo: {
-        flex: 1,
-        justifyContent: "center",
-        marginLeft: 20,
+        flex: 2,
+        marginVertical: 30
     },
     bookName: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: "700"
     },
     bookAuthor: {
-        marginTop: 15,
-        fontSize: 18,
-        color: "gray"
+        marginTop: 20,
+        fontSize: 16,
+        color: "grey"
     },
     bookPrice: {
-        marginTop: 15,
-        fontSize: 22,
+        marginTop: 20,
+        fontSize: 20,
         fontWeight: "700"
     },
     quantityBlock: {
-        marginTop: 15,
+        flex: 1,
         flexDirection: "row",
-        alignItems: "center"
+        marginTop: 60,
+        alignItems: "center",
+        justifyContent: "center"
     },
     changeAmount: {
         alignItems: "center",
@@ -70,11 +85,9 @@ const styles = StyleSheet.create({
         borderColor: "#AAA"
     },
     quantity: {
-        marginHorizontal: 10,
         fontSize: 18,
+        width: 35,
+        textAlign: "center",
         fontWeight: "700"
-    },
-    sign: {
-        fontSize: 20
     }
 }) 

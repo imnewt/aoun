@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { View, SafeAreaView, ScrollView, Image, StyleSheet, Text, TouchableOpacity} from "react-native"
 import firebase from "firebase"
 
+import LinearGradient from 'react-native-linear-gradient';
+
 import { CartContext } from "../contexts/Cart"
 import CartItem from "../components/CartItem"
 
@@ -40,21 +42,24 @@ export default class Cart extends Component {
                             <Image resizeMode="contain" source={EmptyCart} style={{height: 300, width: 400}} />
                         </View> 
                     :   <ScrollView>
-                            <View style={styles.content}>
-                                {cartItems.map((item,index) => 
+                            <Text style={styles.your}>your cart</Text>
+                            {
+                                cartItems.map((item,index) => 
                                     <CartItem 
                                         book={item} 
                                         key={index} 
                                         increaseAmount={increaseAmount} 
                                         decreaseAmount={decreaseAmount}
-                                    />)}
-                                <View style={styles.moneyCtn}>
-                                    <Text style={styles.money}>Total: ${this.roundTo(totalMoney,2)}</Text>
-                                </View>
-                                <TouchableOpacity style={styles.pay} onPress={() => this.handleCheckOut(cartItems)}>
+                                    />)
+                            }
+                            <View style={styles.moneyCtn}>
+                                <Text style={styles.money}>Cart Subtotal: ${this.roundTo(totalMoney,2)}</Text>
+                            </View>
+                            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearGradient}>
+                                <TouchableOpacity style={styles.btn} onPress={() => this.handleCheckOut(cartItems)}>
                                     <Text style={styles.payText}>Check out</Text>
                                 </TouchableOpacity>
-                            </View>
+                            </LinearGradient>
                         </ScrollView>}
                 </CartContext.Consumer>
             </SafeAreaView>
@@ -72,15 +77,15 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    content: {
-        margin: 20,
-        backgroundColor: "#FFF",
-        borderRadius: 15,
-        shadowColor: "#000",
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 0 },
-        elevation: 1
+    your: {
+        marginTop: 40,
+        marginBottom: 10,
+        marginLeft: 50,
+        color: "#AAA",
+        fontSize: 24,
+        fontWeight: "700",
+        fontStyle: "italic",
+        textTransform: "uppercase"
     },
     moneyCtn: {
         marginTop: 20,
@@ -90,15 +95,17 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "700"
     },
-    pay: {
+    linearGradient: {
         marginHorizontal: 50,
         marginTop: 40,
         marginBottom: 20,
-        backgroundColor: "tomato",
         borderRadius: 30,
+    },
+    btn: {
+        flex: 1,
         padding: 15,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
     },
     payText: {
         color: "#FFF",
