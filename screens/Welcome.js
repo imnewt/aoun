@@ -6,8 +6,9 @@ import {
     TouchableOpacity, 
     StyleSheet 
 } from 'react-native';
-
+import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from "@react-navigation/native"
+
 import WelcomeImg from "../images/welcome.jpg"
 
 export default function Welcome() {
@@ -18,13 +19,17 @@ export default function Welcome() {
             <View style={styles.content}>
                 <Text style={styles.sayHi}>Welcome to Aoun</Text>
                 <Text style={styles.present}>Join our community to approach huge collections of books and enjoy the world's best books with no effort.</Text>
-                <View style={styles.navBlock}> 
-                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("HomeTabs")}>
-                        <Text style={styles.btnText}>Get started</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.btn, {backgroundColor: "#FF6253"}]} onPress={() => navigation.navigate("Login", { from: "Welcome" })}>
-                        <Text style={[styles.btnText, {color: "#FFF"}]}>Log in</Text>
-                    </TouchableOpacity>
+                <View style={styles.navBlock}>
+                    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#83a4d4", "#b6fbff"]} style={styles.linearBtn}>
+                        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("HomeTabs")}>
+                            <Text style={styles.btnText}>Get started</Text>
+                        </TouchableOpacity>
+                    </LinearGradient>
+                    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#FF9966", "#FF5E62"]} style={styles.linearBtn}>
+                        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("Login", { from: "Welcome" })}>
+                            <Text style={[styles.btnText, { color: "#FFF" }]}>Log in</Text>
+                        </TouchableOpacity>
+                    </LinearGradient>
                 </View>
             </View>
         </SafeAreaView>
@@ -34,8 +39,7 @@ export default function Welcome() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFF",
-        height: "100%",
+        backgroundColor: "#FFF5F0",
     },
     content: {
         paddingHorizontal: 20,
@@ -60,16 +64,16 @@ const styles = StyleSheet.create({
         marginTop: 40,
         justifyContent: "space-between"
     },
-    btn: {
+    btnText: {
+        fontSize: 18,
+        fontWeight: "700",
+        color: "#242424"
+    },
+    linearBtn: {
         width: 170,
         paddingVertical: 16,
         borderRadius: 20,
         alignItems: "center",
         backgroundColor: "#ddecff"
-    },
-    btnText: {
-        fontSize: 18,
-        fontWeight: "700",
-        color: "#000"
     }
 });

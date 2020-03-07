@@ -78,19 +78,16 @@ function CartStackScreen() {
         headerTitleStyle: {
           fontWeight: "bold"
         },
+        headerTitle: null,
         headerTransparent: true,
         headerTitleAlign: "center",
         headerTintColor: "#36413E",
         headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
       }}
     >
-      <CartStack.Screen name="Cart" component={CartScreen} options={{ headerShown: false }}/>
-      <CartStack.Screen name="PayConfirm" component={PayConfirmScreen} options={{ title: "RECHECK"}}/>
-      <CartStack.Screen name="Login" component={LoginScreen} 
-        options={{
-          headerTitle: null,
-        }}
-      />
+      <CartStack.Screen name="Cart" component={CartScreen} />
+      <CartStack.Screen name="PayConfirm" component={PayConfirmScreen} />
+      <CartStack.Screen name="Login" component={LoginScreen} />
       <CartStack.Screen name="Register" component={RegisterScreen} />
     </CartStack.Navigator>
   );
@@ -188,16 +185,19 @@ const RootStack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Welcome">
+      <RootStack.Navigator 
+        initialRouteName="Welcome"
+        screenOptions={{
+          headerTitle: null,
+          headerTransparent: true,
+          headerTintColor: "#36413E",
+          headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
+        }}
+      >
         <RootStack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
         <RootStack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
-        <RootStack.Screen name="Login" component={LoginScreen} 
-          options={{
-            headerTitle: null,
-            headerTransparent: true,
-            headerTintColor: "#36413E",
-            headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
-          }}/>
+        <RootStack.Screen name="Login" component={LoginScreen} />
+        <RootStack.Screen name="Register" component={RegisterScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

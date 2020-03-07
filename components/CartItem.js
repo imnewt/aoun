@@ -30,7 +30,7 @@ export default function CartItem(props) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
+        marginBottom: 20,
         marginHorizontal: 15,
         height: 180,
         flexDirection: "row",

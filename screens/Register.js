@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import * as firebase from "firebase";
 
 export default class Register extends Component {
     state = {
         name: "",
         email: "",
+        phone: "",
         password: "",
         errorMessage: null
     }
@@ -30,87 +33,103 @@ export default class Register extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.greeting}>Hello! Sign up to get started</Text>
+            <ScrollView style={styles.container}>
+                <Text style={styles.create}>Create new account</Text>
+                <View>
+                    <TextInput
+                        style={styles.input}
+                        autoCapitalize="none"
+                        placeholder="Full Name"
+                        onChangeText={name => this.setState({name})}
+                        value={this.state.name}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        autoCapitalize="none"
+                        placeholder="Your Email"
+                        onChangeText={email => this.setState({email})}
+                        value={this.state.email}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Phone Number"
+                        autoCapitalize="none"
+                        onChangeText={phone => this.setState({phone})}
+                        value={this.state.phone}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        secureTextEntry
+                        placeholder="Password"
+                        autoCapitalize="none"
+                        onChangeText={password => this.setState({password})}
+                        value={this.state.password}
+                    />
+                </View>
                 <View style={styles.errorMessage}>
                     { this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
                 </View>
-                <View style={styles.form}>
-                    <View>
-                        <Text style={styles.inputTitle}>Full name</Text>
-                        <TextInput
-                            style={styles.input}
-                            autoCapitalize="none"
-                            onChangeText={name => this.setState({name})}
-                            value={this.state.name}
-                        />
-                    </View>
-                    <View style={{ marginTop: 32 }}>
-                        <Text style={styles.inputTitle}>Email Address</Text>
-                        <TextInput
-                            style={styles.input}
-                            autoCapitalize="none"
-                            onChangeText={email => this.setState({email})}
-                            value={this.state.email}
-                        />
-                    </View>
-                    <View style={{ marginTop: 32 }}>
-                        <Text style={styles.inputTitle}>Password</Text>
-                        <TextInput
-                            style={styles.input}
-                            secureTextEntry
-                            autoCapitalize="none"
-                            onChangeText={password => this.setState({password})}
-                            value={this.state.password}
-                        />
-                    </View>
-                </View>
-                <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-                    <Text style={{ color: "#FFF" }}>Sign Up</Text>
-                </TouchableOpacity>
-            </View>
+                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
+                    <TouchableOpacity style={styles.btn} onPress={this.handleSignUp}>
+                        <Text style={styles.btnText}>Sign Up</Text>
+                    </TouchableOpacity>
+                </LinearGradient>
+            </ScrollView>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#FFF5F0",
+        paddingTop: 80,
+        marginHorizontal: 30,
     },
-    greeting: {
-        marginTop: 32,
-        fontSize: 18,
-        fontWeight: "400",
-        textAlign: "center"
-    },
-    errorMessage: {
-        height: 72,
-        alignItems: "center",
-        justifyContent: "center",
-        marginHorizontal: 30
-    },
-    form: {
-        marginBottom: 48,
-        marginHorizontal: 30
-    },
-    inputTitle: {
-        color: "#8A8F9E",
-        textTransform: "uppercase",
-        fontSize: 10
+    create: {
+        fontSize: 32,
+        marginBottom: 32,
+        fontWeight: "700",
+        fontStyle: "italic",
+        color: "#ff5a5a"
     },
     input: {
-        borderBottomColor: "#8A8F9E",
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        height: 40,
-        fontSize: 15,
-        color: "#161F3D"
+        marginTop: 20,
+        height: 60,
+        fontSize: 18,
+        backgroundColor: "#FFF",
+        borderRadius: 30,
+        paddingLeft: 20,
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 0 },
+        elevation: 1
     },
-    button: {
-        marginHorizontal: 30,
-        backgroundColor: "#E9446A",
-        borderRadius: 4,
-        height: 52,
+    errorMessage: {
+        height: 48,
+        alignItems: "center",
+        justifyContent: "center",
+        marginVertical: 10
+    },
+    error: {
+        color: "#F00",
+        fontSize: 16
+    },
+    linearBtn: {
+        marginHorizontal: 20,
+        borderRadius: 30,
+    },
+    btn: {
+        flex: 1,
+        padding: 18,
         alignItems: "center",
         justifyContent: "center"
+    },
+    btnText: {
+        color: "#FFF",
+        textTransform: "uppercase",
+        fontSize: 18,
+        fontWeight: "700"
     }
 });
