@@ -37,7 +37,7 @@ export default class Cart extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <CartContext.Consumer>
-                    {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount }) =>  !totalAmount    
+                    {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount, removeBook }) =>  !totalAmount    
                     ?   <View style={styles.emptyCart}>
                             <Image resizeMode="contain" source={EmptyCart} style={{height: 300, width: 400}} />
                         </View> 
@@ -50,6 +50,7 @@ export default class Cart extends Component {
                                         key={index} 
                                         increaseAmount={increaseAmount} 
                                         decreaseAmount={decreaseAmount}
+                                        removeBook={removeBook}
                                     />)
                             }
                             <View style={styles.moneyCtn}>

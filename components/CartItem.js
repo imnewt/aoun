@@ -3,35 +3,34 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
 export default function CartItem(props) {
-    const { book, increaseAmount, decreaseAmount } = props;
+    const { book, increaseAmount, decreaseAmount, removeBook } = props;
     return (
         <View style={styles.container}>
             <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}}/>
             <View style={styles.bookInfo}>
                 <Text style={styles.bookName}>{book.name}</Text>
-                <View style={{ flex: 1, flexDirection: "row" }}>
-                    <View style={{ flex: 1 }}>
-                        <Text style={styles.bookAuthor}>{book.author}</Text>
-                        <Text style={styles.bookPrice}>${book.price}</Text>
-                    </View>
-                    <View style={styles.quantityBlock}>
-                        <TouchableOpacity style={styles.changeAmount} onPress={() => decreaseAmount(book)}>
-                            <Ionicons name="md-remove" size={25}/>
-                        </TouchableOpacity>
-                        <Text style={styles.quantity}>{book.quantity}</Text>
-                        <TouchableOpacity style={styles.changeAmount} onPress={() => increaseAmount(book)}>
-                            <Ionicons name="md-add" size={25}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                <Text style={styles.bookAuthor}>{book.author}</Text>
+                <Text style={styles.bookPrice}>${book.price}</Text>
             </View>
+            <View style={styles.quantityBlock}>
+                <TouchableOpacity style={styles.changeAmount} onPress={() => decreaseAmount(book)}>
+                    <Ionicons name="md-remove" size={25}/>
+                </TouchableOpacity>
+                <Text style={styles.quantity}>{book.quantity}</Text>
+                <TouchableOpacity style={styles.changeAmount} onPress={() => increaseAmount(book)}>
+                    <Ionicons name="md-add" size={25}/>
+                </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={styles.remove} onPress={() => removeBook(book)}>
+                <Ionicons name="md-close" size={20} color="#FFF"/>
+            </TouchableOpacity>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 15,
+        marginTop: 20,
         marginHorizontal: 15,
         height: 180,
         flexDirection: "row",
@@ -51,10 +50,10 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     bookInfo: {
-        flex: 2,
-        marginVertical: 30
+        flex: 2
     },
     bookName: {
+        marginTop: 20,
         fontSize: 20,
         fontWeight: "700"
     },
@@ -69,10 +68,10 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     quantityBlock: {
-        flex: 1,
+        position: "absolute",
+        right: 10,
+        bottom: 15,
         flexDirection: "row",
-        marginTop: 60,
-        alignItems: "center",
         justifyContent: "center"
     },
     changeAmount: {
@@ -89,5 +88,19 @@ const styles = StyleSheet.create({
         width: 35,
         textAlign: "center",
         fontWeight: "700"
+    },
+    remove: {
+        position: "absolute",
+        right: -10,
+        top: -10,
+        backgroundColor: "#ef5658",
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 10
+    },
+    removeText: {
+        fontSize: 16,
+        fontWeight: "700",
+        color: "#FFF"
     }
 }) 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { AsyncStorage } from "react-native"
+import { ThemeConsumer } from "react-native-elements";
 
 export const CartContext = React.createContext();
 
@@ -69,6 +70,14 @@ export class CartProvider extends Component {
         }
     }
 
+    removeBook = (book) => {
+        this.setState({
+            cartItems: this.state.cartItems.filter(item => item._id !== book._id),
+            totalAmount: this.state.totalAmount - book.quantity,
+            totalMoney: this.state.totalMoney -= parseFloat(book.price * book.quantity)
+        })
+    }
+
 //   _saveDataToAsyncStorage = async (cartItems, totalAmount, totalMoney) => {
 //     await AsyncStorage.setItem('cartItems', JSON.stringify(cartItems));
 //     await AsyncStorage.setItem('totalAmount', JSON.stringify(totalAmount));
@@ -99,7 +108,8 @@ export class CartProvider extends Component {
             cartItems: this.state.cartItems,
             addToCart: this.addToCart,
             increaseAmount: this.increaseAmount,
-            decreaseAmount: this.decreaseAmount
+            decreaseAmount: this.decreaseAmount,
+            removeBook: this.removeBook
         }}
       >
         {this.props.children}
