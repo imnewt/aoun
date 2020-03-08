@@ -51,7 +51,9 @@ export default class Settings extends Component {
                         </View>
                         <View style={styles.options}>
                             <SettingsOption iconName="ios-contact" title="Account Detail" color="#788EEC" />
-                            <SettingsOption iconName="ios-call" title="Contact Us" color="lightgreen" />
+                            <SettingsOption iconName="ios-heart" title="My Favorites" color="#FF5562" />
+                            <SettingsOption iconName="ios-settings" title="Settings" color="#999" />
+                            <SettingsOption iconName="ios-call" title="Contact Us" color="#5cb85c" />
                         </View>
                         <TouchableOpacity style={styles.signOut} onPress={this.handleSignOut}>
                             <Text style={styles.textSignOut}>Log Out</Text>

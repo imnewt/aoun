@@ -9,6 +9,8 @@ import Romance from "../images/romance.jpg"
 import Guide from "../images/guide.jpg"
 import Design from "../images/design.jpg"
 
+import HomeGenreBlock from "../components/HomeGenreBlock"
+
 import { YellowBox } from 'react-native'
 
 YellowBox.ignoreWarnings([
@@ -59,16 +61,9 @@ export default class Home extends Component {
         })
         .catch(error => console.error(error));
     }
-
-    _handlePressToBookList = (bookGenre) => {
-        const { allBooks } = this.state;
-        const { navigation } = this.props;
-        const bookList = allBooks.filter(book => book.genre === bookGenre)
-        navigation.navigate("BookList", { filteredBooks: bookList, name: bookGenre })
-    }
-
+    
     render() {
-        const { bookGenres } = this.state 
+        const { bookGenres, allBooks } = this.state 
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
@@ -78,13 +73,7 @@ export default class Home extends Component {
                         <FlatList
                             data={bookGenres}
                             renderItem={({ item }) => (
-                                <TouchableOpacity 
-                                    style={styles.bookGenreCtn}
-                                    onPress={() => this._handlePressToBookList(item.name)}    
-                                >
-                                    <Image source={item.img} style={styles.bookGenreImg} />
-                                    <Text style={styles.bookGenreName}>{item.name}</Text>
-                                </TouchableOpacity>
+                                <HomeGenreBlock bookGenre={item} allBooks={allBooks}/>
                             )}
                             keyExtractor={(item) => item.name}
                             horizontal={false}

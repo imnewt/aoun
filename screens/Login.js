@@ -66,7 +66,7 @@ export default class Login extends Component {
                     </TouchableOpacity>
                 </LinearGradient>
                 <TouchableOpacity style={styles.signUpBtn} onPress={() => this.props.navigation.navigate("Register")}>
-                    <Text style={styles.signUpText}>
+                    <Text style={{ fontSize: 16 }}>
                         New to Aoun? <Text style={{ color: "#E9446A" }}>Sign up</Text>
                     </Text>
                 </TouchableOpacity>
@@ -132,9 +132,6 @@ const styles = StyleSheet.create({
     },
     signUpBtn: {
         alignSelf: "center", 
-        marginTop: 30
-    },
-    signUpText: {
-        fontSize: 16,
+        marginTop: 30,
     }
 });

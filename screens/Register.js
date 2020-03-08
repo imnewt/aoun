@@ -71,9 +71,13 @@ export default class Register extends Component {
                 </View>
                 <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
                     <TouchableOpacity style={styles.btn} onPress={this.handleSignUp}>
-                        <Text style={styles.btnText}>Sign Up</Text>
+                        <Text style={styles.btnText}>Register</Text>
                     </TouchableOpacity>
                 </LinearGradient>
+                <Text style={styles.warnText}>
+                    "By <Text style={{ color: "#E9446A" }}>clicking Register</Text>
+                    , you agree to our Terms of Services."
+                </Text>
             </ScrollView>
         )
     }
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
     },
     create: {
         fontSize: 32,
-        marginBottom: 32,
+        marginBottom: 24,
         fontWeight: "700",
         fontStyle: "italic",
         color: "#ff5a5a"
@@ -131,5 +135,12 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         fontSize: 18,
         fontWeight: "700"
+    },
+    warnText: {
+        marginTop: 20,
+        marginHorizontal: 40,
+        fontSize: 16,
+        color: "#858383",
+        textAlign: "center"
     }
 });

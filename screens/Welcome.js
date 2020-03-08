@@ -71,9 +71,13 @@ const styles = StyleSheet.create({
     },
     linearBtn: {
         width: 170,
-        paddingVertical: 16,
         borderRadius: 20,
-        alignItems: "center",
         backgroundColor: "#ddecff"
+    },
+    btn: {
+        flex: 1,
+        padding: 28,
+        alignItems: "center",
+        justifyContent: "center"
     }
 });
