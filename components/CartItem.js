@@ -46,8 +46,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 90,
         marginVertical: 10,
-        marginHorizontal: 15,
-        borderRadius: 10
+        marginHorizontal: 15
     },
     bookInfo: {
         flex: 2

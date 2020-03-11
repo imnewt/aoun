@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Avatar } from "react-native-elements";
 import * as firebase from "firebase"
-
+import Huyen from "../images/huyen.jpg"
 import SettingsOption from "../components/SettingsOption"
 
 export default class Settings extends Component {
@@ -41,10 +41,7 @@ export default class Settings extends Component {
                             <Avatar
                                 rounded
                                 size="xlarge"
-                                source={{
-                                    uri: 'https://acrossmag.com/wp-content/uploads/2018/11/image3-6.jpg',
-                                    // uri: this.state.avatar ? avatar : 'https://acrossmag.com/wp-content/uploads/2018/11/image3-6.jpg',
-                                }}
+                                source={Huyen}
                                 //showEditButton
                             />
                             {/* { this.state.email="" && <Text style={styles.name}>{this.state.displayName}</Text>} */}

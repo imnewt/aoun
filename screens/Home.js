@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, SafeAreaView, Image, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, ScrollView, SafeAreaView, Image, Text, FlatList, StyleSheet } from 'react-native';
 
 import Logo from "../images/logo.png"
 import History from "../images/history.jpg"
@@ -24,27 +24,33 @@ export default class Home extends Component {
             bookGenres: [
                 {
                     name: "History",
-                    img: History
+                    img: History,
+                    bgColor: "#EBDADF"
                 },
                 {
                     name: "Science",
-                    img: Science
+                    img: Science,
+                    bgColor: "#D1CFE2"
                 },
                 {
                     name: "Life",
-                    img: Life
+                    img: Life,
+                    bgColor: "#9CADCE"
                 },
                 {
                     name: "Romance",
-                    img: Romance
+                    img: Romance,
+                    bgColor: "#7EC4CF"
                 },
                 {
                     name: "Guide",
-                    img: Guide
+                    img: Guide,
+                    bgColor: "#52B2CF"
                 },
                 {
                     name: "Design",
-                    img: Design
+                    img: Design,
+                    bgColor: "#BFCDE0"
                 },
             ],
             allBooks: []
@@ -75,8 +81,7 @@ export default class Home extends Component {
                             renderItem={({ item }) => (
                                 <HomeGenreBlock bookGenre={item} allBooks={allBooks}/>
                             )}
-                            keyExtractor={(item) => item.name}
-                            horizontal={false}
+                            keyExtractor={item => item.name}
                             numColumns={2}
                         />
                     </View>
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
         width: 150
     },
     sayHi: {
-        marginTop: 10,
+        marginVertical: 10,
         marginHorizontal: 20,
         textAlign: "center",
         fontSize: 20,

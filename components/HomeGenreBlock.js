@@ -7,14 +7,14 @@ export default function HomeGenreBlock(props) {
     const { bookGenre, allBooks } = props;
 
     const handlePressToBookList = (bookGenre, allBooks) => {
-        const bookList = allBooks.filter(book => book.genre === bookGenre)
-        navigation.navigate("BookList", { filteredBooks: bookList, name: bookGenre })
+        const bookList = allBooks.filter(book => book.genre === bookGenre.name)
+        navigation.navigate("BookList", { filteredBooks: bookList, headerColor: bookGenre.bgColor })
     }
 
     return (
         <TouchableOpacity 
-            style={styles.bookGenreCtn}
-            onPress={() => handlePressToBookList(bookGenre.name, allBooks)}    
+            style={[styles.bookGenreCtn, { backgroundColor: bookGenre.bgColor }]}
+            onPress={() => handlePressToBookList(bookGenre, allBooks)}    
         >
             <Image source={bookGenre.img} style={styles.bookGenreImg} />
             <Text style={styles.bookGenreName}>{bookGenre.name}</Text>
@@ -24,14 +24,13 @@ export default function HomeGenreBlock(props) {
 
 const styles = StyleSheet.create({
     bookGenreCtn: {
-        marginTop: 30,
+        marginTop: 20,
         marginHorizontal: 10,
-        width: 160,
+        width: 165,
         height: 200,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#FFF",
-        borderRadius: 10,
+        borderRadius: 8,
         shadowColor: "#000",
         shadowOpacity: 0.3,
         shadowRadius: 10,
@@ -39,10 +38,11 @@ const styles = StyleSheet.create({
         elevation: 1
     },
     bookGenreName: {
-        paddingTop: 15,
+        paddingTop: 20,
         textAlign: "center",
-        fontSize: 20,
-        fontWeight: "600"
+        fontSize: 18,
+        textTransform: "uppercase",
+        fontWeight: "700"
     },
     bookGenreImg: {
         height: 110,

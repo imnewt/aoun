@@ -46,19 +46,13 @@ function HomeStackScreen() {
     <HomeStack.Navigator 
       initialRouteName = "Home" 
       screenOptions={{
-        headerStyle: {
-          backgroundColor: "#FF5562",
-        },
-        headerTitleAlign: "center",
-        headerTintColor: "#FFF",
-        headerTitleStyle: {
-          fontWeight: "bold"
-        }
+        headerTitle: null,
+        headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
       }}
     >
       <HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
-      <HomeStack.Screen name="BookList" component={BookListScreen} options={({ route }) => ({ title: `${route.params.name} Books` })}/>
-      <HomeStack.Screen name="BookDetail" component={BookDetailScreen} options={{ title: "DETAILS" }}/>
+      <HomeStack.Screen name="BookList" component={BookListScreen} options={({ route }) => ({ headerStyle: { backgroundColor: route.params.headerColor }})} />
+      <HomeStack.Screen name="BookDetail" component={BookDetailScreen} options={({ route }) => ({ headerStyle: { backgroundColor: route.params.headerColor }})} />
     </HomeStack.Navigator>
   );
 }
@@ -71,16 +65,8 @@ function CartStackScreen() {
     <CartStack.Navigator 
       initialRouteName="Cart"
       screenOptions={{
-        headerStyle: {
-          backgroundColor: "#FF5562",
-        },
-        headerTintColor: "blue",
-        headerTitleStyle: {
-          fontWeight: "bold"
-        },
         headerTitle: null,
         headerTransparent: true,
-        headerTitleAlign: "center",
         headerTintColor: "#36413E",
         headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
       }}
@@ -139,43 +125,37 @@ const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
     <CartProvider>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
-              let iconName;
-              if (route.name === 'Home') {
-                iconName = 'md-home';
-              } else if (route.name === 'Cart') {
-                return (
-                  <CartIconWithBadge
-                    name="ios-cart"
-                    size={25}
-                    color={color}
-                  />)
-              } else if (route.name === 'Orders') {
-                iconName = 'ios-wallet';
-              } else if (route.name === 'Settings') {
-                  iconName = 'ios-list';
-              }
-              return <Ionicons name={iconName} size={25} color={color} />;
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color }) => {
+            let iconName;
+            if (route.name === 'Home') {
+              iconName = 'md-home';
+            } else if (route.name === 'Cart') {
+              return <CartIconWithBadge name="ios-cart" size={25} color={color} />
+            } else if (route.name === 'Orders') {
+              iconName = 'ios-wallet';
+            } else if (route.name === 'Settings') {
+                iconName = 'ios-list';
             }
-          })}
-
-          tabBarOptions={{
-            activeTintColor: 'tomato',
-            inactiveTintColor: 'gray',
-            style: { height: 60 },
-            labelStyle: {
-              fontSize: 14,
-              paddingBottom: 3
-            }
-          }}
-        >
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Cart" component={CartStackScreen} />
-          <Tab.Screen name="Orders" component={OrderStackScreen} />
-          <Tab.Screen name="Settings" component={SettingsStackScreen} />
-        </Tab.Navigator>
+            return <Ionicons name={iconName} size={25} color={color} />;
+          }
+        })}
+        tabBarOptions={{
+          activeTintColor: '#ff5a5a',
+          inactiveTintColor: 'gray',
+          style: { height: 60 },
+          labelStyle: {
+            fontSize: 14,
+            paddingBottom: 3
+          }
+        }}
+      >
+        <Tab.Screen name="Home" component={HomeStackScreen} />
+        <Tab.Screen name="Cart" component={CartStackScreen} />
+        <Tab.Screen name="Orders" component={OrderStackScreen} />
+        <Tab.Screen name="Settings" component={SettingsStackScreen} />
+      </Tab.Navigator>
     </CartProvider>
   );
 }
