@@ -73,18 +73,17 @@ export default class Home extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
-                    <View style={styles.content}>
-                        <Image source={Logo} style={styles.logo}/>
-                        <Text style={styles.sayHi}>Hey, what would you like to read today?</Text>
-                        <FlatList
-                            data={bookGenres}
-                            renderItem={({ item }) => (
-                                <HomeGenreBlock bookGenre={item} allBooks={allBooks}/>
-                            )}
-                            keyExtractor={item => item.name}
-                            numColumns={2}
-                        />
-                    </View>
+                    <Image source={Logo} style={styles.logo}/>
+                    <Text style={styles.sayHi}>Hey, what would you like to read today?</Text>
+                    <FlatList
+                        data={bookGenres}
+                        renderItem={({ item }) => (
+                            <HomeGenreBlock bookGenre={item} allBooks={allBooks}/>
+                        )}
+                        keyExtractor={item => item.name}
+                        numColumns={2}
+                        contentContainerStyle={{ alignItems: "center", marginVertical: 20 }}
+                    />
                 </ScrollView>
             </SafeAreaView>
         )
@@ -96,11 +95,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#FFF5F0"
     },
-    content: {
-        paddingVertical: 20,
-        alignItems: "center"
-    },
     logo: {
+        alignSelf: "center",
+        marginTop: 20,
         height: 150,
         width: 150
     },

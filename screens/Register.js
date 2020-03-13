@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity
@@ -33,52 +34,54 @@ export default class Register extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
-                <Text style={styles.create}>Create new account</Text>
-                <View>
-                    <TextInput
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholder="Full Name"
-                        onChangeText={name => this.setState({name})}
-                        value={this.state.name}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholder="Your Email"
-                        onChangeText={email => this.setState({email})}
-                        value={this.state.email}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Phone Number"
-                        autoCapitalize="none"
-                        onChangeText={phone => this.setState({phone})}
-                        value={this.state.phone}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        secureTextEntry
-                        placeholder="Password"
-                        autoCapitalize="none"
-                        onChangeText={password => this.setState({password})}
-                        value={this.state.password}
-                    />
-                </View>
-                <View style={styles.errorMessage}>
-                    { this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
-                </View>
-                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
-                    <TouchableOpacity style={styles.btn} onPress={this.handleSignUp}>
-                        <Text style={styles.btnText}>Register</Text>
-                    </TouchableOpacity>
-                </LinearGradient>
-                <Text style={styles.warnText}>
-                    "By <Text style={{ color: "#E9446A" }}>clicking Register</Text>
-                    , you agree to our Terms of Services."
-                </Text>
-            </ScrollView>
+            <SafeAreaView style={styles.container}>
+                <ScrollView>
+                    <Text style={styles.create}>Create new account</Text>
+                    <View>
+                        <TextInput
+                            style={styles.input}
+                            autoCapitalize="none"
+                            placeholder="Full Name"
+                            onChangeText={name => this.setState({name})}
+                            value={this.state.name}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            autoCapitalize="none"
+                            placeholder="Your Email"
+                            onChangeText={email => this.setState({email})}
+                            value={this.state.email}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Phone Number"
+                            autoCapitalize="none"
+                            onChangeText={phone => this.setState({phone})}
+                            value={this.state.phone}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            secureTextEntry
+                            placeholder="Password"
+                            autoCapitalize="none"
+                            onChangeText={password => this.setState({password})}
+                            value={this.state.password}
+                        />
+                    </View>
+                    <View style={styles.errorMessage}>
+                        { this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
+                    </View>
+                    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
+                        <TouchableOpacity style={styles.btn} onPress={this.handleSignUp}>
+                            <Text style={styles.btnText}>Register</Text>
+                        </TouchableOpacity>
+                    </LinearGradient>
+                    <Text style={styles.warnText}>
+                        "By <Text style={{ color: "#E9446A" }}>clicking Register</Text>
+                        , you agree to our Terms of Services."
+                    </Text>
+                </ScrollView>
+            </SafeAreaView>
         )
     }
 }

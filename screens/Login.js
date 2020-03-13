@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  ScrollView,
+  SafeAreaView,
   Image,
   Text,
   TextInput,
@@ -38,39 +40,41 @@ export default class Login extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Image source={Logo} style={styles.logo}/>
-                <View style={styles.form}>
-                    <TextInput
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholder="Email Address"
-                        onChangeText={email => this.setState({email})}
-                        value={this.state.email}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        secureTextEntry
-                        placeholder="Password"
-                        autoCapitalize="none"
-                        onChangeText={password => this.setState({password})}
-                        value={this.state.password}
-                    />
-                </View>
-                <View style={styles.errorMessage}>
-                    { this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
-                </View>
-                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
-                    <TouchableOpacity style={styles.btn} onPress={this.handleLogIn}>
-                        <Text style={styles.logInText}>Log In</Text>
+            <SafeAreaView style={styles.container}>
+                <ScrollView style={{ paddingTop: 80 }}>
+                    <Image source={Logo} style={styles.logo}/>
+                    <View style={styles.form}>
+                        <TextInput
+                            style={styles.input}
+                            autoCapitalize="none"
+                            placeholder="Email Address"
+                            onChangeText={email => this.setState({email})}
+                            value={this.state.email}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            secureTextEntry
+                            placeholder="Password"
+                            autoCapitalize="none"
+                            onChangeText={password => this.setState({password})}
+                            value={this.state.password}
+                        />
+                    </View>
+                    <View style={styles.errorMessage}>
+                        { this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
+                    </View>
+                    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
+                        <TouchableOpacity style={styles.btn} onPress={this.handleLogIn}>
+                            <Text style={styles.logInText}>Log In</Text>
+                        </TouchableOpacity>
+                    </LinearGradient>
+                    <TouchableOpacity style={styles.signUpBtn} onPress={() => this.props.navigation.navigate("Register")}>
+                        <Text style={{ fontSize: 16 }}>
+                            New to Aoun? <Text style={{ color: "#E9446A" }}>Sign up</Text>
+                        </Text>
                     </TouchableOpacity>
-                </LinearGradient>
-                <TouchableOpacity style={styles.signUpBtn} onPress={() => this.props.navigation.navigate("Register")}>
-                    <Text style={{ fontSize: 16 }}>
-                        New to Aoun? <Text style={{ color: "#E9446A" }}>Sign up</Text>
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                </ScrollView>
+            </SafeAreaView>
         )
     }
 }
@@ -78,8 +82,7 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFF5F0",
-        paddingTop: 80
+        backgroundColor: "#FFF5F0"
     },
     logo: {
         height: 180,
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
     },
     btn: {
         flex: 1,
-        padding: 28,
+        padding: 18,
         alignItems: "center",
         justifyContent: "center"
     },
