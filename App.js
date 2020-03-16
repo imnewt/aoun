@@ -25,6 +25,16 @@ import MainScreen from "./screens/Main"
 
 import { CartProvider } from "./contexts/Cart"
 
+import EStyleSheet from 'react-native-extended-stylesheet';
+import { Dimensions } from 'react-native'; 
+
+const { width } = Dimensions.get('window');
+const rem = width > 340 ? 19 : 17;
+
+EStyleSheet.build({
+  $rem: rem,
+});
+
 const firebaseConfig = {
   apiKey: "AIzaSyAcD_b5Z3GWIJpYl4ZJKGy--2QerLDeivg",
   authDomain: "aoun-27f28.firebaseapp.com",

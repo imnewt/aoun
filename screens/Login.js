@@ -41,7 +41,10 @@ export default class Login extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <ScrollView style={{ paddingTop: 80 }}>
+                <ScrollView 
+                    style={{ paddingTop: 80 }}
+                    showsVerticalScrollIndicator={false}
+                >
                     <Image source={Logo} style={styles.logo}/>
                     <View style={styles.form}>
                         <TextInput

@@ -35,7 +35,9 @@ export default class Register extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <ScrollView>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                >
                     <Text style={styles.create}>Create new account</Text>
                     <View>
                         <TextInput
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#FFF5F0",
         paddingTop: 80,
-        marginHorizontal: 30,
+        paddingHorizontal: 30,
     },
     create: {
         fontSize: 32,

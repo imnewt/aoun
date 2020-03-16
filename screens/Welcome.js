@@ -3,10 +3,10 @@ import {
     View, 
     SafeAreaView, 
     Image, Text, 
-    TouchableOpacity, 
-    StyleSheet 
+    TouchableOpacity
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from "@react-navigation/native"
 
 import WelcomeImg from "../images/welcome.jpg"
@@ -14,11 +14,11 @@ import WelcomeImg from "../images/welcome.jpg"
 export default function Welcome() {
     const navigation = useNavigation();
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <Image resizeMode="stretch" source={WelcomeImg} style={styles.welcomeImg}/>
             <View style={styles.content}>
                 <Text style={styles.sayHi}>Welcome to Aoun</Text>
-                <Text style={styles.present}>Join our community to approach huge collections of books and enjoy the world's best books with no effort.</Text>
+                <Text style={styles.present}>Aoun is the place to discover fun, exciting books for your life. Let's join our community to approach a huge collection of books and enjoy the world's best books with no effort.</Text>
                 <View style={styles.navBlock}>
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#83a4d4", "#b6fbff"]} style={styles.linearBtn}>
                         <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("HomeTabs")}>
@@ -32,52 +32,55 @@ export default function Welcome() {
                     </LinearGradient>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFF5F0",
     },
-    content: {
-        paddingHorizontal: 20,
-    },
     welcomeImg: {
-        height: 400,
         width: "100%",
+        height: "55%",
         borderColor: "#EEE",
         borderWidth: 1
     },
+    content: {
+        height: "45%",
+        paddingHorizontal: "1.5rem",
+    },
     sayHi: {
-        marginTop: 30,
-        fontSize: 32,
-        fontWeight: "700"
+        flex: 2,
+        fontSize: "1.8rem",
+        fontWeight: "700",
+        textAlignVertical: "center"
     },
     present: {
-        marginTop: 20,
-        fontSize: 18
+        flex: 3,
+        fontSize: ".9rem"
     },
     navBlock: {
+        flex: 3,
         flexDirection: "row",
-        marginTop: 40,
+        alignItems: "center",
         justifyContent: "space-between"
     },
-    btnText: {
-        fontSize: 18,
-        fontWeight: "700",
-        color: "#242424"
-    },
     linearBtn: {
-        width: 170,
+        width: "48%",
+        height: "60%",
         borderRadius: 20,
-        backgroundColor: "#ddecff"
+        backgroundColor: "#DDECFF"
     },
     btn: {
         flex: 1,
-        padding: 28,
         alignItems: "center",
         justifyContent: "center"
+    },
+    btnText: {
+        fontSize: ".9rem",
+        fontWeight: "700",
+        color: "#242424"
     }
 });
