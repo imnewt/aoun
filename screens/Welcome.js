@@ -1,10 +1,5 @@
 import React from 'react';
-import { 
-    View, 
-    SafeAreaView, 
-    Image, Text, 
-    TouchableOpacity
-} from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from "@react-navigation/native"
@@ -18,7 +13,7 @@ export default function Welcome() {
             <Image resizeMode="stretch" source={WelcomeImg} style={styles.welcomeImg}/>
             <View style={styles.content}>
                 <Text style={styles.sayHi}>Welcome to Aoun</Text>
-                <Text style={styles.present}>Aoun is the place to discover fun, exciting books for your life. Let's join our community to approach a huge collection of books and enjoy the world's best books with no effort.</Text>
+                <Text style={styles.present}>Aoun is the place to discover fun, exciting and colorful books for your life. Join our community to approach a huge collection of books, meet new friends and enjoy the world's best books with no effort.</Text>
                 <View style={styles.navBlock}>
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#83a4d4", "#b6fbff"]} style={styles.linearBtn}>
                         <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("HomeTabs")}>
@@ -43,12 +38,10 @@ const styles = EStyleSheet.create({
     },
     welcomeImg: {
         width: "100%",
-        height: "55%",
-        borderColor: "#EEE",
-        borderWidth: 1
+        height: "19.5rem"
     },
     content: {
-        height: "45%",
+        flex: 1,
         paddingHorizontal: "1.5rem",
     },
     sayHi: {
@@ -58,8 +51,8 @@ const styles = EStyleSheet.create({
         textAlignVertical: "center"
     },
     present: {
-        flex: 3,
-        fontSize: ".9rem"
+        flex: 4,
+        fontSize: ".95rem"
     },
     navBlock: {
         flex: 3,
@@ -69,7 +62,7 @@ const styles = EStyleSheet.create({
     },
     linearBtn: {
         width: "48%",
-        height: "60%",
+        height: "3.5rem",
         borderRadius: 20,
         backgroundColor: "#DDECFF"
     },
