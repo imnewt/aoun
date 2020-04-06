@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, HeaderTitle } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from "react-native-vector-icons/Ionicons"
 import * as firebase from "firebase"
@@ -50,21 +50,40 @@ firebase.initializeApp(firebaseConfig);
 
 // HOME TAB
 const HomeStack = createStackNavigator();
-
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator 
       initialRouteName = "Home" 
-      screenOptions={{
-        headerTitle: null,
+      screenOptions={
+      {
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontWeight: "bold",
+          fontSize: 21,
+          fontStyle: "italic"
+        },
         headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
       }}
     >
       <HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
-      <HomeStack.Screen name="BookList" component={BookListScreen} options={({ route }) => ({ headerStyle: { backgroundColor: route.params.headerColor }})} />
-      <HomeStack.Screen name="BookDetail" component={BookDetailScreen} options={({ route }) => ({ headerStyle: { backgroundColor: route.params.headerColor }})} />
+      <HomeStack.Screen 
+        name="BookList" 
+        component={BookListScreen} 
+        options={({ route }) => 
+        ({  
+          headerStyle: { backgroundColor: route.params.headerColor },
+          headerTitle: route.params.headerTitle,
+        })} />
+      <HomeStack.Screen 
+        name="BookDetail" 
+        component={BookDetailScreen} 
+        options={({ route }) => 
+        ({ 
+          headerStyle: { backgroundColor: route.params.headerColor },
+          headerTitle: "Details",
+        })} />
     </HomeStack.Navigator>
-  );
+  )
 }
 
 // CART TAB

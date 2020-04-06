@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image, Text, TouchableOpacity } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from "@react-navigation/native"
 
 export default function HomeGenreBlock(props) {
@@ -8,12 +9,18 @@ export default function HomeGenreBlock(props) {
 
     const handlePressToBookList = (bookGenre, allBooks) => {
         const bookList = allBooks.filter(book => book.genre === bookGenre.name)
-        navigation.navigate("BookList", { filteredBooks: bookList, headerColor: bookGenre.bgColor })
+        navigation.navigate("BookList", 
+        { 
+            filteredBooks: bookList, 
+            headerColor: bookGenre.bgColor, 
+            headerTitle: bookGenre.name 
+        })
     }
 
     return (
         <TouchableOpacity 
             style={[styles.bookGenreCtn, { backgroundColor: bookGenre.bgColor }]}
+            activeOpacity={.7}
             onPress={() => handlePressToBookList(bookGenre, allBooks)}    
         >
             <Image source={bookGenre.img} style={styles.bookGenreImg} />
@@ -22,12 +29,12 @@ export default function HomeGenreBlock(props) {
     )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     bookGenreCtn: {
-        marginTop: 20,
-        marginHorizontal: 10,
-        width: 165,
-        height: 200,
+        marginTop: ".8rem",
+        marginHorizontal: ".4rem",
+        width: "8.5rem",
+        height: "12rem",
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 8,
@@ -35,18 +42,18 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 0 },
-        elevation: 1
+        elevation: 2
     },
     bookGenreName: {
-        paddingTop: 20,
+        paddingTop: "1rem",
         textAlign: "center",
-        fontSize: 18,
+        fontSize: ".9rem",
         textTransform: "uppercase",
         fontWeight: "700"
     },
     bookGenreImg: {
-        height: 110,
-        width: 110,
+        height: "6rem",
+        width: "6rem",
         borderRadius: 99
     }
 })

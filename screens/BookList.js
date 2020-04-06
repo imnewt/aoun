@@ -1,12 +1,12 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { View, ScrollView, FlatList } from 'react-native';
 import BookListItem from "../components/BookListItem"
 
 export default function BookList(props) {
     const { filteredBooks, headerColor } = props.route.params;
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF5F0" }}>
-            <ScrollView>
+        <View style={{ flex: 1, backgroundColor: "#FFF5F0" }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <FlatList
                     data={filteredBooks}
                     renderItem={({ item }) => (
@@ -16,6 +16,6 @@ export default function BookList(props) {
                     contentContainerStyle={{ alignItems: "center", marginTop: 20 }}
                 />
             </ScrollView>
-        </SafeAreaView>
+        </View>
     )
 }

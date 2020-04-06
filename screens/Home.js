@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, ScrollView, SafeAreaView, Image, Text, FlatList, StyleSheet } from 'react-native';
+import { ScrollView, View, Image, Text, FlatList } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Logo from "../images/logo.png"
 import History from "../images/history.jpg"
@@ -58,7 +59,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.1.13:3000/api/books', {
+        fetch('http://192.168.43.157:3000/api/books', {
             method: 'GET'
         })
         .then((response) => response.json())
@@ -71,8 +72,8 @@ export default class Home extends Component {
     render() {
         const { bookGenres, allBooks } = this.state 
         return (
-            <SafeAreaView style={styles.container}>
-                <ScrollView>
+            <View style={styles.container}>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <Image source={Logo} style={styles.logo}/>
                     <Text style={styles.sayHi}>Hey, what would you like to read today?</Text>
                     <FlatList
@@ -85,52 +86,25 @@ export default class Home extends Component {
                         contentContainerStyle={{ alignItems: "center", marginVertical: 20 }}
                     />
                 </ScrollView>
-            </SafeAreaView>
+            </View>
         )
     }
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFF5F0"
     },
     logo: {
         alignSelf: "center",
-        marginTop: 20,
-        height: 150,
-        width: 150
+        marginTop: "1rem",
+        height: "8rem",
+        width: "8rem"
     },
     sayHi: {
-        marginVertical: 10,
-        marginHorizontal: 20,
+        marginTop: ".8rem",
         textAlign: "center",
-        fontSize: 20,
-    },
-    bookGenreCtn: {
-        marginTop: 30,
-        marginHorizontal: 10,
-        width: 160,
-        height: 200,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#FFF",
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 0 },
-        elevation: 1
-    },
-    bookGenreName: {
-        paddingTop: 15,
-        textAlign: "center",
-        fontSize: 20,
-        fontWeight: "600"
-    },
-    bookGenreImg: {
-        height: 110,
-        width: 110,
-        borderRadius: 99
+        fontSize: "1rem",
     }
-});
+})
