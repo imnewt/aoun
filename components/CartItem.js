@@ -1,12 +1,13 @@
 import React from 'react'
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native"
+import { View, Image, Text, TouchableOpacity } from "react-native"
+import EStyleSheet from 'react-native-extended-stylesheet';
 import Ionicons from "react-native-vector-icons/Ionicons"
 
 export default function CartItem(props) {
     const { book, increaseAmount, decreaseAmount, removeBook } = props;
     return (
         <View style={styles.container}>
-            <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}}/>
+            <Image resizeMode="stretch" style={styles.img} source={{uri: book.imageUrl}}/>
             <View style={styles.bookInfo}>
                 <Text style={styles.bookName}>{book.name}</Text>
                 <Text style={styles.bookAuthor}>{book.author}</Text>
@@ -14,11 +15,11 @@ export default function CartItem(props) {
             </View>
             <View style={styles.quantityBlock}>
                 <TouchableOpacity style={styles.changeAmount} onPress={() => decreaseAmount(book)}>
-                    <Ionicons name="md-remove" size={25}/>
+                    <Ionicons name="md-remove" size={20}/>
                 </TouchableOpacity>
                 <Text style={styles.quantity}>{book.quantity}</Text>
                 <TouchableOpacity style={styles.changeAmount} onPress={() => increaseAmount(book)}>
-                    <Ionicons name="md-add" size={25}/>
+                    <Ionicons name="md-add" size={20}/>
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.remove} onPress={() => removeBook(book)}>
@@ -28,11 +29,12 @@ export default function CartItem(props) {
     )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     container: {
-        marginBottom: 20,
-        marginHorizontal: 15,
-        height: 180,
+        marginBottom: "4rem",
+        marginHorizontal: "3rem",
+        width: "90%",
+        aspectRatio: 1/.5,
         flexDirection: "row",
         backgroundColor: "#FFF",
         borderRadius: 10,
@@ -40,51 +42,50 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 0 },
-        elevation: 1
+        elevation: 2
     },
-    bookImg: {
+    img: {
         flex: 1,
-        width: 90,
-        marginVertical: 10,
-        marginHorizontal: 15
+        margin: "3rem"
     },
     bookInfo: {
-        flex: 2
+        flex: 2,
+        marginTop: "2rem"
     },
     bookName: {
-        marginTop: 20,
-        fontSize: 20,
+        marginTop: "4rem",
+        fontSize: "4.5rem",
         fontWeight: "700"
     },
     bookAuthor: {
-        marginTop: 20,
-        fontSize: 16,
+        marginTop: "4rem",
+        fontSize: "4.5rem",
         color: "grey"
     },
     bookPrice: {
-        marginTop: 20,
-        fontSize: 20,
+        marginTop: "4rem",
+        fontSize: "4.5rem",
         fontWeight: "700"
     },
     quantityBlock: {
         position: "absolute",
-        right: 10,
-        bottom: 15,
+        right: "4rem",
+        bottom: "4rem",
         flexDirection: "row",
         justifyContent: "center"
     },
     changeAmount: {
         alignItems: "center",
         justifyContent: "center",
-        width: 30,
-        height: 30,
+        width: "7rem",
+        height: "7rem",
         borderRadius: 1000,
         borderWidth: 1,
         borderColor: "#AAA"
     },
     quantity: {
-        fontSize: 18,
-        width: 35,
+        fontSize: "5rem",
+        width: "8rem",
         textAlign: "center",
         fontWeight: "700"
     },
@@ -92,14 +93,9 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: -10,
         top: -10,
-        backgroundColor: "#ef5658",
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        backgroundColor: "#EF5658",
+        paddingHorizontal: "2.4rem",
+        paddingVertical: "1.2rem",
         borderRadius: 10
-    },
-    removeText: {
-        fontSize: 16,
-        fontWeight: "700",
-        color: "#FFF"
     }
 }) 

@@ -38,10 +38,10 @@ export default function BookListItem(props) {
 const styles = EStyleSheet.create({
     container: {
         flexDirection: "row",
-        width: "17.5rem",
-        height: "10rem",
-        marginBottom: "1rem",
-        padding: ".5rem",
+        width: "90%",
+        aspectRatio: 1/.5,
+        marginBottom: "5rem",
+        padding: "3rem",
         backgroundColor: "#FFF",
         borderRadius: 10,
         shadowColor: "#000",
@@ -58,24 +58,24 @@ const styles = EStyleSheet.create({
     bookInfo: {
         flex: 2,
         justifyContent: "center",
-        marginLeft: ".6rem"
+        marginLeft: "3rem"
     },
     bookName: {
-        fontSize: "1rem",
+        fontSize: "5rem",
         fontWeight: "700"
     },
     bookAuthor: {
-        marginTop: "1rem",
-        fontSize: ".8rem",
+        marginTop: "4rem",
+        fontSize: "4rem",
         color: "gray"
     },
     bookRating: {
         alignSelf: "flex-start",
-        marginTop: "1rem"
+        marginTop: "4rem"
     },
     icon: {
         position: "absolute",
-        right: "1rem",
-        bottom: "1rem"
+        right: "4rem",
+        bottom: "4rem"
     }
 })

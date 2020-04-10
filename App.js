@@ -28,12 +28,8 @@ import { CartProvider } from "./contexts/Cart"
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Dimensions } from 'react-native'; 
 
-const { width } = Dimensions.get('window');
-const rem = width > 340 ? 19 : 17;
-
-EStyleSheet.build({
-  $rem: rem,
-});
+const entireScreenWidth = Dimensions.get('window').width;
+EStyleSheet.build({$rem: entireScreenWidth / 100});
 
 const firebaseConfig = {
   apiKey: "AIzaSyAcD_b5Z3GWIJpYl4ZJKGy--2QerLDeivg",
@@ -59,7 +55,7 @@ function HomeStackScreen() {
         headerTitleAlign: "center",
         headerTitleStyle: {
           fontWeight: "bold",
-          fontSize: 21,
+          fontSize: 20,
           fontStyle: "italic"
         },
         headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
@@ -128,15 +124,10 @@ function SettingsStackScreen() {
     <SettingsStack.Navigator 
       initialRouteName="Settings"
       screenOptions={{
-        title: "SETTINGS",
-        headerStyle: {
-          backgroundColor: "#FF5562",
-        },
-        headerTitleAlign: "center",
-        headerTintColor: "#FFF",
-        headerTitleStyle: {
-          fontWeight: "bold"
-        }
+        headerTitle: null,
+        headerTransparent: true,
+        headerTintColor: "#36413E",
+        headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
       }}
       >
       <SettingsStack.Screen name="Settings" component={SettingsScreen} />

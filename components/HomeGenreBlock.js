@@ -31,10 +31,10 @@ export default function HomeGenreBlock(props) {
 
 const styles = EStyleSheet.create({
     bookGenreCtn: {
-        marginTop: ".8rem",
-        marginHorizontal: ".4rem",
-        width: "8.5rem",
-        height: "12rem",
+        marginTop: "5rem",
+        marginHorizontal: "2rem",
+        width: "45%",
+        aspectRatio: 1/1.3,
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 8,
@@ -45,15 +45,15 @@ const styles = EStyleSheet.create({
         elevation: 2
     },
     bookGenreName: {
-        paddingTop: "1rem",
+        paddingTop: "5rem",
         textAlign: "center",
-        fontSize: ".9rem",
+        fontSize: "4.5rem",
         textTransform: "uppercase",
         fontWeight: "700"
     },
     bookGenreImg: {
-        height: "6rem",
-        width: "6rem",
+        height: "25rem",
+        width: "25rem",
         borderRadius: 99
     }
 })

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { View, ScrollView, Image, Text, TextInput, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import { useNavigation } from "@react-navigation/native";
-import * as firebase from "firebase";
+import React, { useState } from 'react'
+import { View, ScrollView, Image, Text, TextInput, TouchableOpacity } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { useNavigation } from "@react-navigation/native"
+import * as firebase from "firebase"
 
 import Logo from "../images/logo.png"
 
@@ -27,10 +27,8 @@ export default function Login(props) {
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.logoCtn}>
-                    <Image source={Logo} style={styles.logo}/>
-                </View>
-                <View style={styles.form}>
+                <Image source={Logo} style={styles.logo}/>
+                <View style={{ alignSelf: "center" }}>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -69,27 +67,23 @@ const styles = EStyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFF5F0",
-        paddingHorizontal: "1.2rem"
-    },
-    logoCtn: {
-        height: "13rem"
+        paddingHorizontal: "3rem"
     },
     logo: {
-        marginTop: "2.5rem",
-        height: "10rem",
-        width: "10rem",
+        marginTop: "15rem",
+        marginBottom: "10rem",
+        height: "40rem",
+        width: "40rem",
         alignSelf: "center"
     },
-    form: {
-        height: "8.4rem"
-    },
     input: {
-        marginTop: "1.2rem",
-        height: "3rem",
-        fontSize: ".9rem",
+        marginTop: "5rem",
+        width: "90%",
+        aspectRatio: 1/.18,
+        fontSize: "4rem",
         backgroundColor: "#FFF",
         borderRadius: 30,
-        paddingLeft: "1.1rem",
+        paddingLeft: "5rem",
         shadowColor: "#000",
         shadowOpacity: 0.3,
         shadowRadius: 10,
@@ -97,18 +91,21 @@ const styles = EStyleSheet.create({
         elevation: 2
     },
     errorMessage: {
-        height: "4rem",
-        alignItems: "center",
-        justifyContent: "center"
+        marginTop: "6rem",
+        height: "4rem"
     },
     error: {
         textAlign: "center",
         color: "#F00",
-        fontSize: ".9rem"
+        fontSize: "4rem"
     },
     linearBtn: {
-        height: "3rem",
-        marginHorizontal: "1.8rem",
+        width: "80%",
+        aspectRatio: 1/0.2,
+        alignSelf: "center",
+        marginTop: "8rem",
+        marginBottom: "4rem",
+        marginHorizontal: "3rem",
         borderRadius: 30
     },
     logInBtn: {
@@ -119,15 +116,14 @@ const styles = EStyleSheet.create({
     logInText: {
         color: "#FFF",
         textTransform: "uppercase",
-        fontSize: ".9rem",
+        fontSize: "4rem",
         fontWeight: "700"
     },
     signUpBtn: {
-        marginTop: "1rem",
-        height: "2rem",
+        marginVertical: "4rem",
         alignSelf: "center"
     },
     signUpText: {
-        fontSize: ".9rem"
+        fontSize: "4rem"
     }
-});
+})

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Image, Text, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from "@react-navigation/native"
@@ -9,8 +9,10 @@ import WelcomeImg from "../images/welcome.jpg"
 export default function Welcome() {
     const navigation = useNavigation();
     return (
-        <View style={styles.container}>
-            <Image resizeMode="stretch" source={WelcomeImg} style={styles.welcomeImg}/>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+            <View style={styles.imgCtn}>
+                <Image source={WelcomeImg} style={styles.img}/>
+            </View>
             <View style={styles.content}>
                 <Text style={styles.sayHi}>Welcome to Aoun</Text>
                 <Text style={styles.present}>Aoun is the place to discover fun, exciting and colorful books for your life. Join our community to approach a huge collection of books, meet new friends and enjoy the world's best books with no effort.</Text>
@@ -27,42 +29,50 @@ export default function Welcome() {
                     </LinearGradient>
                 </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
 const styles = EStyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFF5F0",
+        backgroundColor: "#FFF5F0"
     },
-    welcomeImg: {
+    imgCtn: {
         width: "100%",
-        height: "19.5rem"
+        aspectRatio: 1/1,
+    },
+    img: {
+        width: "100%",
+        height: "100%"
     },
     content: {
         flex: 1,
-        paddingHorizontal: "1.5rem",
+        paddingHorizontal: "5rem",
     },
     sayHi: {
         flex: 2,
-        fontSize: "1.8rem",
+        fontSize: "10rem",
         fontWeight: "700",
-        textAlignVertical: "center"
+        textAlignVertical: "center",
+        marginTop: "4rem"
     },
     present: {
         flex: 4,
-        fontSize: ".95rem"
+        fontSize: "5.5rem",
+        marginVertical: "2rem"
     },
     navBlock: {
         flex: 3,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        marginTop: "3rem",
+        marginBottom: "5rem"
     },
     linearBtn: {
-        width: "48%",
-        height: "3.5rem",
+        width: "47%",
+        aspectRatio: 1/0.45,
         borderRadius: 20,
         backgroundColor: "#DDECFF"
     },
@@ -72,8 +82,8 @@ const styles = EStyleSheet.create({
         justifyContent: "center"
     },
     btnText: {
-        fontSize: ".9rem",
+        fontSize: "5rem",
         fontWeight: "700",
         color: "#242424"
     }
-});
+})

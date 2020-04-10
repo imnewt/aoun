@@ -1,17 +1,18 @@
-import React, { Component } from 'react'
-import { View, SafeAreaView, ScrollView, Image, StyleSheet, Text, TouchableOpacity} from "react-native"
+import React from 'react'
+import { View, SafeAreaView, ScrollView, Image, Text, TouchableOpacity} from "react-native"
 import firebase from "firebase"
 
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient'
+import EStyleSheet from 'react-native-extended-stylesheet'
 
 import { CartContext } from "../contexts/Cart"
 import CartItem from "../components/CartItem"
 
 import EmptyCart from "../images/empty-cart.png"
 
-export default class Cart extends Component {
+export default function Cart(props){
 
-    roundTo(n, digits) {
+    const roundTo = (n, digits) => {
         if (digits === undefined) {
             digits = 0;
         }
@@ -22,8 +23,8 @@ export default class Cart extends Component {
         return +(test.toFixed(digits));
     }
 
-    handleCheckOut = (cartItems) => {
-        const { navigation } = this.props;
+    const handleCheckOut = (cartItems) => {
+        const { navigation } = props;
         const user = firebase.auth().currentUser;
         if (user) {
             navigation.navigate("PayConfirm", { cartItems: cartItems });
@@ -33,47 +34,45 @@ export default class Cart extends Component {
         }
     }
 
-    render() {
-        return (
-            <SafeAreaView style={styles.container}>
-                <CartContext.Consumer>
-                    {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount, removeBook }) =>  !totalAmount    
-                    ?   <View style={styles.emptyCart}>
-                            <Image resizeMode="contain" source={EmptyCart} style={{height: 300, width: 400}} />
-                        </View> 
-                    :   <View style={{ flex:1 }}>
-                            <ScrollView>
-                                <Text style={styles.your}>your cart</Text>
-                                {
-                                    cartItems.map((item,index) => 
-                                        <CartItem 
-                                            book={item} 
-                                            key={index} 
-                                            increaseAmount={increaseAmount} 
-                                            decreaseAmount={decreaseAmount}
-                                            removeBook={removeBook}
-                                        />)
-                                }
-                            </ScrollView>
-                            <View style={styles.footer}>
-                                <View style={styles.moneyCtn}>
-                                    <Text style={styles.money}>Subtotal:</Text>
-                                    <Text style={[styles.money, {textAlign: "right"}]}>${this.roundTo(totalMoney,2)}</Text>
-                                </View>
-                                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
-                                    <TouchableOpacity style={styles.btn} onPress={() => this.handleCheckOut(cartItems)}>
-                                        <Text style={styles.payText}>Check out</Text>
-                                    </TouchableOpacity>
-                                </LinearGradient>
+    return (
+        <SafeAreaView style={styles.container}>
+            <CartContext.Consumer>
+                {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount, removeBook }) =>  !totalAmount    
+                ?   <View style={styles.emptyCart}>
+                        <Image resizeMode="contain" source={EmptyCart} style={{height: 300, width: 400}} />
+                    </View> 
+                :   <View style={{ flex:1 }}>
+                        <ScrollView>
+                            <Text style={styles.your}>your cart</Text>
+                            {
+                                cartItems.map((item,index) => 
+                                    <CartItem 
+                                        book={item} 
+                                        key={index} 
+                                        increaseAmount={increaseAmount} 
+                                        decreaseAmount={decreaseAmount}
+                                        removeBook={removeBook}
+                                    />)
+                            }
+                        </ScrollView>
+                        <View style={styles.footer}>
+                            <View style={styles.moneyCtn}>
+                                <Text style={styles.money}>Subtotal:</Text>
+                                <Text style={[styles.money, {textAlign: "right"}]}>${roundTo(totalMoney,2)}</Text>
                             </View>
-                        </View>}
-                </CartContext.Consumer>
-            </SafeAreaView>
-        )
-    }
+                            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
+                                <TouchableOpacity style={styles.btn} onPress={() => handleCheckOut(cartItems)}>
+                                    <Text style={styles.payText}>Check out</Text>
+                                </TouchableOpacity>
+                            </LinearGradient>
+                        </View>
+                    </View>}
+            </CartContext.Consumer>
+        </SafeAreaView>
+    )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFF5F0"
@@ -84,42 +83,43 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     your: {
-        marginTop: 40,
-        marginBottom: 20,
-        marginLeft: 50,
-        color: "#ff5a5a",
-        fontSize: 24,
+        marginTop: "12rem",
+        marginBottom: "6rem",
+        marginLeft: "10rem",
+        color: "#FF5A5A",
+        fontSize: "6rem",
         fontWeight: "700",
         fontStyle: "italic",
         textTransform: "uppercase"
     },
     moneyCtn: {
         flexDirection: "row",
-        marginVertical: 10,
-        marginHorizontal: 50,
+        marginTop: "2rem",
+        marginHorizontal: "10rem",
         alignSelf: "flex-end",
     },
     money: {
         flex: 1,
-        fontSize: 20,
+        fontSize: "5.5rem",
         fontWeight: "700"
     },
     linearBtn: {
-        marginHorizontal: 50,
-        marginBottom: 10,
-        borderRadius: 30,
-        padding: 10
+        width: "80%",
+        aspectRatio: 1/0.18,
+        alignSelf: "center",
+        marginVertical: "3rem",
+        marginHorizontal: "3rem",
+        borderRadius: 30
     },
     btn: {
         flex: 1,
-        padding: 15,
         alignItems: "center",
         justifyContent: "center"
     },
     payText: {
         color: "#FFF",
         textTransform: "uppercase",
-        fontSize: 18,
+        fontSize: "4rem",
         fontWeight: "700"
     },
     footer: {

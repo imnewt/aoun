@@ -83,8 +83,8 @@ export default class Home extends Component {
                         )}
                         keyExtractor={item => item.name}
                         numColumns={2}
-                        contentContainerStyle={{ alignItems: "center", marginVertical: 20 }}
-                    />
+                        contentContainerStyle={{ alignItems: "space-between", marginVertical: 20 }}
+                    />  
                 </ScrollView>
             </View>
         )
@@ -98,13 +98,13 @@ const styles = EStyleSheet.create({
     },
     logo: {
         alignSelf: "center",
-        marginTop: "1rem",
-        height: "8rem",
-        width: "8rem"
+        marginTop: "10rem",
+        height: "45rem",
+        width: "45rem"
     },
     sayHi: {
-        marginTop: ".8rem",
+        marginTop: "5rem",
         textAlign: "center",
-        fontSize: "1rem",
+        fontSize: "5rem",
     }
 })

@@ -1,38 +1,38 @@
-import React, { Component } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
+import React, { useState } from 'react'
+import { Text, Switch, TouchableOpacity } from "react-native"
+import EStyleSheet from 'react-native-extended-stylesheet'
 import Ionicons from "react-native-vector-icons/Ionicons"
 
-export default function SettingsOption({ iconName, title, color }) {
+export default function SettingsOption({ title, func }) {
+    const [switchValue, setSwitchValue] = useState(false);
     return (
-        <TouchableOpacity style={styles.container}>
-            <View style={styles.content}>
-                <Ionicons name={iconName} size={30} color={color}/>
-                <Text style={styles.title}>{title}</Text>
-            </View>
-            <Ionicons style={styles.arrow} name="ios-arrow-forward" size={25} color="#AAA"/>
+        <TouchableOpacity style={styles.container} onPress={func}>
+            <Text style={styles.title}>{title}</Text>
+            { title == "notifications" 
+            ?   <Switch 
+                    style={{ flex: 1 }}
+                    thumbColor="tomato"
+                    onValueChange={() => setSwitchValue(!switchValue)}
+                    value={switchValue}/>
+            :   <Ionicons style={styles.arrow} name="ios-arrow-forward" size={25} color="#AAA"/>
+            } 
+            
         </TouchableOpacity>
     )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     container: {
         flex: 1,
-        marginHorizontal: 20,
-        marginVertical: 10,
-        //height: 250,
-        //borderColor: "red",
-        //borderWidth: 1,
+        marginHorizontal: "8rem",
+        marginTop: "5rem",
         flexDirection: "row",
         alignItems: "center",
     },
-    content: {
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center"
-    },
     title: {
-        marginLeft: 15,
-        fontSize: 18
+        fontSize: "4.5rem",
+        color: "#AEAEAE",
+        textTransform: "capitalize"
     },
     arrow: {
         flex: 1,

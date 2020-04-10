@@ -42,47 +42,49 @@ export default function BookDetail(props) {
 const styles = EStyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFF5F0",
+        backgroundColor: "#FFF5F0"
     },
     bookMainInfo: {
         alignItems: "center",
-        paddingVertical: "1rem",
-        paddingHorizontal: ".5rem",
+        paddingVertical: "4rem",
+        paddingHorizontal: "2rem",
         backgroundColor: "#FFF",
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20
     },
     bookImg: {
-        width: "8rem",
-        height: "14rem",
+        width: "40rem",
+        aspectRatio: 1/1.8,
         borderRadius: 10
     },
     bookName: {
-        marginTop: ".8rem",
+        marginTop: "4rem",
         textAlign: "center",
         textTransform: "capitalize",
-        fontSize: "1.2rem",
+        fontSize: "6rem",
         fontWeight: "700"
     },
     bookAuthor: {
-        marginTop: ".4rem",
-        fontSize: ".8rem",
+        marginTop: "3rem",
+        fontSize: "4.5rem",
         color: "gray"
     },
     bookRating: {
         flexDirection: "row", 
         alignItems: "center",
-        marginTop: ".4rem"
+        marginTop: "3rem"
     },
     bookDescription: {
-        marginTop: "1.5rem",
-        marginHorizontal: ".5rem",
-        fontSize: ".85rem"
+        marginTop: "6rem",
+        marginHorizontal: "4rem",
+        fontSize: "4.5rem"
     },
     linearBtn: {
-        height: "2.7rem",
-        marginVertical: "1rem",
-        marginHorizontal: "1.8rem",
+        width: "80%",
+        aspectRatio: 1/0.2,
+        alignSelf: "center",
+        marginVertical: "3rem",
+        marginHorizontal: "3rem",
         borderRadius: 30
     },
     btn: {
@@ -93,7 +95,7 @@ const styles = EStyleSheet.create({
     btnText: {
         color: "#FFF",
         textTransform: "uppercase",
-        fontSize: "1rem",
+        fontSize: "4rem",
         fontWeight: "700"
     }
 })

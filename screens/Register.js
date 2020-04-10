@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import { useNavigation } from "@react-navigation/native";
-import * as firebase from "firebase";
+import LinearGradient from 'react-native-linear-gradient'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { useNavigation } from "@react-navigation/native"
+import * as firebase from "firebase"
 
 export default function Register() {
     const navigation = useNavigation();
@@ -29,7 +29,7 @@ export default function Register() {
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Text style={styles.create}>Create new account</Text>
-                <View style={styles.form}>
+                <View style={{ alignSelf: "center" }}>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -84,23 +84,23 @@ const styles = EStyleSheet.create({
         paddingHorizontal: "1.2rem"
     },
     create: {
-        marginTop: "3rem",
-        marginLeft: ".7rem",
-        fontSize: "1.8rem",
+        marginTop: "20rem",
+        marginBottom: "6rem",
+        marginLeft: "6rem",
+        color: "#FF5A5A",
+        fontSize: "6rem",
         fontWeight: "700",
         fontStyle: "italic",
-        color: "#ff5a5a"
-    },
-    form: {
-        height: "16rem"
+        textTransform: "uppercase"
     },
     input: {
-        marginTop: "1rem",
-        height: "3rem",
-        fontSize: ".9rem",
+        marginTop: "5rem",
+        width: "90%",
+        aspectRatio: 1/.18,
+        fontSize: "4rem",
         backgroundColor: "#FFF",
         borderRadius: 30,
-        paddingLeft: "1.1rem",
+        paddingLeft: "5rem",
         shadowColor: "#000",
         shadowOpacity: 0.3,
         shadowRadius: 10,
@@ -108,18 +108,21 @@ const styles = EStyleSheet.create({
         elevation: 2
     },
     errorMessage: {
-        height: "4rem",
-        alignItems: "center",
-        justifyContent: "center"
+        marginTop: "6rem",
+        height: "4rem"
     },
     error: {
         textAlign: "center",
         color: "#F00",
-        fontSize: ".9rem"
+        fontSize: "4rem"
     },
     linearBtn: {
-        height: "2.7rem",
-        marginHorizontal: "1.8rem",
+        width: "80%",
+        aspectRatio: 1/0.2,
+        alignSelf: "center",
+        marginTop: "8rem",
+        marginBottom: "4rem",
+        marginHorizontal: "3rem",
         borderRadius: 30
     },
     btn: {
@@ -130,14 +133,14 @@ const styles = EStyleSheet.create({
     btnText: {
         color: "#FFF",
         textTransform: "uppercase",
-        fontSize: "1rem",
+        fontSize: "4rem",
         fontWeight: "700"
     },
     warnText: {
-        marginTop: "1rem",
-        marginHorizontal: "1rem",
-        fontSize: ".9rem",
+        marginVertical: "4rem",
+        marginHorizontal: "4rem",
+        fontSize: "4.45rem",
         color: "#858383",
         textAlign: "center"
     }
-});
+})
