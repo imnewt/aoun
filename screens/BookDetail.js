@@ -10,7 +10,7 @@ export default function BookDetail(props) {
     const { book } = props.route.params;
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.bookMainInfo}>
                     <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}} />
                     <Text style={styles.bookName}>{book.name}</Text>
@@ -81,7 +81,7 @@ const styles = EStyleSheet.create({
     },
     linearBtn: {
         width: "80%",
-        aspectRatio: 1/0.2,
+        aspectRatio: 1/0.18,
         alignSelf: "center",
         marginVertical: "3rem",
         marginHorizontal: "3rem",

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator, HeaderTitle } from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from "react-native-vector-icons/Ionicons"
 import * as firebase from "firebase"
@@ -18,10 +18,8 @@ import CartIconWithBadge from "./components/CartIconWithBadge"
 import OrdersScreen from "./screens/Orders"
 
 import SettingsScreen from "./screens/Settings"
-import LoadingScreen from "./screens/Loading"
 import LoginScreen from "./screens/Login"
 import RegisterScreen from "./screens/Register"
-import MainScreen from "./screens/Main"
 
 import { CartProvider } from "./contexts/Cart"
 
@@ -131,9 +129,7 @@ function SettingsStackScreen() {
       }}
       >
       <SettingsStack.Screen name="Settings" component={SettingsScreen} />
-      <SettingsStack.Screen name="Loading" component={LoadingScreen} />
       <SettingsStack.Screen name="Login" component={LoginScreen} />
-      <SettingsStack.Screen name="Main" component={MainScreen} />
       <SettingsStack.Screen name="Register" component={RegisterScreen} />
     </SettingsStack.Navigator>
   );

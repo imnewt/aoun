@@ -1,45 +1,112 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  ScrollView,
-  Image,
-  Text,
-  ImageBackground
-} from 'react-native';
+import { View, ScrollView, Image, Text, TextInput, Modal, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from "@react-navigation/native"
 import EStyleSheet from 'react-native-extended-stylesheet'
+import Ionicons from "react-native-vector-icons/Ionicons"
 import * as firebase from "firebase"
-import Huyen from "../images/admin.jpg"
+
 import SettingsTag from "../components/SettingsTag"
 import SettingsOption from "../components/SettingsOption"
+
+import Huyen from "../images/admin.jpg"
 import bg from "../images/info-bg.jpg"
 
-
 export default function Settings(){
+    const navigation = useNavigation();
     const [user, setUser] = useState(null);
+    const [displayName, setDisplayName] = useState(user ? user.displayName : "hihi");
+    const [phoneNumber, setPhoneNumber] = useState(user ? user.phoneNumber : "");
+
+    const [editProfileVisible, setEditProfileVisible] = useState(false);
+    const [logOutVisible, setLogOutVisible] = useState(false);
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(() => {
             const user = firebase.auth().currentUser;
             user && setUser(user)
         })
-    });
+    }, [user]);
 
     const handleSignOut = () => {
         firebase.auth().signOut();
+        setLogOutVisible(true);
         setUser(null);
+    }
+
+    const updateProfile = (key, newData) => {
+        const user = firebase.auth().currentUser;
+        key == "profile" 
+        ?   user.updateProfile({
+                displayName: newData[0], 
+                phoneNumber: newData[1]
+            })
+        :   user.updatePassword(newData)
+    }
+
+    const navigateTo = screen => {
+        navigation.navigate(screen, { from: "Settings" });
     }
 
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={editProfileVisible}
+                >
+                    <View style={styles.modalCtn}>
+                        <View style={styles.modal}>
+                            <TextInput 
+                                style={styles.input}
+                                // autoCapitalize="none"
+                                // placeholder="Email Address"
+                                onChangeText={displayName => setDisplayName(displayName)}
+                                value={displayName}
+                            />
+                            <TextInput 
+                                style={styles.input}
+                                // autoCapitalize="none"
+                                // placeholder="Email Address"
+                                onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+                                value={phoneNumber}
+                            />
+                            <TouchableOpacity
+                                style={styles.modalBtn}
+                                activeOpacity={.7}
+                                onPress={() => console.log(phoneNumber)}
+                            >
+                                <Text style={styles.modalBtnText}>Save</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={logOutVisible}
+                >
+                    <View style={styles.modalCtn}>
+                        <View style={styles.modal}>
+                            <Ionicons name="ios-checkmark-circle-outline" size={70} color="#109648"/>
+                            <Text style={styles.modalText}>Logout Success!</Text>
+                            <TouchableOpacity
+                                style={styles.modalBtn}
+                                activeOpacity={.7}
+                                onPress={() => setLogOutVisible(false)}
+                            >
+                                <Text style={styles.modalBtnText}>Ok</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <View style={styles.bgWrapper}>
                     <ImageBackground style={styles.bg} source={bg}>
                         <Image style={styles.avatar} source={Huyen}/>
                         { user 
                             ?   <View style={styles.greeting}>
                                     <Text style={styles.hi}>Welcome back,</Text>
-                                    <Text style={styles.userName}>{user.displayName}</Text>
+                                    <Text style={styles.userName}>{user.displayName || "Aouner"}</Text>
                                 </View>
                             :   <View style={styles.greeting}>
                                     <Text style={styles.hi}>Hi there!</Text>
@@ -48,22 +115,26 @@ export default function Settings(){
                     </ImageBackground>
                 </View>
                 <View style={styles.optionsCtn}>
-                    { user && 
-                        <View>
-                            <SettingsTag iconName="ios-contact" title="accounts" color="#4c6ffe" />
-                            <SettingsOption title="edit profile" />
-                            <SettingsOption title="change password" />
-                            <SettingsOption title="log out" func={handleSignOut} />
+                    <SettingsTag iconName="ios-contact" title="account" color="#4c6ffe"/>
+                    {   user 
+                    ?   <View>
+                            <SettingsOption title="edit profile" func={() => setEditProfileVisible(true)}/>
+                            <SettingsOption title="change password"/>
+                            <SettingsOption title="log out" func={handleSignOut}/>
+                        </View>
+                    :   <View>
+                            <SettingsOption title="log in" func={() => navigateTo("Login")}/>
+                            <SettingsOption title="create new" func={() => navigateTo("Register")}/>
                         </View>
                     }
                     
-                    <SettingsTag iconName="ios-settings" title="settings" color="#999" />
-                    <SettingsOption title="notifications" />
-                    <SettingsOption title="privacy policy" />
+                    <SettingsTag iconName="ios-settings" title="settings" color="#999"/>
+                    <SettingsOption title="notifications"/>
+                    <SettingsOption title="privacy policy"/>
 
-                    <SettingsTag iconName="ios-call" title="contact" color="#5cb85c" />
-                    <SettingsOption title="support" />
-                    <SettingsOption title="about us" />
+                    <SettingsTag iconName="ios-call" title="contact" color="#5cb85c"/>
+                    <SettingsOption title="support"/>
+                    <SettingsOption title="about us"/>
                 </View>
             </ScrollView>
         </View>
@@ -74,6 +145,51 @@ const styles = EStyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFF5F0"
+    },
+    modalCtn: {
+        flex: 1,
+        backgroundColor: "#171718D1",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    modal: {
+        backgroundColor: "#FFF5F0",
+        width: "80%",
+        aspectRatio: 1/.7,
+        borderRadius: 25,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    modalText: {
+        fontSize: "5.5rem",
+        fontWeight: "700",
+        marginTop: "3rem"
+    },
+    modalBtn: {
+        backgroundColor: "#84D9FA",
+        marginTop: "6rem",
+        paddingVertical: "3.5rem",
+        paddingHorizontal: "10rem",
+        borderRadius: 10
+    },
+    modalBtnText: {
+        fontSize: "4rem",
+        fontWeight: "700",
+        textTransform: "uppercase",
+    },
+    input: {
+        marginTop: "3rem",
+        width: "90%",
+        aspectRatio: 1/.18,
+        fontSize: "4rem",
+        backgroundColor: "#FFF",
+        borderRadius: 30,
+        paddingLeft: "5rem",
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 0 },
+        elevation: 2
     },
     bgWrapper: {
         marginTop: "5rem",
@@ -98,7 +214,7 @@ const styles = EStyleSheet.create({
         width: "20rem",
         height: "20rem",
         borderRadius: 99,
-        marginLeft: "12rem"
+        marginLeft: "8rem"
     },
     greeting: {
         marginLeft: "5rem"
