@@ -20,6 +20,8 @@ import OrdersScreen from "./screens/Orders"
 import SettingsScreen from "./screens/Settings"
 import LoginScreen from "./screens/Login"
 import RegisterScreen from "./screens/Register"
+import ProfileScreen from "./screens/Profile"
+import PasswordScreen from "./screens/Password"
 
 import { CartProvider } from "./contexts/Cart"
 
@@ -131,6 +133,8 @@ function SettingsStackScreen() {
       <SettingsStack.Screen name="Settings" component={SettingsScreen} />
       <SettingsStack.Screen name="Login" component={LoginScreen} />
       <SettingsStack.Screen name="Register" component={RegisterScreen} />
+      <SettingsStack.Screen name="Profile" component={ProfileScreen} />
+      <SettingsStack.Screen name="Password" component={PasswordScreen} />
     </SettingsStack.Navigator>
   );
 }

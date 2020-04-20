@@ -10,7 +10,6 @@ export default function Register(props) {
     const navigation = useNavigation();
     const [email, setEmail] = useState("");
     const [displayName, setDisplayName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
     const [errMessage, setErrMessage] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
@@ -21,7 +20,7 @@ export default function Register(props) {
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(userCredentials => {
             return userCredentials.user.updateProfile({
-                displayName, phoneNumber
+                displayName
             })
         })
         .then(() => setModalVisible(true))
@@ -75,13 +74,6 @@ export default function Register(props) {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Phone Number"
-                        autoCapitalize="none"
-                        onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
-                        value={phoneNumber}
-                    />
-                    <TextInput
-                        style={styles.input}
                         secureTextEntry
                         placeholder="Password"
                         autoCapitalize="none"
@@ -110,7 +102,8 @@ const styles = EStyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFF5F0",
-        paddingHorizontal: "1.2rem"
+        paddingHorizontal: "1.2rem",
+        justifyContent: "center"
     },
     modalCtn: {
         flex: 1,
@@ -144,7 +137,7 @@ const styles = EStyleSheet.create({
         textTransform: "uppercase"
     },
     create: {
-        marginTop: "20rem",
+        marginTop: "30rem",
         marginBottom: "6rem",
         marginLeft: "6rem",
         color: "#FF5A5A",

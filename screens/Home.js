@@ -59,7 +59,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.43.157:3000/api/books', {
+        fetch('http://192.168.43.110:3000/api/books', {
             method: 'GET'
         })
         .then((response) => response.json())

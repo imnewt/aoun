@@ -142,7 +142,7 @@ const styles = EStyleSheet.create({
         textTransform: "uppercase"
     },
     logo: {
-        marginTop: "15rem",
+        marginTop: "30rem",
         marginBottom: "10rem",
         height: "40rem",
         width: "40rem",

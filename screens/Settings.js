@@ -14,10 +14,6 @@ import bg from "../images/info-bg.jpg"
 export default function Settings(){
     const navigation = useNavigation();
     const [user, setUser] = useState(null);
-    const [displayName, setDisplayName] = useState(user ? user.displayName : "hihi");
-    const [phoneNumber, setPhoneNumber] = useState(user ? user.phoneNumber : "");
-
-    const [editProfileVisible, setEditProfileVisible] = useState(false);
     const [logOutVisible, setLogOutVisible] = useState(false);
 
     useEffect(() => {
@@ -33,54 +29,13 @@ export default function Settings(){
         setUser(null);
     }
 
-    const updateProfile = (key, newData) => {
-        const user = firebase.auth().currentUser;
-        key == "profile" 
-        ?   user.updateProfile({
-                displayName: newData[0], 
-                phoneNumber: newData[1]
-            })
-        :   user.updatePassword(newData)
-    }
-
-    const navigateTo = screen => {
-        navigation.navigate(screen, { from: "Settings" });
+    const navigateTo = (screen, user) => {
+        navigation.navigate(screen, { from: "Settings", user });
     }
 
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={editProfileVisible}
-                >
-                    <View style={styles.modalCtn}>
-                        <View style={styles.modal}>
-                            <TextInput 
-                                style={styles.input}
-                                // autoCapitalize="none"
-                                // placeholder="Email Address"
-                                onChangeText={displayName => setDisplayName(displayName)}
-                                value={displayName}
-                            />
-                            <TextInput 
-                                style={styles.input}
-                                // autoCapitalize="none"
-                                // placeholder="Email Address"
-                                onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
-                                value={phoneNumber}
-                            />
-                            <TouchableOpacity
-                                style={styles.modalBtn}
-                                activeOpacity={.7}
-                                onPress={() => console.log(phoneNumber)}
-                            >
-                                <Text style={styles.modalBtnText}>Save</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -118,8 +73,8 @@ export default function Settings(){
                     <SettingsTag iconName="ios-contact" title="account" color="#4c6ffe"/>
                     {   user 
                     ?   <View>
-                            <SettingsOption title="edit profile" func={() => setEditProfileVisible(true)}/>
-                            <SettingsOption title="change password"/>
+                            <SettingsOption title="edit profile" func={() => navigateTo("Profile")}/>
+                            <SettingsOption title="change password" func={() => navigateTo("Password")}/>
                             <SettingsOption title="log out" func={handleSignOut}/>
                         </View>
                     :   <View>
