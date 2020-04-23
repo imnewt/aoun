@@ -120,7 +120,7 @@ const styles = EStyleSheet.create({
         width: "80%",
         aspectRatio: 1/.7,
         borderRadius: 25,
-        backgroundColor: "white",
+        backgroundColor: "#FFF",
         justifyContent: "center",
         alignItems: "center"
     },
@@ -150,8 +150,8 @@ const styles = EStyleSheet.create({
     },
     input: {
         marginTop: "5rem",
-        width: "90%",
-        aspectRatio: 1/.18,
+        width: "95%",
+        aspectRatio: 1/.17,
         fontSize: "4rem",
         backgroundColor: "#FFF",
         borderRadius: 30,
@@ -163,8 +163,9 @@ const styles = EStyleSheet.create({
         elevation: 2
     },
     errorMessage: {
-        marginTop: "6rem",
-        height: "4rem"
+        height: "20rem",
+        alignItems: "center",
+        justifyContent: "center"
     },
     error: {
         textAlign: "center",
@@ -175,7 +176,6 @@ const styles = EStyleSheet.create({
         width: "80%",
         aspectRatio: 1/0.18,
         alignSelf: "center",
-        marginTop: "8rem",
         marginBottom: "4rem",
         marginHorizontal: "3rem",
         borderRadius: 30

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Image, Text, TextInput, Modal, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, ScrollView, Image, Text, Modal, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from "@react-navigation/native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Ionicons from "react-native-vector-icons/Ionicons"
@@ -108,7 +108,7 @@ const styles = EStyleSheet.create({
         alignItems: "center"
     },
     modal: {
-        backgroundColor: "#FFF5F0",
+        backgroundColor: "#FFF",
         width: "80%",
         aspectRatio: 1/.7,
         borderRadius: 25,

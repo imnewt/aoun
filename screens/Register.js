@@ -102,8 +102,7 @@ const styles = EStyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFF5F0",
-        paddingHorizontal: "1.2rem",
-        justifyContent: "center"
+        paddingHorizontal: "3rem"
     },
     modalCtn: {
         flex: 1,
@@ -115,7 +114,7 @@ const styles = EStyleSheet.create({
         width: "80%",
         aspectRatio: 1/.7,
         borderRadius: 25,
-        backgroundColor: "white",
+        backgroundColor: "#FFF",
         justifyContent: "center",
         alignItems: "center"
     },
@@ -137,8 +136,8 @@ const styles = EStyleSheet.create({
         textTransform: "uppercase"
     },
     create: {
-        marginTop: "30rem",
-        marginBottom: "6rem",
+        marginTop: "20rem",
+        marginBottom: "10rem",
         marginLeft: "6rem",
         color: "#FF5A5A",
         fontSize: "6rem",
@@ -147,9 +146,9 @@ const styles = EStyleSheet.create({
         textTransform: "uppercase"
     },
     input: {
-        marginTop: "5rem",
-        width: "90%",
-        aspectRatio: 1/.18,
+        marginTop: "8rem",
+        width: "95%",
+        aspectRatio: 1/.17,
         fontSize: "4rem",
         backgroundColor: "#FFF",
         borderRadius: 30,
@@ -161,8 +160,9 @@ const styles = EStyleSheet.create({
         elevation: 2
     },
     errorMessage: {
-        marginTop: "6rem",
-        height: "4rem"
+        height: "20rem",
+        alignItems: "center",
+        justifyContent: "center"
     },
     error: {
         textAlign: "center",
@@ -173,7 +173,6 @@ const styles = EStyleSheet.create({
         width: "80%",
         aspectRatio: 1/0.18,
         alignSelf: "center",
-        marginTop: "8rem",
         marginBottom: "4rem",
         marginHorizontal: "3rem",
         borderRadius: 30
@@ -191,8 +190,8 @@ const styles = EStyleSheet.create({
     },
     warnText: {
         marginVertical: "4rem",
-        marginHorizontal: "4rem",
-        fontSize: "4.45rem",
+        marginHorizontal: "10rem",
+        fontSize: "4rem",
         color: "#858383",
         textAlign: "center"
     }

@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import EStyleSheet from 'react-native-extended-stylesheet'
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, TextInput, Text, Modal, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native"
+import EStyleSheet from 'react-native-extended-stylesheet'
+import LinearGradient from 'react-native-linear-gradient'
+import Ionicons from "react-native-vector-icons/Ionicons"
 import * as firebase from "firebase"
 
 export default function Profile() {
     const navigation = useNavigation();
     const [email, setEmail] = useState("");
     const [displayName, setDisplayName] = useState("");
+    const [password, setPassword] = useState("");
+    const [errMessage, setErrMessage] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         const user = firebase.auth().currentUser;
@@ -16,16 +20,62 @@ export default function Profile() {
         setDisplayName(user.displayName);
     }, []);
 
-    const updateProfile = (newEmail, newName) => {
-        const user = firebase.auth().currentUser;
-        user.updateEmail(newEmail);
-        user.updateProfile({ displayName: newName });
-        navigation.navigate("Settings");
+    const validate = () => {
+        (email === "" || displayName === "" || password === "") 
+        ?   setErrMessage("Fields can not be blank!")
+        :   updateProfile(email, displayName, password)
+        
+    }
+
+    const reauthenticate = (currentPassword) => {
+        var user = firebase.auth().currentUser;
+        var cred = firebase.auth.EmailAuthProvider.credential(
+            user.email, currentPassword);
+        return user.reauthenticateWithCredential(cred);
+    }
+
+    const updateProfile = (newEmail, newName, password) => {
+        // reauthenticate(currentPassword).then(() => {
+        //   var user = firebase.auth().currentUser;
+        //   user.updateEmail(newEmail).then(() => {
+        //     setModalVisible(true);
+        //   }).catch(error => setErrMessage(error));
+        //   user.updateProfile({ displayName: newName });
+        // }).catch(error => setErrMessage(error));
+
+        reauthenticate(password)
+            .then(() => {
+                var user = firebase.auth().currentUser;
+                user.updateEmail(newEmail)
+                user.updateProfile({ displayName: newName });
+                setModalVisible(true)
+            })
+            .catch(() => setErrMessage("Your password is incorrect!"))
     }
 
     return (
         <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} >
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <View style={styles.modalCtn}>
+                        <View style={styles.modal}>
+                            <Ionicons name="ios-checkmark-circle-outline" size={70} color="#109648"/>
+                            <Text style={styles.modalText}>Update Success!</Text>
+                            <Text style={styles.modalContent}>Changes will be applied the next time you log in.</Text>
+                            <TouchableOpacity
+                                style={styles.modalBtn}
+                                activeOpacity={.7}
+                                onPress={() => { setModalVisible(false); navigation.goBack() }}
+                            >
+                                <Text style={styles.modalBtnText}>Ok</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <View style={styles.content}>
                     <Text style={styles.heading}>Edit Profile</Text>
                     <View style={{ alignSelf: "center" }}>
@@ -43,6 +93,17 @@ export default function Profile() {
                             onChangeText={displayName => setDisplayName(displayName)}
                             value={displayName}
                         />
+                        <Text style={styles.label}>Your Password</Text>
+                        <TextInput 
+                            style={styles.input}
+                            autoCapitalize="none"
+                            secureTextEntry
+                            onChangeText={password => setPassword(password)}
+                            value={password}
+                        />
+                    </View>
+                    <View style={styles.errorMessage}>
+                        { errMessage && <Text style={styles.error}>{errMessage}</Text>}
                     </View>
                     <LinearGradient 
                         start={{x: 0, y: 0}} 
@@ -52,7 +113,7 @@ export default function Profile() {
                     >
                         <TouchableOpacity 
                             style={styles.btn} 
-                            onPress={() => updateProfile(email, displayName)}
+                            onPress={() => validate()}
                             activeOpacity={.7}
                         >
                             <Text style={styles.btnText}>Save</Text>
@@ -70,8 +131,45 @@ const styles = EStyleSheet.create({
         backgroundColor: "#FFF5F0",
         alignItems: "center"
     },
+    modalCtn: {
+        flex: 1,
+        backgroundColor: "#171718D1",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    modal: {
+        backgroundColor: "#FFF",
+        width: "80%",
+        aspectRatio: 1/.85,
+        borderRadius: 25,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    modalText: {
+        fontSize: "5.5rem",
+        fontWeight: "700",
+        marginTop: "3rem"
+    },
+    modalContent: {
+        fontSize: "4rem",
+        marginHorizontal: "3rem",
+        textAlign: "center",
+        marginTop: "3rem"
+    },  
+    modalBtn: {
+        backgroundColor: "#84D9FA",
+        marginTop: "6rem",
+        paddingVertical: "3.5rem",
+        paddingHorizontal: "10rem",
+        borderRadius: 10
+    },
+    modalBtnText: {
+        fontSize: "4rem",
+        fontWeight: "700",
+        textTransform: "uppercase",
+    },
     content: {
-        paddingTop: "30rem"
+        paddingTop: "20rem"
     },
     heading: {
         alignSelf: "flex-start",
@@ -93,7 +191,7 @@ const styles = EStyleSheet.create({
     input: {
         marginTop: "3rem",
         width: "95%",
-        aspectRatio: 1/.18,
+        aspectRatio: 1/.17,
         fontSize: "4rem",
         backgroundColor: "#FFF",
         borderRadius: 30,
@@ -104,11 +202,20 @@ const styles = EStyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         elevation: 2
     },
+    errorMessage: {
+        height: "20rem",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    error: {
+        textAlign: "center",
+        color: "#F00",
+        fontSize: "4rem"
+    },
     linearBtn: {
         width: "80%",
         aspectRatio: 1/0.18,
         alignSelf: "center",
-        marginTop: "14rem",
         marginBottom: "4rem",
         marginHorizontal: "3rem",
         borderRadius: 30
