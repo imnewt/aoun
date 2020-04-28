@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TextInput, Text, Modal, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react'
+import { View, ScrollView, TextInput, Text, Modal, TouchableOpacity } from 'react-native'
 import { useNavigation } from "@react-navigation/native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import LinearGradient from 'react-native-linear-gradient'
@@ -35,22 +35,14 @@ export default function Profile() {
     }
 
     const updateProfile = (newEmail, newName, password) => {
-        // reauthenticate(currentPassword).then(() => {
-        //   var user = firebase.auth().currentUser;
-        //   user.updateEmail(newEmail).then(() => {
-        //     setModalVisible(true);
-        //   }).catch(error => setErrMessage(error));
-        //   user.updateProfile({ displayName: newName });
-        // }).catch(error => setErrMessage(error));
-
         reauthenticate(password)
-            .then(() => {
-                var user = firebase.auth().currentUser;
-                user.updateEmail(newEmail)
-                user.updateProfile({ displayName: newName });
-                setModalVisible(true)
-            })
-            .catch(() => setErrMessage("Your password is incorrect!"))
+        .then(() => {
+            var user = firebase.auth().currentUser;
+            user.updateEmail(newEmail)
+            user.updateProfile({ displayName: newName });
+            setModalVisible(true)
+        })
+        .catch(() => setErrMessage("Your password is incorrect!"))
     }
 
     return (
@@ -77,7 +69,6 @@ export default function Profile() {
                     </View>
                 </Modal>
                 <View style={styles.content}>
-                    <Text style={styles.heading}>Edit Profile</Text>
                     <View style={{ alignSelf: "center" }}>
                         <Text style={styles.label}>Your Email</Text>
                         <TextInput 
@@ -170,16 +161,6 @@ const styles = EStyleSheet.create({
     },
     content: {
         paddingTop: "20rem"
-    },
-    heading: {
-        alignSelf: "flex-start",
-        marginBottom: "6rem",
-        marginLeft: "10rem",
-        color: "#FF5A5A",
-        fontSize: "6rem",
-        fontWeight: "700",
-        fontStyle: "italic",
-        textTransform: "uppercase"
     },
     label: {
         marginLeft: "5rem",

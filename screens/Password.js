@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, ScrollView, TextInput, Text, Modal, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react'
+import { View, ScrollView, TextInput, Text, Modal, TouchableOpacity } from 'react-native'
 import { useNavigation } from "@react-navigation/native"
 import EStyleSheet from 'react-native-extended-stylesheet'
 import LinearGradient from 'react-native-linear-gradient'
@@ -35,12 +35,12 @@ export default function Password() {
 
     const changePassword = (currentPassword, newPassword) => {
         reauthenticate(currentPassword)
-            .then(() => {
-                var user = firebase.auth().currentUser;
-                user.updatePassword(newPassword)
-                .then(() => setModalVisible(true))
-            })
-            .catch(() => setErrMessage("Current password is incorrect!"))
+        .then(() => {
+            var user = firebase.auth().currentUser;
+            user.updatePassword(newPassword)
+            .then(() => setModalVisible(true))
+        })
+        .catch(() => setErrMessage("Current password is incorrect!"))
     }   
 
     return (
@@ -67,7 +67,6 @@ export default function Password() {
                     </View>
                 </Modal>
                 <View style={styles.content}>
-                    <Text style={styles.heading}>Change Password</Text>
                     <View style={{ alignSelf: "center" }}>
                         <Text style={styles.label}>Current Password</Text>
                         <TextInput 
@@ -162,16 +161,6 @@ const styles = EStyleSheet.create({
     },
     content: {
         paddingTop: "20rem"
-    },
-    heading: {
-        alignSelf: "flex-start",
-        marginBottom: "6rem",
-        marginLeft: "10rem",
-        color: "#FF5A5A",
-        fontSize: "6rem",
-        fontWeight: "700",
-        fontStyle: "italic",
-        textTransform: "uppercase"
     },
     label: {
         marginLeft: "5rem",

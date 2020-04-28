@@ -8,7 +8,7 @@ import * as firebase from "firebase"
 import SettingsTag from "../components/SettingsTag"
 import SettingsOption from "../components/SettingsOption"
 
-import Huyen from "../images/admin.jpg"
+import User from "../images/user.jpg"
 import bg from "../images/info-bg.jpg"
 
 export default function Settings(){
@@ -57,7 +57,7 @@ export default function Settings(){
                 </Modal>
                 <View style={styles.bgWrapper}>
                     <ImageBackground style={styles.bg} source={bg}>
-                        <Image style={styles.avatar} source={Huyen}/>
+                        <Image style={styles.avatar} source={User}/>
                         { user 
                             ?   <View style={styles.greeting}>
                                     <Text style={styles.hi}>Welcome back,</Text>
@@ -85,11 +85,11 @@ export default function Settings(){
                     
                     <SettingsTag iconName="ios-settings" title="settings" color="#999"/>
                     <SettingsOption title="notifications"/>
-                    <SettingsOption title="privacy policy"/>
+                    <SettingsOption title="privacy policy" func={() => navigateTo("Policy")}/>
 
                     <SettingsTag iconName="ios-call" title="contact" color="#5cb85c"/>
-                    <SettingsOption title="support"/>
-                    <SettingsOption title="about us"/>
+                    <SettingsOption title="support" func={() => navigateTo("Support")}/>
+                    <SettingsOption title="about us" func={() => navigateTo("About")}/>
                 </View>
             </ScrollView>
         </View>
@@ -132,22 +132,8 @@ const styles = EStyleSheet.create({
         fontWeight: "700",
         textTransform: "uppercase",
     },
-    input: {
-        marginTop: "3rem",
-        width: "90%",
-        aspectRatio: 1/.18,
-        fontSize: "4rem",
-        backgroundColor: "#FFF",
-        borderRadius: 30,
-        paddingLeft: "5rem",
-        shadowColor: "#000",
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 0 },
-        elevation: 2
-    },
     bgWrapper: {
-        marginTop: "5rem",
+        marginTop: "10rem",
         width: "90%",
         alignSelf: "center",
         aspectRatio: 1/0.45, 
@@ -184,6 +170,6 @@ const styles = EStyleSheet.create({
         fontWeight: "700"
     },
     optionsCtn: {
-        marginBottom: "5rem"
+        marginBottom: "10rem"
     }
 })

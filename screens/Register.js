@@ -56,8 +56,7 @@ export default function Register(props) {
                         </View>
                     </View>
                 </Modal>
-                <Text style={styles.create}>Create new account</Text>
-                <View style={{ alignSelf: "center" }}>
+                <View style={styles.form}>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -135,15 +134,9 @@ const styles = EStyleSheet.create({
         fontWeight: "700",
         textTransform: "uppercase"
     },
-    create: {
-        marginTop: "20rem",
-        marginBottom: "10rem",
-        marginLeft: "6rem",
-        color: "#FF5A5A",
-        fontSize: "6rem",
-        fontWeight: "700",
-        fontStyle: "italic",
-        textTransform: "uppercase"
+    form: {
+        alignSelf: "center",
+        paddingTop: "20rem"
     },
     input: {
         marginTop: "8rem",
