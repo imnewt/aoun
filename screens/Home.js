@@ -59,12 +59,13 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.1.7:3000/api/books', {
+        fetch('http://192.168.1.10:3000/api/books', {
             method: 'GET'
         })
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({allBooks: responseJson})
+            console.log(this.state.allBooks)
         })
         .catch(error => console.error(error));
     }
@@ -72,8 +73,8 @@ export default class Home extends Component {
     render() {
         const { bookGenres, allBooks } = this.state 
         return (
-            <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.container}>
                     <Image source={Logo} style={styles.logo}/>
                     <Text style={styles.sayHi}>Hey, what would you like to read today?</Text>
                     <FlatList
@@ -84,9 +85,9 @@ export default class Home extends Component {
                         keyExtractor={item => item.name}
                         numColumns={2}
                         contentContainerStyle={{ alignItems: "space-between", marginVertical: 20 }}
-                    />  
-                </ScrollView>
-            </View>
+                    />
+                </View>
+            </ScrollView>
         )
     }
 }
