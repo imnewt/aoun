@@ -16,35 +16,35 @@ export default function About() {
             heading: "Values We Live By", 
             values: [
                 { 
-                    title: "Customer Commitment", 
-                    content: "We develop relationships that make a positive difference in our customers' lives."
+                    title: "- Customer Commitment", 
+                    content: "We develop relationships that make a positive difference in our customers's lives."
                 },
                 { 
-                    title: "Quality", 
+                    title: "- Quality", 
                     content: "We provide outstanding products and unsurpassed service that, together, deliver premium value to our customers."
                 },
                 { 
-                    title: "Integrity", 
+                    title: "- Integrity", 
                     content: "We uphold the highest standards of integrity in all of our actions."
                 },
                 { 
-                    title: "Teamwork", 
+                    title: "- Teamwork", 
                     content: "We work together, across boundaries, to meet the needs of our customers and to help our Company win."
                 },
                 { 
-                    title: "Respect for People", 
+                    title: "- Respect for People", 
                     content: "We value our people, encourage their development and reward their performance."
                 },
                 { 
-                    title: "Good Citizenship", 
+                    title: "- Good Citizenship", 
                     content: "We are good citizens in the communities in which we live and work."
                 },
                 { 
-                    title: "A Will to Win", 
+                    title: "- A Will to Win", 
                     content: "We exhibit a strong will to win in the marketplace and in every aspect of our business."
                 },
                 { 
-                    title: "Personal Accountability", 
+                    title: "- Personal Accountability", 
                     content: "We are personally accountable for delivering on our commitments."
                 },
             ] 

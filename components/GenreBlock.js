@@ -1,9 +1,10 @@
-import React from 'react';
-import { Image, Text, TouchableOpacity } from 'react-native';
-import EStyleSheet from 'react-native-extended-stylesheet';
+import React from "react"
+import { Image, Text, TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 
-export default function HomeGenreBlock(props) {
+import EStyleSheet from "react-native-extended-stylesheet"
+
+export default function GenreBlock(props) {
     const navigation = useNavigation();
     const { bookGenre, allBooks } = props;
 

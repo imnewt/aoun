@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { View, ScrollView, FlatList } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
+import React, { useState } from "react"
+import { View, ScrollView, FlatList } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
+
 import InfoItem from "../components/InfoItem"
 
 export default function Policy() {

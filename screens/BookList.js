@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, ScrollView, FlatList } from 'react-native';
+import React from "react"
+import { View, ScrollView, FlatList } from "react-native"
+
 import BookListItem from "../components/BookListItem"
 
 export default function BookList(props) {

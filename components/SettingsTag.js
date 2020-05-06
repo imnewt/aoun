@@ -1,6 +1,6 @@
-import React from 'react'
-import { View, Text, TouchableOpacity } from "react-native"
-import EStyleSheet from 'react-native-extended-stylesheet'
+import React from "react"
+import { View, Text } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
 export default function SettingsTag({ iconName, title, color }) {

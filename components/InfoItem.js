@@ -1,6 +1,6 @@
-import React from 'react'
-import { View, Text, FlatList } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
+import React from "react"
+import { View, Text, FlatList } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 export default function InfoItem(props) {
     const { data } = props

@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import { View, ScrollView, Text, TextInput, Modal, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient'
-import EStyleSheet from 'react-native-extended-stylesheet'
-import Ionicons from "react-native-vector-icons/Ionicons"
+import React, { useState } from "react"
+import { View, ScrollView, Text, TextInput } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import * as firebase from "firebase"
+
+import EStyleSheet from "react-native-extended-stylesheet"
+import firebase from "firebase"
+
+import CustomModal from "../components/CustomModal"
+import LinearButton from "../components/LinearButton"
 
 export default function Register(props) {
     const navigation = useNavigation();
@@ -37,25 +39,12 @@ export default function Register(props) {
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
+                <CustomModal 
+                    title="user created"
+                    btnText="ok"
                     visible={modalVisible}
-                >
-                    <View style={styles.modalCtn}>
-                        <View style={styles.modal}>
-                            <Ionicons name="ios-checkmark-circle-outline" size={70} color="#109648"/>
-                            <Text style={styles.modalText}>User Created!</Text>
-                            <TouchableOpacity
-                                style={styles.modalBtn}
-                                activeOpacity={.7}
-                                onPress={navigate}
-                            >
-                                <Text style={styles.modalBtnText}>Ok</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                    onPress={navigate}
+                />
                 <View style={styles.form}>
                     <TextInput
                         style={styles.input}
@@ -83,11 +72,7 @@ export default function Register(props) {
                 <View style={styles.errorMessage}>
                     { errMessage && <Text style={styles.error}>{errMessage}</Text>}
                 </View>
-                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
-                    <TouchableOpacity style={styles.btn} onPress={handleSignUp}>
-                        <Text style={styles.btnText}>Register</Text>
-                    </TouchableOpacity>
-                </LinearGradient>
+                <LinearButton onPress={handleSignUp} title="register"/>
                 <Text style={styles.warnText}>
                     "By <Text style={{ color: "#E9446A" }}>clicking Register</Text>
                     , you agree to our Terms of Services."
@@ -102,37 +87,6 @@ const styles = EStyleSheet.create({
         flex: 1,
         backgroundColor: "#FFF5F0",
         paddingHorizontal: "3rem"
-    },
-    modalCtn: {
-        flex: 1,
-        backgroundColor: "#171718D1",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    modal: {
-        width: "80%",
-        aspectRatio: 1/.7,
-        borderRadius: 25,
-        backgroundColor: "#FFF",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    modalText: {
-        fontSize: "5.5rem",
-        fontWeight: "700",
-        marginTop: "3rem",
-        marginBottom: "6rem"
-    },
-    modalBtn: {
-        backgroundColor: "#84D9FA",
-        paddingVertical: "3.5rem",
-        paddingHorizontal: "10rem",
-        borderRadius: 10
-    },
-    modalBtnText: {
-        fontSize: "4rem",
-        fontWeight: "700",
-        textTransform: "uppercase"
     },
     form: {
         alignSelf: "center",
@@ -161,25 +115,6 @@ const styles = EStyleSheet.create({
         textAlign: "center",
         color: "#F00",
         fontSize: "4rem"
-    },
-    linearBtn: {
-        width: "80%",
-        aspectRatio: 1/0.18,
-        alignSelf: "center",
-        marginBottom: "4rem",
-        marginHorizontal: "3rem",
-        borderRadius: 30
-    },
-    btn: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    btnText: {
-        color: "#FFF",
-        textTransform: "uppercase",
-        fontSize: "4rem",
-        fontWeight: "700"
     },
     warnText: {
         marginVertical: "4rem",

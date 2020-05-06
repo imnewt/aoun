@@ -1,29 +1,21 @@
-import React, { Component } from 'react';
-import {
-  View,
-  Image,
-  Text,
-  StatusBar,
-  Button,
-  StyleSheet
-} from 'react-native';
+import React from 'react'
+import { View, ScrollView, Image, Text, TouchableOpacity } from "react-native"
+import EStyleSheet from 'react-native-extended-stylesheet'
 
-import Aoun from "../images/aoun.jpg"
+import EmptyView from "../components/EmptyView"
+import EmptyOrder from "../images/empty-order.jpg"
 
-export default class Orders extends Component {
-    render() {
-        const { navigation } = this.props
-        return (
-            <View style={styles.container}>
-                <Image source={Aoun} />
-                <Text style={{fontSize: 20}}>Orders</Text>
-            </View>
-        )
-    }
+export default function Orders() {
+    return (
+        <View style={styles.container}>
+            <EmptyView img={EmptyOrder} text="you have no orders" textColor="#EC5F56"/>
+        </View>
+    )
 }
 
-const styles = StyleSheet.create({
-  container: {
-      alignItems: "center"
-  }
+const styles = EStyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#FFF5F0"
+    }
 });

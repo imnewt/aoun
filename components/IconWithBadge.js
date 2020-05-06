@@ -1,6 +1,6 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from "react"
+import { Text, View } from "react-native"
+import Ionicons from "react-native-vector-icons/Ionicons"
 
 export default function IconWithBadge({ name, badgeCount, color, size }) {
   return (
@@ -10,12 +10,12 @@ export default function IconWithBadge({ name, badgeCount, color, size }) {
         <View
           style={{
             position: 'absolute',
-            right: -9,
-            top: -2.5,
+            right: -10,
+            top: -4,
             backgroundColor: 'red',
             borderRadius: 6,
-            width: 15,
-            height: 15,
+            width: 18,
+            height: 18,
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -26,5 +26,5 @@ export default function IconWithBadge({ name, badgeCount, color, size }) {
         </View>
       )}
     </View>
-  );
+  )
 }

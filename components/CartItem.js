@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 import { View, Image, Text, TouchableOpacity } from "react-native"
-import EStyleSheet from 'react-native-extended-stylesheet';
+import EStyleSheet from "react-native-extended-stylesheet"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
 export default function CartItem(props) {
@@ -85,7 +85,7 @@ const styles = EStyleSheet.create({
     },
     quantity: {
         fontSize: "5rem",
-        width: "8rem",
+        width: "10rem",
         textAlign: "center",
         fontWeight: "700"
     },

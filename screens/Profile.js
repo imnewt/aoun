@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { View, ScrollView, TextInput, Text, Modal, TouchableOpacity } from 'react-native'
-import { useNavigation } from "@react-navigation/native"
-import EStyleSheet from 'react-native-extended-stylesheet'
-import LinearGradient from 'react-native-linear-gradient'
-import Ionicons from "react-native-vector-icons/Ionicons"
-import * as firebase from "firebase"
+import React, { useState, useEffect } from "react"
+import { View, ScrollView, TextInput, Text } from "react-native"
+
+import EStyleSheet from "react-native-extended-stylesheet"
+import firebase from "firebase"
+
+import CustomModal from "../components/CustomModal"
+import LinearButton from "../components/LinearButton"
 
 export default function Profile() {
-    const navigation = useNavigation();
     const [email, setEmail] = useState("");
     const [displayName, setDisplayName] = useState("");
     const [password, setPassword] = useState("");
@@ -24,7 +24,6 @@ export default function Profile() {
         (email === "" || displayName === "" || password === "") 
         ?   setErrMessage("Fields can not be blank!")
         :   updateProfile(email, displayName, password)
-        
     }
 
     const reauthenticate = (currentPassword) => {
@@ -48,26 +47,14 @@ export default function Profile() {
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={modalVisible}
-                >
-                    <View style={styles.modalCtn}>
-                        <View style={styles.modal}>
-                            <Ionicons name="ios-checkmark-circle-outline" size={70} color="#109648"/>
-                            <Text style={styles.modalText}>Update Success!</Text>
-                            <Text style={styles.modalContent}>Changes will be applied the next time you log in.</Text>
-                            <TouchableOpacity
-                                style={styles.modalBtn}
-                                activeOpacity={.7}
-                                onPress={() => { setModalVisible(false); navigation.goBack() }}
-                            >
-                                <Text style={styles.modalBtnText}>Ok</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                <CustomModal 
+                    title="update success"
+                    content="Changes will be applied the next time you log in" 
+                    btnText="ok" 
+                    visible={modalVisible} 
+                    onPress={setModalVisible} 
+                    goBack={true}
+                />
                 <View style={styles.content}>
                     <View style={{ alignSelf: "center" }}>
                         <Text style={styles.label}>Your Email</Text>
@@ -96,20 +83,7 @@ export default function Profile() {
                     <View style={styles.errorMessage}>
                         { errMessage && <Text style={styles.error}>{errMessage}</Text>}
                     </View>
-                    <LinearGradient 
-                        start={{x: 0, y: 0}} 
-                        end={{x: 1, y: 0}} 
-                        colors={["#ff9966", "#ff5e62"]} 
-                        style={styles.linearBtn}
-                    >
-                        <TouchableOpacity 
-                            style={styles.btn} 
-                            onPress={() => validate()}
-                            activeOpacity={.7}
-                        >
-                            <Text style={styles.btnText}>Save</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
+                    <LinearButton onPress={validate} title="save"/>
                 </View>
             </ScrollView>
         </View>
@@ -121,43 +95,6 @@ const styles = EStyleSheet.create({
         flex: 1,
         backgroundColor: "#FFF5F0",
         alignItems: "center"
-    },
-    modalCtn: {
-        flex: 1,
-        backgroundColor: "#171718D1",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    modal: {
-        backgroundColor: "#FFF",
-        width: "80%",
-        aspectRatio: 1/.85,
-        borderRadius: 25,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    modalText: {
-        fontSize: "5.5rem",
-        fontWeight: "700",
-        marginTop: "3rem"
-    },
-    modalContent: {
-        fontSize: "4rem",
-        marginHorizontal: "3rem",
-        textAlign: "center",
-        marginTop: "3rem"
-    },  
-    modalBtn: {
-        backgroundColor: "#84D9FA",
-        marginTop: "6rem",
-        paddingVertical: "3.5rem",
-        paddingHorizontal: "10rem",
-        borderRadius: 10
-    },
-    modalBtnText: {
-        fontSize: "4rem",
-        fontWeight: "700",
-        textTransform: "uppercase",
     },
     content: {
         paddingTop: "20rem"
@@ -192,24 +129,5 @@ const styles = EStyleSheet.create({
         textAlign: "center",
         color: "#F00",
         fontSize: "4rem"
-    },
-    linearBtn: {
-        width: "80%",
-        aspectRatio: 1/0.18,
-        alignSelf: "center",
-        marginBottom: "4rem",
-        marginHorizontal: "3rem",
-        borderRadius: 30
-    },
-    btn: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    btnText: {
-        color: "#FFF",
-        textTransform: "uppercase",
-        fontSize: "4rem",
-        fontWeight: "700"
     }
 })

@@ -1,9 +1,8 @@
-import React from 'react'
-import { View, ScrollView, Text } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
+import React from "react"
+import { View, ScrollView, Text } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 export default function Support() {
-
     return (
         <ScrollView 
             showsVerticalScrollIndicator={false} 

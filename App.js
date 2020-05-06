@@ -6,7 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import LinearGradient from 'react-native-linear-gradient'
 
 import * as firebase from "firebase"
-
+import "firebase/firestore"
 
 import WelcomeScreen from "./screens/Welcome"
 
@@ -116,7 +116,15 @@ const OrderStack = createStackNavigator();
 
 function OrderStackScreen() {
   return (
-    <OrderStack.Navigator initialRouteName="Orders">
+    <OrderStack.Navigator 
+      initialRouteName="Orders"
+      screenOptions={{
+        headerTitle: null,
+        headerTransparent: true,
+        headerTintColor: "#36413E",
+        headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
+      }}  
+    >
       <OrderStack.Screen name="Orders" component={OrdersScreen} />
     </OrderStack.Navigator>
   );

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from "react"
 import IconWithBadge from "./IconWithBadge";
 
 import { CartContext } from "../contexts/Cart"

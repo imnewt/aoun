@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, ScrollView, Image, Text, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import EStyleSheet from 'react-native-extended-stylesheet';
+import React from "react"
+import { View, ScrollView, Image, Text, TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native"
+
+import LinearGradient from "react-native-linear-gradient"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 import WelcomeImg from "../images/welcome.jpg"
 

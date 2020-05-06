@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Image, Text, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-import Logo from "../images/logo.png"
+import Logo from "../images/logo.jpg"
 import History from "../images/history.jpg"
 import Science from "../images/science.jpg"
 import Life from "../images/life.jpg"
@@ -10,7 +10,7 @@ import Romance from "../images/romance.jpg"
 import Guide from "../images/guide.jpg"
 import Design from "../images/design.jpg"
 
-import HomeGenreBlock from "../components/HomeGenreBlock"
+import GenreBlock from "../components/GenreBlock"
 
 import { YellowBox } from 'react-native'
 
@@ -59,13 +59,12 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.1.10:3000/api/books', {
+        fetch('http://192.168.1.6:3000/api/books', {
             method: 'GET'
         })
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({allBooks: responseJson})
-            console.log(this.state.allBooks)
         })
         .catch(error => console.error(error));
     }
@@ -80,7 +79,7 @@ export default class Home extends Component {
                     <FlatList
                         data={bookGenres}
                         renderItem={({ item }) => (
-                            <HomeGenreBlock bookGenre={item} allBooks={allBooks}/>
+                            <GenreBlock bookGenre={item} allBooks={allBooks}/>
                         )}
                         keyExtractor={item => item.name}
                         numColumns={2}

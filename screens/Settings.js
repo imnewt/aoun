@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Image, Text, Modal, TouchableOpacity, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from "react"
+import { View, ScrollView, Image, Text, ImageBackground } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import EStyleSheet from 'react-native-extended-stylesheet'
-import Ionicons from "react-native-vector-icons/Ionicons"
-import * as firebase from "firebase"
 
+import EStyleSheet from "react-native-extended-stylesheet"
+import firebase from "firebase"
+
+import CustomModal from "../components/CustomModal"
 import SettingsTag from "../components/SettingsTag"
 import SettingsOption from "../components/SettingsOption"
 
@@ -14,7 +15,7 @@ import bg from "../images/info-bg.jpg"
 export default function Settings(){
     const navigation = useNavigation();
     const [user, setUser] = useState(null);
-    const [logOutVisible, setLogOutVisible] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(() => {
@@ -25,7 +26,7 @@ export default function Settings(){
 
     const handleSignOut = () => {
         firebase.auth().signOut();
-        setLogOutVisible(true);
+        setModalVisible(true);
         setUser(null);
     }
 
@@ -36,32 +37,19 @@ export default function Settings(){
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={logOutVisible}
-                >
-                    <View style={styles.modalCtn}>
-                        <View style={styles.modal}>
-                            <Ionicons name="ios-checkmark-circle-outline" size={70} color="#109648"/>
-                            <Text style={styles.modalText}>Logout Success!</Text>
-                            <TouchableOpacity
-                                style={styles.modalBtn}
-                                activeOpacity={.7}
-                                onPress={() => setLogOutVisible(false)}
-                            >
-                                <Text style={styles.modalBtnText}>Ok</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                <CustomModal 
+                    title="logout success"
+                    btnText="ok"
+                    visible={modalVisible}
+                    onPress={setModalVisible}
+                />
                 <View style={styles.bgWrapper}>
                     <ImageBackground style={styles.bg} source={bg}>
                         <Image style={styles.avatar} source={User}/>
                         { user 
                             ?   <View style={styles.greeting}>
                                     <Text style={styles.hi}>Welcome back,</Text>
-                                    <Text style={styles.userName}>{user.displayName || "Aouner"}</Text>
+                                    <Text style={styles.userName}>{user.displayName || "new member"}</Text>
                                 </View>
                             :   <View style={styles.greeting}>
                                     <Text style={styles.hi}>Hi there!</Text>
@@ -101,37 +89,6 @@ const styles = EStyleSheet.create({
         flex: 1,
         backgroundColor: "#FFF5F0"
     },
-    modalCtn: {
-        flex: 1,
-        backgroundColor: "#171718D1",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    modal: {
-        backgroundColor: "#FFF",
-        width: "80%",
-        aspectRatio: 1/.7,
-        borderRadius: 25,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    modalText: {
-        fontSize: "5.5rem",
-        fontWeight: "700",
-        marginTop: "3rem"
-    },
-    modalBtn: {
-        backgroundColor: "#84D9FA",
-        marginTop: "6rem",
-        paddingVertical: "3.5rem",
-        paddingHorizontal: "10rem",
-        borderRadius: 10
-    },
-    modalBtnText: {
-        fontSize: "4rem",
-        fontWeight: "700",
-        textTransform: "uppercase",
-    },
     bgWrapper: {
         marginTop: "10rem",
         width: "90%",
@@ -158,7 +115,9 @@ const styles = EStyleSheet.create({
         marginLeft: "8rem"
     },
     greeting: {
-        marginLeft: "5rem"
+        marginLeft: "5rem",
+        marginRight: "2rem",
+        flexShrink: 1
     },
     hi: {
         fontSize: "5.2rem",
