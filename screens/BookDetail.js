@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { View, ScrollView, Text, Image } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Rating } from "react-native-elements"
@@ -9,10 +10,18 @@ import LinearButton from "../components/LinearButton"
 import { CartContext } from "../contexts/Cart"
 
 export default function BookDetail(props) {
-    const { book } = props.route.params;
+    const { book, from } = props.route.params;
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        // const { from } = props.route.params;
+        console.log(from)
+        // from === "PaySuccess" && navigation.navigate("Home")
+    }, [from])
+
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.bookMainInfo}>
                     <Image resizeMode="stretch" style={styles.bookImg} source={{uri: book.imageUrl}} />
                     <Text style={styles.bookName}>{book.name}</Text>
@@ -28,18 +37,12 @@ export default function BookDetail(props) {
                     <Text style={styles.bookDescription}>{book.description}</Text>
                 </View>
                 <CartContext.Consumer>
-                    {({ addToCart }) => (
-                        // <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={styles.linearBtn}>
-                        //     <TouchableOpacity style={styles.btn} onPress={() => addToCart(book)}>
-                        //         <Text style={styles.btnText}>Add To Cart (${book.price})</Text>
-                        //     </TouchableOpacity>
-                        // </LinearGradient>
+                    {({ addToCart }) => 
                         <LinearButton onPress={() => addToCart(book)} title="add to cart" price={book.price}/>
-
-                    )}
+                    }
                 </CartContext.Consumer>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
     )
 }
 

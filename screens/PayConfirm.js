@@ -1,125 +1,116 @@
-import React, { Component } from 'react'
-import { View, SafeAreaView, ScrollView, Image, StyleSheet, Text, TextInput, TouchableOpacity} from "react-native"
+import React, { useState, useEffect } from "react"
+import { View, ScrollView, Text, TextInput } from "react-native"
+import { useNavigation } from "@react-navigation/native"
+
+import EStyleSheet from "react-native-extended-stylesheet"
 import firebase from "firebase"
 
+import LinearButton from "../components/LinearButton"
 
-export default class PayConfirm extends Component {
-    state ={
-        cartItems: [],
-        user: null,
-        isFocused: false,
-        address: ""
-    }
 
-    
+export default function PayConfirm(props) {
+    const { cartItems, totalMoney, clearCart } = props.route.params
+    const navigation = useNavigation();
+    const [user, setUser] = useState(null);
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [errMessage, setErrMessage] = useState(null);
 
-    componentDidMount() {
-        const { cartItems } = this.props.route.params;
+    useEffect(() => {
         const user = firebase.auth().currentUser;
-        this.setState({ cartItems, user })
+        setUser(user);
+        //REMOVE
+        setAddress("28 Hung Vuong");
+        setPhone("0854374769");
+    }, []);
+
+    const validate = () => {
+        if (address === "" || phone === "") {
+            setErrMessage("Fields can not be blank!")
+        }
+        else {
+            confirm(user, address, phone)
+        }
     }
 
-    handleFocus = () => {
-        this.setState({ isFocused: true })
-        // if (this.props.onFocus)
+    const confirm = () => {
+        navigation.navigate("PaySuccess", { address, phone, cartItems, totalMoney, clearCart });
     }
 
-    handleBlur = () => {
-        this.setState({ isFocused: false })
-        // if (this.props.onFocus)
-    }
-
-    handleConfirm = () => {
-
-    }
-
-    render() {
-        return (
-            <SafeAreaView style={styles.container}>
-                <ScrollView>
-                    <View style={styles.content}>
-                        {/* <TextInput 
-                            onChangeText={address => this.setState({ address })}
-                            value={this.state.address}
-                        /> */}
-                        <View style={styles.form}>
-                            <View style={styles.inputBlock}>
-                                <Text style={styles.inputTitle}>Deliver to:</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Your address here..."
-                                    selectionColor="#FF5562"
-                                    underlineColorAndroid={
-                                        this.state.isFocused ? "#FF5562" : "gray"
-                                    }
-                                    onFocus={this.handleFocus}
-                                    onBlur={this.handleBlur}
-                                    //autoCapitalize="none"
-                                    onChangeText={address => this.setState({address})}
-                                    value={this.state.address}
-                                />
-                            </View>
-                        </View>
-                        <TouchableOpacity style={styles.button} onPress={() => this.handleConfirm(this.state.cartItems)}>
-                            <Text style={styles.buttonText}>Confirm Order</Text>
-                        </TouchableOpacity>
+    return (
+        <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.content}>
+                    <Text style={styles.text}>Hi there, we need a little more information to complete your order.</Text>
+                    <View style={{ alignSelf: "center" }}>
+                        <Text style={styles.label}>Your address</Text>
+                        <TextInput 
+                            style={styles.input}
+                            autoCapitalize="none"
+                            onChangeText={address => setAddress(address)}
+                            value={address}
+                        />
+                        <Text style={styles.label}>Your phone number</Text>
+                        <TextInput 
+                            style={styles.input}
+                            autoCapitalize="none"
+                            onChangeText={phone => setPhone(phone)}
+                            value={phone}
+                        />
                     </View>
-                </ScrollView>
-            </SafeAreaView>
-        )
-    }
+                    <View style={styles.errorMessage}>
+                        { errMessage && <Text style={styles.error}>{errMessage}</Text>}
+                    </View>
+                    <LinearButton onPress={validate} title="confirm"/>
+                </View>
+            </ScrollView>
+        </View>
+    )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F6F2F9"
+        backgroundColor: "#FFF5F0",
+        alignItems: "center"
     },
     content: {
-        margin: 20,
+        paddingTop: "20rem"
+    },
+    text: {
+        marginLeft: "6rem",
+        marginBottom: "10rem",
+        fontSize: "4.5rem"
+    },
+    label: {
+        marginLeft: "5rem",
+        marginTop: "6rem",
+        fontSize: "4.2rem",
+        fontWeight: "700",
+        fontStyle: "italic"
+    },
+    input: {
+        marginTop: "3rem",
+        width: "95%",
+        aspectRatio: 1/.17,
+        fontSize: "4rem",
         backgroundColor: "#FFF",
-        borderRadius: 15,
+        borderRadius: 30,
+        paddingLeft: "5rem",
         shadowColor: "#000",
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 0 },
-        elevation: 1
+        elevation: 2
     },
-    form: {
-        marginBottom: 48,
-        marginHorizontal: 20
-    },
-    inputBlock: {
-        //flex: 1,
-        //flexDirection: "row",
-        //alignItems: "center"
-    },
-    inputTitle: {
-        flex: 1,
-        textTransform: "uppercase",
-        fontSize: 15
-    },
-    input: {
-        flex: 3,
-        //borderBottomColor: "#8A8F9E",
-        //borderBottomWidth: StyleSheet.hairlineWidth,
-        //height: 40,
-        //fontSize: 15,
-        height: 40,
-        //paddingLeft: 6
-        //color: "#161F3D"
-    },
-    button: {
-        margin: 20,
-        padding: 15,
-        borderRadius: 10,
+    errorMessage: {
+        height: "20rem",
         alignItems: "center",
-        backgroundColor: "#FF5562"
+        justifyContent: "center"
     },
-    buttonText: {
-        fontSize: 18,
-        fontWeight: "700",
-        textTransform: "uppercase",
-        color: "#FFF"
+    error: {
+        textAlign: "center",
+        color: "#F00",
+        fontSize: "4rem"
     }
 }) 

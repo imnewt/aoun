@@ -13,17 +13,17 @@ import EmptyCart from "../images/empty-cart.jpg"
 
 export default function Cart(props){
 
-    const handleCheckOut = (cartItems) => {
+    const handleCheckOut = (cartItems, totalMoney, clearCart) => {
         const { navigation } = props;
         const user = firebase.auth().currentUser;
-        user ?  navigation.navigate("PayConfirm", { cartItems: cartItems })
+        user ?  navigation.navigate("PayConfirm", { cartItems, totalMoney, clearCart })
              :  navigation.navigate("Login", { from: "Cart"})
     }
 
     return (
         <View style={{ flex: 1, backgroundColor: "#FFF5F0" }}>
             <CartContext.Consumer>
-                {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount, removeBook }) =>  !totalAmount    
+                {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount, removeBook, clearCart }) =>  !totalAmount    
                 ?   <EmptyView img={EmptyCart} text="your cart is empty" textColor="#FFCA55"/>
                 :   <View style={{ flex:1 }}>
                         <ScrollView showsVerticalScrollIndicator={false}>
@@ -39,7 +39,7 @@ export default function Cart(props){
                                     />)
                             }
                         </ScrollView>
-                        <CheckOut totalMoney={totalMoney} onPress={() => handleCheckOut(cartItems)}/>
+                        <CheckOut totalMoney={totalMoney} onPress={() => handleCheckOut(cartItems, totalMoney, clearCart)}/>
                     </View>}
             </CartContext.Consumer>
         </View>

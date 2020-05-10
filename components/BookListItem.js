@@ -1,9 +1,10 @@
-import React from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
+import React from "react"
+import { View, Text, Image, TouchableOpacity } from "react-native"
+import { useNavigation } from "@react-navigation/native"
+
+import EStyleSheet from "react-native-extended-stylesheet"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { Rating } from "react-native-elements"
-import { useNavigation } from "@react-navigation/native"
 
 export default function BookListItem(props) {
     const navigation = useNavigation();

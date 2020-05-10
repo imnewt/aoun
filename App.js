@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Ionicons from "react-native-vector-icons/Ionicons"
-import LinearGradient from 'react-native-linear-gradient'
+import React from "react"
+import { NavigationContainer } from "@react-navigation/native"
+import { createStackNavigator } from "@react-navigation/stack"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import * as firebase from "firebase"
-import "firebase/firestore"
+import Ionicons from "react-native-vector-icons/Ionicons"
+import LinearGradient from "react-native-linear-gradient"
+import firebase from "firebase"
+// import "firebase/firestore"
 
 import WelcomeScreen from "./screens/Welcome"
 
@@ -16,6 +16,7 @@ import BookDetailScreen from "./screens/BookDetail"
 
 import CartScreen from "./screens/Cart"
 import PayConfirmScreen from "./screens/PayConfirm"
+import PaySuccessScreen from "./screens/PaySuccess"
 import CartIconWithBadge from "./components/CartIconWithBadge"
 
 import OrdersScreen from "./screens/Orders"
@@ -55,9 +56,8 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator 
-      initialRouteName = "Home" 
-      screenOptions={
-      {
+      initialRouteName="Home" 
+      screenOptions={{
         headerTitleAlign: "center",
         headerTitleStyle: {
           fontWeight: "bold",
@@ -78,11 +78,11 @@ function HomeStackScreen() {
         })} />
       <HomeStack.Screen 
         name="BookDetail" 
-        component={BookDetailScreen} 
+        component={BookDetailScreen}
         options={({ route }) => 
         ({ 
           headerStyle: { backgroundColor: route.params.headerColor },
-          headerTitle: "Details",
+          headerTitle: "Details"
         })} />
     </HomeStack.Navigator>
   )
@@ -99,11 +99,24 @@ function CartStackScreen() {
         headerTitle: null,
         headerTransparent: true,
         headerTintColor: "#36413E",
-        headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontWeight: "bold",
+          fontSize: 19,
+          color: "#FFF"
+        }
       }}
     >
       <CartStack.Screen name="Cart" component={CartScreen} />
-      <CartStack.Screen name="PayConfirm" component={PayConfirmScreen} />
+      <CartStack.Screen name="PayConfirm" component={PayConfirmScreen} 
+        options={{
+          headerTitle: "Confirm",
+          headerTransparent: false,
+          headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} color="#FFF"/>,
+          headerBackground: () => <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={{flex: 1}}/>
+        }}
+      />
+      <CartStack.Screen name="PaySuccess" component={PaySuccessScreen} options={{ headerLeft: null }} />
       <CartStack.Screen name="Login" component={LoginScreen} />
       <CartStack.Screen name="Register" component={RegisterScreen} />
     </CartStack.Navigator>
@@ -149,7 +162,7 @@ function SettingsStackScreen() {
         },
         headerBackImage: () => <Ionicons name="ios-arrow-back" size={25}/>
       }}
-      >
+    >
       <SettingsStack.Screen name="Settings" component={SettingsScreen}/>
       <SettingsStack.Screen name="Login" component={LoginScreen}/>
       <SettingsStack.Screen name="Register" component={RegisterScreen}
@@ -214,21 +227,21 @@ function HomeTabs() {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color }) => {
             let iconName;
-            if (route.name === 'Home') {
-              iconName = 'md-home';
-            } else if (route.name === 'Cart') {
+            if (route.name === "Home") {
+              iconName = "md-home";
+            } else if (route.name === "Cart") {
               return <CartIconWithBadge name="ios-cart" size={25} color={color} />
-            } else if (route.name === 'Orders') {
-              iconName = 'ios-wallet';
-            } else if (route.name === 'Settings') {
-                iconName = 'ios-list';
+            } else if (route.name === "Orders") {
+              iconName = "ios-wallet";
+            } else if (route.name === "Settings") {
+                iconName = "ios-list";
             }
             return <Ionicons name={iconName} size={25} color={color} />;
           }
         })}
         tabBarOptions={{
-          activeTintColor: '#ff5a5a',
-          inactiveTintColor: 'gray',
+          activeTintColor: "#DD5A5A",
+          inactiveTintColor: "gray",
           style: { height: 60 },
           labelStyle: {
             fontSize: 14,

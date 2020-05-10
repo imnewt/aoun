@@ -15,6 +15,7 @@ export class CartProvider extends Component {
     this.addToCart = this.addToCart.bind(this);
     this.increaseAmount = this.increaseAmount.bind(this);
     this.decreaseAmount = this.decreaseAmount.bind(this);
+    this.clearCart = this.clearCart.bind(this);
     }
 
     addToCart = (book) => {
@@ -78,6 +79,14 @@ export class CartProvider extends Component {
         })
     }
 
+    clearCart = () => {
+        this.setState({
+            cartItems: [],
+            totalAmount: 0,
+            totalMoney: 0
+        })
+    }
+
 //   _saveDataToAsyncStorage = async (cartItems, totalAmount, totalMoney) => {
 //     await AsyncStorage.setItem('cartItems', JSON.stringify(cartItems));
 //     await AsyncStorage.setItem('totalAmount', JSON.stringify(totalAmount));
@@ -109,7 +118,8 @@ export class CartProvider extends Component {
             addToCart: this.addToCart,
             increaseAmount: this.increaseAmount,
             decreaseAmount: this.decreaseAmount,
-            removeBook: this.removeBook
+            removeBook: this.removeBook,
+            clearCart: this.clearCart
         }}
       >
         {this.props.children}
