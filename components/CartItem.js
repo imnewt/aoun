@@ -11,7 +11,7 @@ export default function CartItem(props) {
             <View style={styles.bookInfo}>
                 <Text style={styles.bookName}>{book.name}</Text>
                 <Text style={styles.bookAuthor}>{book.author}</Text>
-                <Text style={styles.bookPrice}>${book.price}</Text>
+                <Text style={styles.bookPrice}>$ {book.price}</Text>
             </View>
             <View style={styles.quantityBlock}>
                 <TouchableOpacity style={styles.changeAmount} onPress={() => decreaseAmount(book)}>
@@ -50,7 +50,8 @@ const styles = EStyleSheet.create({
     },
     bookInfo: {
         flex: 2,
-        marginTop: "2rem"
+        marginTop: "2rem",
+        marginRight: "1rem"
     },
     bookName: {
         marginTop: "4rem",

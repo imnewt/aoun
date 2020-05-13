@@ -1,24 +1,12 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { View, ScrollView, Text, Image } from "react-native"
-import { useNavigation } from "@react-navigation/native"
-
 import EStyleSheet from "react-native-extended-stylesheet"
 import { Rating } from "react-native-elements"
-
 import LinearButton from "../components/LinearButton"
-
 import { CartContext } from "../contexts/Cart"
 
 export default function BookDetail(props) {
-    const { book, from } = props.route.params;
-    const navigation = useNavigation();
-
-    useEffect(() => {
-        // const { from } = props.route.params;
-        console.log(from)
-        // from === "PaySuccess" && navigation.navigate("Home")
-    }, [from])
-
+    const { book } = props.route.params;
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -37,9 +25,7 @@ export default function BookDetail(props) {
                     <Text style={styles.bookDescription}>{book.description}</Text>
                 </View>
                 <CartContext.Consumer>
-                    {({ addToCart }) => 
-                        <LinearButton onPress={() => addToCart(book)} title="add to cart" price={book.price}/>
-                    }
+                    {({ addToCart }) => <LinearButton onPress={() => addToCart(book)} title="add to cart" price={book.price}/> }
                 </CartContext.Consumer>
             </ScrollView>
         </View>
@@ -57,7 +43,13 @@ const styles = EStyleSheet.create({
         paddingHorizontal: "2rem",
         backgroundColor: "#FFF",
         borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20
+        borderBottomRightRadius: 20,
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 0 },
+        elevation: 2
     },
     bookImg: {
         width: "40rem",

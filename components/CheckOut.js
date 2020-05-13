@@ -1,8 +1,6 @@
-import React from 'react'
+import React from "react"
 import { View, Text } from "react-native"
-
-import EStyleSheet from 'react-native-extended-stylesheet'
-
+import EStyleSheet from "react-native-extended-stylesheet"
 import LinearButton from "../components/LinearButton"
 
 export default function CheckOut(props){
@@ -20,7 +18,7 @@ export default function CheckOut(props){
         <View style={styles.container}>
             <View style={styles.moneyCtn}>
                 <Text style={styles.money}>Subtotal:</Text>
-                <Text style={[styles.money, { textAlign: "right" }]}>${roundTo(totalMoney,2)}</Text>
+                <Text style={[styles.money, { textAlign: "right" }]}>$ {roundTo(totalMoney,2)}</Text>
             </View>
             <LinearButton onPress={onPress} title="check out"/>
         </View>

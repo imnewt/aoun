@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native"
 
 import EStyleSheet from "react-native-extended-stylesheet"
 import firebase from "firebase"
-import moment from 'moment';
+import moment from 'moment'
 
 import OrderHeading from "../components/OrderHeading"
 import OrderTotal from "../components/OrderTotal"
@@ -58,12 +58,30 @@ export default function PaySuccess(props) {
     const discount = roundTo(money * 0.04, 2);
     const total = roundTo(money + shipTax + tax - discount, 2);
 
-    const finish = async () => {
+    const finish = () => {
         // Create new order
 
+        fetch('http://192.168.1.232:3000/api/orders/create', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: user.uid,
+                phone,
+                address,
+                date,
+                no,
+                totalMoney,
+                cartItems
+            })
+        }).then(res => res.json())
+        .then(json => console.log(json));
+
         // Navigate
-        navigation.popToTop();
-        navigation.navigate("Orders");
+        // navigation.popToTop();
+        // navigation.navigate("Orders");
         
         // navigation.popToTop();
         // navigation.navigate("Home");
@@ -94,7 +112,7 @@ export default function PaySuccess(props) {
                 />
                 <Text style={styles.content}>We'll be sending a shipping confirmation message to {phone} when the items shipped successfully.</Text>
                 <Text style={styles.greeting}>Thank you for shopping with us!</Text>
-                <LinearButton onPress={finish} title="see your orders" />
+                <LinearButton onPress={finish} title="go back home" />
             </ScrollView>
         </View>
     ) 

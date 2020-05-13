@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { View, ScrollView, Image, Text, ImageBackground } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-
 import EStyleSheet from "react-native-extended-stylesheet"
 import firebase from "firebase"
-
 import CustomModal from "../components/CustomModal"
 import SettingsTag from "../components/SettingsTag"
 import SettingsOption from "../components/SettingsOption"
-
 import User from "../images/user.jpg"
 import bg from "../images/info-bg.jpg"
 
@@ -20,7 +17,7 @@ export default function Settings(){
     useEffect(() => {
         firebase.auth().onAuthStateChanged(() => {
             const user = firebase.auth().currentUser;
-            user && setUser(user)
+            user && setUser(user);
         })
     }, [user]);
 
