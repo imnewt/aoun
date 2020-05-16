@@ -53,7 +53,7 @@ export default function Home() {
     const [allBooks, setAllBooks] = useState([])
     
     useEffect(() => {
-        fetch('http://192.168.43.110:3000/api/books', {
+        fetch('http://192.168.1.7:3000/api/books', {
             method: 'GET'
         })
         .then((response) => response.json())

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useLayoutEffect } from "react"
 import { View, ScrollView, Image, Text, ImageBackground } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import EStyleSheet from "react-native-extended-stylesheet"
@@ -15,11 +15,10 @@ export default function Settings(){
     const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged(() => {
-            const user = firebase.auth().currentUser;
+        firebase.auth().onAuthStateChanged(user => {
             user && setUser(user);
         })
-    }, [user]);
+    })
 
     const handleSignOut = () => {
         firebase.auth().signOut();

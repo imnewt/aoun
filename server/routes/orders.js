@@ -6,48 +6,9 @@ mongoose.connect("mongodb://localhost/aoun", { useNewUrlParser: true, useUnified
 
 const Order = require("../models/order.model");
 
-// router.get('/orders', async (req, res) => {
-//     const orders = await Order.find();
-//     res.send(orders);
-// })
-
-router.post('/orders', async (req, res) => {
-    const { user } = req.body;
-    if (user) {
-        if(user.uid === 'Wbthx7q7xJXohFu4VuhXDPPLEPw1') {
-            await Order.find({ isChecked: false },
-            (err, products) => {
-                if(err) {
-                    res.send({
-                        success: false,
-                        message: 'server error'
-                    })
-                }
-                console.log('Admin: ', products);
-                res.send({
-                    success: true,
-                    message: products
-                })
-    
-            });
-        }
-        else {
-            await Order.findById({ userId: user.uid }, (err, products) => {
-                if(err) {
-                    res.send({
-                        success: false,
-                        message: 'server error'
-                    })
-                }
-                console.log('User: ', products);
-                res.send({
-                    success: true,
-                    message: products
-                })
-            })
-        }
-    }
-    
+router.get('/orders', async (req, res) => {
+    const orders = await Order.find();
+    res.send(orders);
 })
 
 router.post('/orders/create', async (req, res) => {

@@ -60,8 +60,7 @@ export default function PaySuccess(props) {
 
     const finish = () => {
         // Create new order
-
-        fetch('http://192.168.1.232:3000/api/orders/create', {
+        fetch('http://192.168.1.7:3000/api/orders/create', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

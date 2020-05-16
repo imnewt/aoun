@@ -118,7 +118,14 @@ function CartStackScreen() {
       />
       <CartStack.Screen name="PaySuccess" component={PaySuccessScreen} options={{ headerLeft: null }} />
       <CartStack.Screen name="Login" component={LoginScreen} />
-      <CartStack.Screen name="Register" component={RegisterScreen} />
+      <CartStack.Screen name="Register" component={RegisterScreen} 
+        options={{
+          headerTitle: "Create New Account",
+          headerTransparent: false,
+          headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} color="#FFF"/>,
+          headerBackground: () => <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={{flex: 1}}/>
+        }}
+      />
     </CartStack.Navigator>
   );
 }
@@ -269,13 +276,26 @@ export default function App() {
           headerTitle: null,
           headerTransparent: true,
           headerTintColor: "#36413E",
-          headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} />
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 19,
+            color: "#FFF"
+          },
+          headerBackImage: () => <Ionicons name="ios-arrow-back" size={25}/>
         }}
       >
         <RootStack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
         <RootStack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
         <RootStack.Screen name="Login" component={LoginScreen} />
-        <RootStack.Screen name="Register" component={RegisterScreen} />
+        <RootStack.Screen name="Register" component={RegisterScreen} 
+          options={{
+            headerTitle: "Create New Account",
+            headerTransparent: false,
+            headerBackImage: () => <Ionicons name="ios-arrow-back" size={25} color="#FFF"/>,
+            headerBackground: () => <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#ff9966", "#ff5e62"]} style={{flex: 1}}/>
+          }}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );

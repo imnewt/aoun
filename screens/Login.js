@@ -1,13 +1,10 @@
 import React, { useState } from "react"
 import { View, ScrollView, Image, Text, TextInput, TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-
 import EStyleSheet from "react-native-extended-stylesheet"
 import firebase from "firebase"
-
 import CustomModal from "../components/CustomModal"
 import LinearButton from "../components/LinearButton"
-
 import Logo from "../images/logo.jpg"
 
 export default function Login(props) {
@@ -74,7 +71,6 @@ export default function Login(props) {
                         </Text>
                     </TouchableOpacity>
                 }
-                
             </ScrollView>
         </View>
     )
