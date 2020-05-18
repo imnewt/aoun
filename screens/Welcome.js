@@ -1,7 +1,7 @@
 import React from "react"
-import { View, ScrollView, Image, Text, TouchableOpacity } from "react-native"
+import { View, Image, Text, TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-
+import Container from "../components/Container"
 import LinearGradient from "react-native-linear-gradient"
 import EStyleSheet from "react-native-extended-stylesheet"
 
@@ -10,7 +10,7 @@ import WelcomeImg from "../images/welcome.jpg"
 export default function Welcome() {
     const navigation = useNavigation();
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <Container>
             <View style={styles.imgCtn}>
                 <Image source={WelcomeImg} style={styles.img}/>
             </View>
@@ -30,15 +30,11 @@ export default function Welcome() {
                     </LinearGradient>
                 </View>
             </View>
-        </ScrollView>
+        </Container>
     )
 }
 
 const styles = EStyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#FFF5F0"
-    },
     imgCtn: {
         width: "100%",
         aspectRatio: 1/1,

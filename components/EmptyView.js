@@ -15,6 +15,7 @@ export default function EmptyView(props){
 const styles = EStyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#FFF5F0",
         justifyContent: "center",
         alignItems: "center",
     },

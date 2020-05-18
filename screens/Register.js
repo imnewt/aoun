@@ -1,12 +1,13 @@
 import React, { useState } from "react"
-import { View, ScrollView, Text, TextInput } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-
-import EStyleSheet from "react-native-extended-stylesheet"
 import firebase from "firebase"
-
+import Container from "../components/Container"
 import CustomModal from "../components/CustomModal"
+import InputContainer from "../components/InputContainer"
+import Input from "../components/Input"
+import ErrorBlock from "../components/ErrorBlock"
 import LinearButton from "../components/LinearButton"
+import RegisterText from "../components/RegisterText"
 
 export default function Register(props) {
     const navigation = useNavigation();
@@ -37,90 +38,34 @@ export default function Register(props) {
     }
 
     return (
-        <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <CustomModal 
-                    title="user created"
-                    btnText="ok"
-                    visible={modalVisible}
-                    onPress={navigate}
+        <Container>
+            <CustomModal 
+                title="user created"
+                btnText="ok"
+                visible={modalVisible}
+                onPress={navigate}
+            />
+            <InputContainer>
+                <Input 
+                    placeholder="Your Email"
+                    setValue={setEmail}
+                    value={email}
                 />
-                <View style={styles.form}>
-                    <TextInput
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholder="Your Email"
-                        onChangeText={email => setEmail(email)}
-                        value={email}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholder="Full Name"
-                        onChangeText={displayName => setDisplayName(displayName)}
-                        value={displayName}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        secureTextEntry
-                        placeholder="Password"
-                        autoCapitalize="none"
-                        onChangeText={password => setPassword(password)}
-                        value={password}
-                    />
-                </View>
-                <View style={styles.errorMessage}>
-                    { errMessage && <Text style={styles.error}>{errMessage}</Text>}
-                </View>
-                <LinearButton onPress={handleSignUp} title="register"/>
-                <Text style={styles.warnText}>
-                    "By <Text style={{ color: "#E9446A" }}>clicking Register</Text>
-                    , you agree to our Terms of Services."
-                </Text>
-            </ScrollView>
-        </View>
+                <Input
+                    placeholder="Display Name"
+                    setValue={setDisplayName}
+                    value={displayName}
+                />
+                <Input 
+                    isPassword={true}
+                    placeholder="Password"
+                    setValue={setPassword}
+                    value={password}
+                />
+            </InputContainer>
+            <ErrorBlock errMessage={errMessage}/>
+            <LinearButton onPress={handleSignUp} title="register"/>
+            <RegisterText/>
+        </Container>
     )
 }
-
-const styles = EStyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#FFF5F0",
-        paddingHorizontal: "3rem"
-    },
-    form: {
-        alignSelf: "center",
-        paddingTop: "20rem"
-    },
-    input: {
-        marginTop: "8rem",
-        width: "95%",
-        aspectRatio: 1/.17,
-        fontSize: "4rem",
-        backgroundColor: "#FFF",
-        borderRadius: 30,
-        paddingLeft: "5rem",
-        shadowColor: "#000",
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 0 },
-        elevation: 2
-    },
-    errorMessage: {
-        height: "20rem",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    error: {
-        textAlign: "center",
-        color: "#F00",
-        fontSize: "4rem"
-    },
-    warnText: {
-        marginVertical: "4rem",
-        marginHorizontal: "10rem",
-        fontSize: "4rem",
-        color: "#858383",
-        textAlign: "center"
-    }
-})

@@ -1,11 +1,14 @@
 import React, { useState } from "react"
-import { View, ScrollView, Image, Text, TextInput, TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import EStyleSheet from "react-native-extended-stylesheet"
 import firebase from "firebase"
+import Container from "../components/Container"
+import Logo from "../components/Logo"
 import CustomModal from "../components/CustomModal"
+import InputContainer from "../components/InputContainer"
+import Input from "../components/Input"
+import ErrorBlock from "../components/ErrorBlock"
 import LinearButton from "../components/LinearButton"
-import Logo from "../images/logo.jpg"
+import LoginText from "../components/LoginText"
 
 export default function Login(props) {
     const navigation = useNavigation();
@@ -30,94 +33,30 @@ export default function Login(props) {
     }
 
     return (
-        <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <CustomModal 
-                    title="login success"
-                    btnText="ok"
-                    visible={modalVisible}
-                    onPress={navigate}
+        <Container>
+            <CustomModal 
+                title="login success"
+                btnText="ok"
+                visible={modalVisible}
+                onPress={navigate}
+            />
+            <Logo/>
+            <InputContainer>
+                <Input 
+                    placeholder="Email Address"
+                    setValue={setEmail}
+                    value={email}
                 />
-                <Image source={Logo} style={styles.logo}/>
-                <View style={{ alignSelf: "center" }}>
-                    <TextInput
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholder="Email Address"
-                        onChangeText={email => setEmail(email)}
-                        value={email}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        secureTextEntry
-                        placeholder="Password"
-                        autoCapitalize="none"
-                        onChangeText={password => setPassword(password)}
-                        value={password}
-                    />
-                </View>
-                <View style={styles.errorMessage}>
-                    { errMessage && <Text style={styles.error}>{errMessage}</Text>}
-                </View>
-                <LinearButton onPress={handleLogIn} title="log in"/>
-                {
-                    from !== "Settings" &&
-                    <TouchableOpacity 
-                        style={styles.signUpBtn} 
-                        onPress={() => navigation.navigate("Register", { from: "Login" })}
-                    >
-                        <Text style={styles.signUpText}>
-                            New to Aoun? <Text style={{ color: "#E9446A" }}>Sign up</Text>
-                        </Text>
-                    </TouchableOpacity>
-                }
-            </ScrollView>
-        </View>
+                <Input 
+                    isPassword={true}
+                    placeholder="Password"
+                    setValue={setPassword}
+                    value={password}
+                />
+            </InputContainer>
+            <ErrorBlock errMessage={errMessage}/>
+            <LinearButton onPress={handleLogIn} title="log in"/>
+            { from !== "Settings" && <LoginText/> }
+        </Container>
     )
 }
-
-const styles = EStyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#FFF5F0",
-        paddingHorizontal: "3rem"
-    },
-    logo: {
-        marginTop: "30rem",
-        marginBottom: "10rem",
-        height: "40rem",
-        width: "40rem",
-        alignSelf: "center"
-    },
-    input: {
-        marginTop: "5rem",
-        width: "95%",
-        aspectRatio: 1/.17,
-        fontSize: "4rem",
-        backgroundColor: "#FFF",
-        borderRadius: 30,
-        paddingLeft: "5rem",
-        shadowColor: "#000",
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 0 },
-        elevation: 2
-    },
-    errorMessage: {
-        height: "20rem",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    error: {
-        textAlign: "center",
-        color: "#F00",
-        fontSize: "4rem"
-    },
-    signUpBtn: {
-        marginVertical: "4rem",
-        alignSelf: "center"
-    },
-    signUpText: {
-        fontSize: "4rem"
-    }
-})

@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
-import { View, ScrollView, FlatList } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
-
+import React, { useState } from "react"
+import { FlatList } from "react-native"
+import Container from "../components/Container"
 import InfoItem from "../components/InfoItem"
 import EmployeeInfo from "../components/EmployeeInfo"
-
 import E1 from "../images/employee1.jpg"
 import E2 from "../images/employee2.jpg"
 import E3 from "../images/employee3.jpg"
@@ -60,32 +58,22 @@ export default function About() {
     ])
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.container}>
-                <FlatList
-                    data={data}
-                    renderItem={({ item }) => (
-                        <InfoItem data={item} />
-                    )}
-                    keyExtractor={item => item.heading}
-                />
-                <FlatList
-                    data={employees}
-                    renderItem={({ item }) => (
-                        <EmployeeInfo employee={item} />
-                    )}
-                    keyExtractor={item => item.name}
-                    numColumns={2}
-                />
-            </View>
-        </ScrollView>
+        <Container pd={true}>
+            <FlatList
+                data={data}
+                renderItem={({ item }) => (
+                    <InfoItem data={item} />
+                )}
+                keyExtractor={item => item.heading}
+            />
+            <FlatList
+                data={employees}
+                renderItem={({ item }) => (
+                    <EmployeeInfo employee={item} />
+                )}
+                keyExtractor={item => item.name}
+                numColumns={2}
+            />
+        </Container>
     )
 }
-
-const styles = EStyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#FFF5F0",
-        paddingHorizontal: "5rem"
-    }
-})

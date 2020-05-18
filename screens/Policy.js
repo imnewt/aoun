@@ -1,8 +1,7 @@
 import React, { useState } from "react"
-import { View, ScrollView, FlatList } from "react-native"
-import EStyleSheet from "react-native-extended-stylesheet"
-
+import { FlatList } from "react-native"
 import InfoItem from "../components/InfoItem"
+import Container from "../components/Container"
 
 export default function Policy() {
     const [data] = useState([
@@ -15,24 +14,14 @@ export default function Policy() {
     ])
 
     return (
-        <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <FlatList
-                    data={data}
-                    renderItem={({ item }) => (
-                        <InfoItem data={item} />
-                    )}
-                    keyExtractor={item => item.heading}
-                />
-            </ScrollView>
-        </View>
+        <Container pd={true}>
+            <FlatList
+                data={data}
+                renderItem={({ item }) => (
+                    <InfoItem data={item} />
+                )}
+                keyExtractor={item => item.heading}
+            />
+        </Container>
     )
 }
-
-const styles = EStyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#FFF5F0",
-        paddingHorizontal: "5rem"
-    }
-})

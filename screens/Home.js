@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Image, Text, FlatList } from 'react-native';
-import EStyleSheet from 'react-native-extended-stylesheet';
-
-import Logo from "../images/logo.jpg"
+import React, { useState, useEffect } from "react"
+import { Text, FlatList } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
+import Container from "../components/Container"
+import Logo from "../components/Logo"
+import GenreBlock from "../components/GenreBlock"
 import History from "../images/history.jpg"
 import Science from "../images/science.jpg"
 import Life from "../images/life.jpg"
 import Romance from "../images/romance.jpg"
 import Guide from "../images/guide.jpg"
 import Design from "../images/design.jpg"
-
-import GenreBlock from "../components/GenreBlock"
+import { HOST } from "../env"
 
 import { YellowBox } from 'react-native'
-
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested', // TODO: Remove when fixed
 ])
@@ -53,7 +52,7 @@ export default function Home() {
     const [allBooks, setAllBooks] = useState([])
     
     useEffect(() => {
-        fetch('http://192.168.1.7:3000/api/books', {
+        fetch(`${HOST}/api/books`, {
             method: 'GET'
         })
         .then((response) => response.json())
@@ -64,36 +63,24 @@ export default function Home() {
     })
     
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.container}>
-                <Image source={Logo} style={styles.logo}/>
-                <Text style={styles.sayHi}>Hey, what would you like to read today?</Text>
-                <FlatList
-                    data={bookGenres}
-                    renderItem={({ item }) => (
-                        <GenreBlock bookGenre={item} allBooks={allBooks}/>
-                    )}
-                    keyExtractor={item => item.name}
-                    numColumns={2}
-                    contentContainerStyle={{ alignItems: "space-between", marginVertical: 20 }}
-                />
-            </View>
-        </ScrollView>
+        <Container>
+            <Logo isHome={true}/>
+            <Text style={styles.text}>Hey, what would you like to read today?</Text>
+            <FlatList
+                data={bookGenres}
+                renderItem={({ item }) => (
+                    <GenreBlock bookGenre={item} allBooks={allBooks}/>
+                )}
+                keyExtractor={item => item.name}
+                numColumns={2}
+                contentContainerStyle={{ alignItems: "space-between", marginVertical: 20 }}
+            />
+        </Container>
     )
 }
 
 const styles = EStyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#FFF5F0"
-    },
-    logo: {
-        alignSelf: "center",
-        marginTop: "10rem",
-        height: "45rem",
-        width: "45rem"
-    },
-    sayHi: {
+    text: {
         marginTop: "5rem",
         textAlign: "center",
         fontSize: "5rem",

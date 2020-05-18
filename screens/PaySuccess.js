@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react"
-import { View, ScrollView, Text, FlatList, BackHandler } from "react-native"
+import { Text, FlatList, BackHandler } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 
 import EStyleSheet from "react-native-extended-stylesheet"
 import firebase from "firebase"
 import moment from 'moment'
 
+import Container from "../components/Container"
 import OrderHeading from "../components/OrderHeading"
 import OrderTotal from "../components/OrderTotal"
 import SuccessItem from "../components/SuccessItem"
 import LinearButton from "../components/LinearButton"
+
+import { HOST } from "../env"
 
 export default function PaySuccess(props) {
     const navigation = useNavigation();
@@ -58,9 +61,10 @@ export default function PaySuccess(props) {
     const discount = roundTo(money * 0.04, 2);
     const total = roundTo(money + shipTax + tax - discount, 2);
 
+    // MOVE TO USE EFFECT - HIDE BOTTOM TAB NAVIGATOR
     const finish = () => {
         // Create new order
-        fetch('http://192.168.1.7:3000/api/orders/create', {
+        fetch(`${HOST}/api/orders/create`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -89,40 +93,33 @@ export default function PaySuccess(props) {
     }
 
     return (
-        <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.heading}>your order confirmed.</Text>
-                <Text style={styles.greeting}>Hello {user ? user.displayName : ""},</Text>
-                <Text style={styles.content}>Your order has been confirmed and will be shipping within the next days.</Text>    
-                <OrderHeading date={date} no={no} address={address}/>
-                <FlatList
-                    data={cartItems}
-                    renderItem={({ item }) => (
-                        <SuccessItem book={item}/>
-                    )}
-                    keyExtractor={item => item._id}
-                />
-                <OrderTotal 
-                    money={money}
-                    shipTax={shipTax}
-                    tax={tax}
-                    discount={discount}
-                    total={total}
-                />
-                <Text style={styles.content}>We'll be sending a shipping confirmation message to {phone} when the items shipped successfully.</Text>
-                <Text style={styles.greeting}>Thank you for shopping with us!</Text>
-                <LinearButton onPress={finish} title="go back home" />
-            </ScrollView>
-        </View>
+        <Container pd={true}>
+            <Text style={styles.heading}>your order confirmed.</Text>
+            <Text style={styles.greeting}>Hello {user ? user.displayName : ""},</Text>
+            <Text style={styles.content}>Your order has been confirmed and will be shipping within the next days.</Text>    
+            <OrderHeading date={date} no={no} address={address}/>
+            <FlatList
+                data={cartItems}
+                renderItem={({ item }) => (
+                    <SuccessItem book={item}/>
+                )}
+                keyExtractor={item => item._id}
+            />
+            <OrderTotal 
+                money={money}
+                shipTax={shipTax}
+                tax={tax}
+                discount={discount}
+                total={total}
+            />
+            <Text style={styles.content}>We'll be sending a shipping confirmation message to {phone} when the items shipped successfully.</Text>
+            <Text style={styles.greeting}>Thank you for shopping with us!</Text>
+            <LinearButton onPress={finish} title="go back home" />
+        </Container>
     ) 
 }
 
 const styles = EStyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#FFF5F0",
-        paddingHorizontal: "5rem"
-    },
     heading: {
         marginTop: "5rem",
         fontSize: "7rem",

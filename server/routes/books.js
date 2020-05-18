@@ -1,7 +1,8 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
 const router = express.Router();
 
-const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/aoun", { useNewUrlParser: true, useUnifiedTopology: true });
 
 const Book = require("../models/book.model");

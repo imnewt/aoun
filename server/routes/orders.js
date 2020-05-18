@@ -7,8 +7,47 @@ mongoose.connect("mongodb://localhost/aoun", { useNewUrlParser: true, useUnified
 const Order = require("../models/order.model");
 
 router.get('/orders', async (req, res) => {
-    const orders = await Order.find();
-    res.send(orders);
+    // const orders = await Order.find();
+    // res.send(orders);
+    const { authorization } = req.headers;
+    // console.log("authorization: ", authorization);
+    if(!authorization) {
+        res.send({
+            success: false,
+            message: "Server Error 1"
+        })
+    }
+    const id = authorization.replace('Bearer ', "");
+    // console.log(id);
+    if (id === "Wbthx7q7xJXohFu4VuhXDPPLEPw1") {
+        await Order.find({ isChecked: false }, (err, order) => {
+            if(err) {
+                res.send({
+                    success: false,
+                    message: "Sever Error 2"
+                })
+            }
+            res.send({
+                success: true,
+                message: order
+            })
+        })
+    }
+    else {
+        await Order.find({ userId: id }, (err, order) => {
+            if(err) {
+                res.send({
+                    success: false,
+                    message: "Sever Error 3"
+                })
+            }
+            res.send({
+                success: true,
+                message: order
+            })
+        })
+
+    }
 })
 
 router.post('/orders/create', async (req, res) => {
@@ -25,12 +64,12 @@ router.post('/orders/create', async (req, res) => {
         if (err) {
             return res.send({
                 success: false,
-                message: 'Error: Server error.'
+                message: "Error when creating new order"
             })
         } else {
             return res.send({
                 success: true,
-                message: 'Order successfully'
+                message: "Order success"
             })
         }
     })
