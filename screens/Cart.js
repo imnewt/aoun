@@ -20,7 +20,7 @@ export default function Cart(props){
         <CartContext.Consumer>
             {({ totalAmount, totalMoney, cartItems, increaseAmount, decreaseAmount, removeBook, clearCart }) =>  !totalAmount    
             ?   <EmptyView img={EmptyCart} text="your cart is empty" textColor="#FFCA55"/>
-            :   <View style={{ flex:1, backgroundColor: "#FFF5F0" }}>
+            :   <View style={{ flex: 1, backgroundColor: "#FFF5F0" }}>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <EmptyHeading text="your cart"/>
                         {

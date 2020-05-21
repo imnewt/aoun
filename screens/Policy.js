@@ -17,9 +17,9 @@ export default function Policy() {
         <Container pd={true}>
             <FlatList
                 data={data}
-                renderItem={({ item }) => (
+                renderItem={({ item }) => 
                     <InfoItem data={item} />
-                )}
+                }
                 keyExtractor={item => item.heading}
             />
         </Container>

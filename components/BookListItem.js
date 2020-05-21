@@ -54,6 +54,7 @@ const styles = EStyleSheet.create({
     bookImage: {
         flex: 1,
         borderColor: "#DDD",
+        borderRadius: 10,
         borderWidth: 1
     },
     bookInfo: {

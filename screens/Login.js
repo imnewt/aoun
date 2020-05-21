@@ -33,7 +33,7 @@ export default function Login(props) {
     }
 
     return (
-        <Container>
+        <Container pd={true}>
             <CustomModal 
                 title="login success"
                 btnText="ok"
@@ -56,7 +56,7 @@ export default function Login(props) {
             </InputContainer>
             <ErrorBlock errMessage={errMessage}/>
             <LinearButton onPress={handleLogIn} title="log in"/>
-            { from !== "Settings" && <LoginText/> }
+            { from !== "Settings" && <LoginText from={from}/> }
         </Container>
     )
 }

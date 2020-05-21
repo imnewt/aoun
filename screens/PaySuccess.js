@@ -1,95 +1,47 @@
 import React, { useState, useEffect } from "react"
 import { Text, FlatList, BackHandler } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-
 import EStyleSheet from "react-native-extended-stylesheet"
 import firebase from "firebase"
-import moment from 'moment'
-
 import Container from "../components/Container"
 import OrderHeading from "../components/OrderHeading"
 import OrderTotal from "../components/OrderTotal"
 import SuccessItem from "../components/SuccessItem"
 import LinearButton from "../components/LinearButton"
-
-import { HOST } from "../env"
+import { roundTo, getNo, getDate, createOrder } from "../functions"
 
 export default function PaySuccess(props) {
     const navigation = useNavigation();
     const [user, setUser] = useState(null);
     const [cartItems, setCartItems] = useState([]);
-
-    const { address, phone, totalMoney } = props.route.params
+    const { address, phone, totalMoney } = props.route.params;
 
     useEffect(() => {
-        const { clearCart, cartItems } = props.route.params
+        const { clearCart, cartItems } = props.route.params;
         clearCart();
         setCartItems(cartItems);
         const user = firebase.auth().currentUser;
         setUser(user);
+        createOrder(user, phone, address, date, no, totalMoney, cartItems);
         BackHandler.addEventListener('hardwareBackPress', () => true);
-    })
-
-    const getRandomString = () => {
-        var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        var result = "";
-        for ( var i = 0; i < 8; i++ ) {
-            result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-        }
-        return result;
-    }
-
-    const roundTo = (n, digits) => {
-        digits === undefined && (digits = 0);    
-        var multiplicator = Math.pow(10, digits);
-        n = parseFloat((n * multiplicator).toFixed(11));
-        var test =(Math.round(n) / multiplicator);
-        return +(test.toFixed(digits));
-    }
+    }, [])
 
     // ORDER HEADING DATA
-    const date = moment()
-      .utcOffset('+07:00')
-      .format('DD MMM, YYYY');
-
-    const no = getRandomString();
+    const date = getDate();
+    const no = getNo();
 
     // ORDER TOTAL DATA
-    const money = roundTo(totalMoney, 2);
-    const shipTax = roundTo(money * 0.12, 2);
-    const tax = roundTo(money * 0.05, 2);
-    const discount = roundTo(money * 0.04, 2);
-    const total = roundTo(money + shipTax + tax - discount, 2);
+    const money = roundTo(totalMoney);
+    const shipTax = roundTo(money * 0.12);
+    const tax = roundTo(money * 0.05);
+    const discount = roundTo(money * 0.04);
+    const total = roundTo(money + shipTax + tax - discount);
 
-    // MOVE TO USE EFFECT - HIDE BOTTOM TAB NAVIGATOR
-    const finish = () => {
-        // Create new order
-        fetch(`${HOST}/api/orders/create`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userId: user.uid,
-                phone,
-                address,
-                date,
-                no,
-                totalMoney,
-                cartItems
-            })
-        }).then(res => res.json())
-        .then(json => console.log(json));
-
-        // Navigate
-        // navigation.popToTop();
-        // navigation.navigate("Orders");
-        
-        // navigation.popToTop();
-        // navigation.navigate("Home");
-        // navigation.popToTop();
-        // navigation.navigate("HomeTabs");
+    const goBackHome = () => {
+        navigation.popToTop();
+        navigation.navigate("Home");
+        navigation.popToTop();
+        navigation.navigate("HomeTabs");
     }
 
     return (
@@ -114,7 +66,7 @@ export default function PaySuccess(props) {
             />
             <Text style={styles.content}>We'll be sending a shipping confirmation message to {phone} when the items shipped successfully.</Text>
             <Text style={styles.greeting}>Thank you for shopping with us!</Text>
-            <LinearButton onPress={finish} title="go back home" />
+            <LinearButton onPress={() => goBackHome()} title="go back home" />
         </Container>
     ) 
 }

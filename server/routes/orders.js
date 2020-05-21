@@ -46,7 +46,6 @@ router.get('/orders', async (req, res) => {
                 message: order
             })
         })
-
     }
 })
 
@@ -59,20 +58,33 @@ router.post('/orders/create', async (req, res) => {
     newOrder.address = address;
     newOrder.date = date;
     newOrder.no = no;
-    newOrder.money = totalMoney;
+    newOrder.totalMoney = totalMoney;
     newOrder.save((err, order) => {
         if (err) {
             return res.send({
                 success: false,
                 message: "Error when creating new order"
             })
-        } else {
+        } 
+        else {
             return res.send({
                 success: true,
                 message: "Order success"
             })
         }
     })
+})
+
+router.post('/orders/accept', async (req, res) => {
+    const { order } = req.body;
+    await Order.findByIdAndUpdate(
+        { _id: order._id }, 
+        { $set: { isChecked: true }})
+})
+
+router.post('/orders/delete', async (req, res) => {
+    const { order } = req.body;
+    await Order.findByIdAndRemove({ _id: order._id })
 })
 
 module.exports = router;

@@ -55,7 +55,7 @@ export default function PayConfirm(props) {
                 />
             </InputContainer>
             <ErrorBlock errMessage={errMessage}/>
-            <LinearButton onPress={validate} title="agree"/>
+            <LinearButton onPress={validate} title="confirm"/>
         </Container>
     )
 }

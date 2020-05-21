@@ -16,7 +16,6 @@ export default function Register(props) {
     const [password, setPassword] = useState("");
     const [errMessage, setErrMessage] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-
     const { from } = props.route.params;
 
     const handleSignUp = () => {
@@ -32,13 +31,14 @@ export default function Register(props) {
 
     const navigate = () => {
         setModalVisible(false);
-        from == "Settings"
+        from === "Settings"
         ? navigation.goBack()
         : navigation.navigate("HomeTabs")
+        from === "Cart" && navigation.popToTop()
     }
 
     return (
-        <Container>
+        <Container pd={true}>
             <CustomModal 
                 title="user created"
                 btnText="ok"

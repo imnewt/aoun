@@ -46,6 +46,7 @@ const styles = EStyleSheet.create({
     },
     img: {
         flex: 1,
+        borderRadius: 10,
         margin: "3rem"
     },
     bookInfo: {
