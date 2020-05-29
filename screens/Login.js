@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { useNavigation } from "@react-navigation/native"
-import firebase from "firebase"
 import Container from "../components/Container"
 import Logo from "../components/Logo"
 import CustomModal from "../components/CustomModal"
@@ -9,6 +8,7 @@ import Input from "../components/Input"
 import ErrorBlock from "../components/ErrorBlock"
 import LinearButton from "../components/LinearButton"
 import LoginText from "../components/LoginText"
+import { handleLogin, navigateLogin } from "../functions"
 
 export default function Login(props) {
     const navigation = useNavigation();
@@ -16,21 +16,7 @@ export default function Login(props) {
     const [password, setPassword] = useState("");
     const [errMessage, setErrMessage] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-
     const { from } = props.route.params;
-
-    const handleLogIn = () => {
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(() => setModalVisible(true))
-        .catch(error => setErrMessage(error.message))
-    }
-
-    const navigate = () => {
-        setModalVisible(false);
-        from == "Welcome" 
-        ? navigation.navigate("HomeTabs")
-        : navigation.goBack()
-    }
 
     return (
         <Container pd={true}>
@@ -38,7 +24,8 @@ export default function Login(props) {
                 title="login success"
                 btnText="ok"
                 visible={modalVisible}
-                onPress={navigate}
+                onPress={() => navigateLogin(from, email, navigation, 
+                    setEmail, setPassword, setErrMessage, setModalVisible)}
             />
             <Logo/>
             <InputContainer>
@@ -55,7 +42,9 @@ export default function Login(props) {
                 />
             </InputContainer>
             <ErrorBlock errMessage={errMessage}/>
-            <LinearButton onPress={handleLogIn} title="log in"/>
+            <LinearButton 
+                onPress={() => handleLogin(email, password, setErrMessage, setModalVisible)} 
+                title="log in"/>
             { from !== "Settings" && <LoginText from={from}/> }
         </Container>
     )

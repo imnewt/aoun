@@ -1,77 +1,126 @@
 import React, { useState, useEffect } from "react"
-import firebase from "firebase"
+import { AsyncStorage } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 import Container from "../components/Container"
 import CustomModal from "../components/CustomModal"
-import InputContainer from "../components/InputContainer"
 import Input from "../components/Input"
 import ErrorBlock from "../components/ErrorBlock"
 import LinearButton from "../components/LinearButton"
+import {HOST} from "../env"
 
 export default function Profile() {
+    const navigation = useNavigation();
+    const [user, setUser] = useState(null);
     const [email, setEmail] = useState("");
-    const [displayName, setDisplayName] = useState("");
     const [password, setPassword] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
     const [errMessage, setErrMessage] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
-        const user = firebase.auth().currentUser;
-        setEmail(user.email);
-        setDisplayName(user.displayName);
+        getData();
     }, []);
 
-    const validate = () => {
-        (email === "" || displayName === "" || password === "") 
-        ?   setErrMessage("Fields can not be blank!")
-        :   updateProfile(email, displayName, password)
-    }
-
-    const reauthenticate = (currentPassword) => {
-        var user = firebase.auth().currentUser;
-        var cred = firebase.auth.EmailAuthProvider.credential(
-            user.email, currentPassword);
-        return user.reauthenticateWithCredential(cred);
-    }
-
-    const updateProfile = (newEmail, newName, password) => {
-        reauthenticate(password)
-        .then(() => {
-            var user = firebase.auth().currentUser;
-            user.updateEmail(newEmail)
-            user.updateProfile({ displayName: newName });
-            setModalVisible(true)
+    const getData = async () => {
+        const userEmail = await AsyncStorage.getItem("userEmail");
+        fetch(`${HOST}/api/users`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userEmail
+            })
+        }).then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                setUser(json.user[0]);
+                setEmail(json.user[0].email)
+                setPhone(json.user[0].phone);
+                setAddress(json.user[0].address);
+            }
+            else {
+                setErrMessage(json.message);
+            }
         })
-        .catch(() => setErrMessage("Your password is incorrect!"))
+    }
+
+    const validate = () => {
+        if (email === "" || phone === "" || address === "") {
+            setErrMessage("Fields can not be blank!")
+        }
+        else if (password === "") {
+            setErrMessage("Password is requied!")
+        }
+        else {
+            updateProfile()
+        }
+    }
+
+    const updateProfile = async () => {
+        if (password === user.password) {
+            fetch(`${HOST}/api/users/update`, {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user, email, phone, address
+                })
+            }).then(res => res.json())
+            .then(json => { 
+                if (json.success) {
+                    setModalVisible(true);
+                }
+                else {
+                    setErrMessage(json.message)
+                }  
+            })
+            await AsyncStorage.setItem("userEmail", email);
+        }
+        else {
+            setErrMessage("Your password is incorrect!")
+        }
+    }
+
+    const goBackWithEmail = () => {
+        setModalVisible(false);
+        navigation.navigate("Settings", { email })
     }
 
     return (
         <Container pd={true}>
             <CustomModal 
                 title="update success"
-                content="Changes will be applied the next time you log in" 
-                btnText="ok" 
-                visible={modalVisible} 
-                onPress={setModalVisible} 
-                goBack={true}
+                btnText="ok"
+                visible={modalVisible}
+                onPress={goBackWithEmail}
             />
-            <InputContainer>
-                <Input 
-                    label="Your Email"
-                    setValue={setEmail}
-                    value={email}
-                />
-                <Input 
-                    label="Display Name"
-                    setValue={setDisplayName}
-                    value={displayName}
-                />
-                <Input 
-                    label="Your Password"
-                    isPassword={true}
-                    setValue={setPassword}
-                    value={password}
-                />
-            </InputContainer>
+            <Input 
+                label="Your Email"
+                setValue={setEmail}
+                value={email}
+            />
+            <Input 
+                label="Your phone number"
+                isNumeric={true}
+                setValue={setPhone}
+                value={phone}
+            />
+            <Input 
+                label="Your address"
+                setValue={setAddress}
+                value={address}
+            />
+            <Input 
+                label="Your Password"
+                isPassword={true}
+                setValue={setPassword}
+                value={password}
+            />
             <ErrorBlock errMessage={errMessage}/>
             <LinearButton onPress={validate} title="save"/>
         </Container>

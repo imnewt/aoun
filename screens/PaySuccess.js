@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Text, FlatList, BackHandler } from "react-native"
+import { Text, FlatList } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import firebase from "firebase"
 import Container from "../components/Container"
 import OrderHeading from "../components/OrderHeading"
 import OrderTotal from "../components/OrderTotal"
@@ -14,16 +13,14 @@ export default function PaySuccess(props) {
     const navigation = useNavigation();
     const [user, setUser] = useState(null);
     const [cartItems, setCartItems] = useState([]);
-    const { address, phone, totalMoney } = props.route.params;
+    const { totalMoney } = props.route.params;
 
     useEffect(() => {
-        const { clearCart, cartItems } = props.route.params;
+        const { user, clearCart, cartItems } = props.route.params;
         clearCart();
-        setCartItems(cartItems);
-        const user = firebase.auth().currentUser;
         setUser(user);
-        createOrder(user, phone, address, date, no, totalMoney, cartItems);
-        BackHandler.addEventListener('hardwareBackPress', () => true);
+        setCartItems(cartItems);
+        createOrder(user, date, no, totalMoney, cartItems);
     }, [])
 
     // ORDER HEADING DATA
@@ -47,9 +44,9 @@ export default function PaySuccess(props) {
     return (
         <Container pd={true}>
             <Text style={styles.heading}>your order confirmed.</Text>
-            <Text style={styles.greeting}>Hello {user ? user.displayName : ""},</Text>
+            <Text style={styles.greeting}>Hello {user ? user.email.split("@")[0] : ""},</Text>
             <Text style={styles.content}>Your order has been confirmed and will be shipping within the next days.</Text>    
-            <OrderHeading date={date} no={no} address={address}/>
+            <OrderHeading date={date} no={no} address={user ? user.address : ""}/>
             <FlatList
                 data={cartItems}
                 renderItem={({ item }) => (
@@ -64,7 +61,7 @@ export default function PaySuccess(props) {
                 discount={discount}
                 total={total}
             />
-            <Text style={styles.content}>We'll be sending a shipping confirmation message to {phone} when the items shipped successfully.</Text>
+            <Text style={styles.content}>We'll be sending a shipping confirmation mail to {user ? user.email : ""} when the items shipped successfully.</Text>
             <Text style={styles.greeting}>Thank you for shopping with us!</Text>
             <LinearButton onPress={() => goBackHome()} title="go back home" />
         </Container>

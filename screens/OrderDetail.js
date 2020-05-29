@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { useNavigation } from "@react-navigation/native"
 import { FlatList } from "react-native"
 import Container from "../components/Container"
 import CustomModal from "../components/CustomModal"
@@ -10,7 +9,6 @@ import SuccessItem from "../components/SuccessItem"
 import { roundTo } from "../functions"
 
 export default function OrderDetail(props) {
-    const navigation = useNavigation();
     const [aptModalVisible, setAptModalVisible] = useState(false);
     const [dclModalVisible, setDclModalVisible] = useState(false);
     const { order, user } = props.route.params;
@@ -27,18 +25,20 @@ export default function OrderDetail(props) {
                 title="order accepted"
                 btnText="ok"
                 visible={aptModalVisible}
-                onPress={() => navigation.goBack()}
+                onPress={setAptModalVisible}
+                goBack={true}
             />
             <CustomModal 
                 title="order deleted"
                 btnText="ok"
                 visible={dclModalVisible}
-                onPress={() => navigation.goBack()}
+                onPress={setDclModalVisible}
+                goBack={true}
             />
             <OrderHeading 
                 date={order.date}
                 no={order.no}
-                address={order.address}
+                address={user.address}
             />
             <FlatList
                 data={order.cartItems}

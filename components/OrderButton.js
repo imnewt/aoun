@@ -7,7 +7,7 @@ export default function OrderButton(props) {
     const { order, user, setAptModalVisible, setDclModalVisible } = props;
     return (
         <View>
-            {   user.uid === "Wbthx7q7xJXohFu4VuhXDPPLEPw1" 
+            {   user.email === "admin@aoun.com" 
                 ?   <View style={styles.navBlock}>
                         <TouchableOpacity 
                             style={[styles.btn, { backgroundColor: "#4AD560" }]} 

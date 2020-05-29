@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 var index = require("./routes/index");
 var books = require("./routes/books");
 var orders = require("./routes/orders");
+var users = require("./routes/users");
 
 var app = express();
 var port = 3000;
@@ -20,10 +21,10 @@ app.engine("html", require("ejs").renderFile);
 
 //Body parser MW
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
-
+app.use(bodyParser.urlencoded({ extended:true }));
 
 //Routes
 app.use("/", index);
 app.use("/api", books);
 app.use("/api", orders);
+app.use("/api", users);

@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 
 export default function Input(props){
     const [passwordShow, setPasswordShow] = useState(false);
-    const { label, placeholder, value, setValue, isPassword } = props;
+    const { label, placeholder, value, setValue, isPassword, isNumeric } = props;
 
     const toggleIcon = () => {
         passwordShow ? setPasswordShow(false) : setPasswordShow(true)
@@ -18,6 +18,8 @@ export default function Input(props){
                 style={styles.input}
                 placeholder={placeholder}
                 autoCapitalize="none"
+                keyboardType={isNumeric ? "numeric" : "default"}
+                maxLength={isNumeric && 10}
                 secureTextEntry={isPassword ? passwordShow ? false : true : false}
                 onChangeText={value => setValue(value)}
                 value={value}

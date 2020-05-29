@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Text, FlatList } from "react-native"
+import { Text, FlatList, BackHandler } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import Container from "../components/Container"
 import Logo from "../components/Logo"
@@ -60,8 +60,9 @@ export default function Home() {
             setAllBooks(responseJson)
         })
         .catch(error => console.error(error));
-    })
-    
+        BackHandler.addEventListener('hardwareBackPress', () => true);
+    }, [])
+
     return (
         <Container>
             <Logo isHome={true}/>

@@ -1,27 +1,221 @@
 import React from "react"
-import { View, ImageBackground, Image, Text } from "react-native"
+import { View, ImageBackground, Image, Text, TouchableOpacity } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
+import ActionSheet from "react-native-actionsheet"
+import ImagePicker from "react-native-image-picker"
+import RNFetchBlob from "rn-fetch-blob"
+import CustomModal from "../components/CustomModal"
 import User from "../images/user.jpg"
 import bg from "../images/info-bg.jpg"
+import { HOST } from "../env"
 
-export default function UserNameBlock(props){
-    const { user } = props;
-    return (
-        <View style={styles.container}>
-            <ImageBackground style={styles.bg} source={bg}>
-                <Image style={styles.avatar} source={User}/>
-                { user 
-                    ?   <View style={styles.greeting}>
-                            <Text style={styles.hi}>Welcome back,</Text>
-                            <Text style={styles.userName}>{user.displayName || "new member"}</Text>
-                        </View>
-                    :   <View style={styles.greeting}>
-                            <Text style={styles.hi}>Hi there!</Text>
-                        </View>
-                } 
-            </ImageBackground>
-        </View>
-    )
+import test from "../server/public/uploads/avatar-1590595479674.jpg"
+
+const options = [
+    <Text style={{ color: "#147EFB", fontSize: 18 }}>Take Photo</Text>,
+    <Text style={{ color: "#147EFB", fontSize: 18 }}>Choose From Photos</Text>,
+    "Cancel"
+]
+
+export default class UserNameBlock extends React.Component {
+    state= {
+        avatarSource: null,
+        data: null,
+        // userImage: "",
+        // url: "",
+        modalVisible: false
+    }
+
+    showActionSheet = () => {
+        this.ActionSheet.show()
+    }
+
+    // componentDidMount() {
+    //     this.getData();
+    //     console.log("DID MOUNT!", this.state.url)
+    // }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     // if (nextProps.userEmail === this.props.userEmail) {
+    //     //     return false
+    //     // }
+    //     if (nextState.url === this.state.url) {
+    //         return false
+    //     }
+    //     return true
+    // }
+
+    
+
+    // componentDidUpdate() {
+    //     this.getData();
+    //     console.log("UPDATED!", this.state.url)
+    // }
+
+    // getData = async () => {
+    //     const { userEmail } = this.props;
+    //     fetch(`${HOST}/api/users`, {
+    //         method: "POST",
+    //         headers: {
+    //             "Accept": "application/json",
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             userEmail
+    //         })
+    //     }).then(res => res.json())
+    //     .then(json => {
+    //         if (json.success) {
+    //             // const url = "../server/public/" + json.user[0].imageUrl;
+    //             // this.setState({userImage: url})
+    //             console.log(json.imageUrl);
+    //             this.setState({
+    //                 url: json.imageUrl
+    //             })
+    //         }
+    //     })
+    // }
+
+    onActionSelectPhotoDone = (index) => {
+        const options = {
+            title: "Select Avatar",
+            storageOptions: {
+                skipBackup: true,
+                path: "images",
+            },
+        };
+        switch (index) {
+            case 0:
+                ImagePicker.launchCamera(options, (response) => {
+                    if (response.didCancel) {
+                        console.log('User cancelled image picker');
+                    } else if (response.error) {
+                        console.log('ImagePicker Error: ', response.error);
+                    } else if (response.customButton) {
+                        console.log('User tapped custom button: ', response.customButton);
+                    } else {
+                        this.setState({
+                            avatarSource: response,
+                            data: response.data,
+                            modalVisible: true
+                        })
+                    }
+                })
+                break;
+            case 1:
+                ImagePicker.launchImageLibrary(options, (response) => {
+                    if (response.didCancel) {
+                        console.log('User cancelled image picker');
+                    } else if (response.error) {
+                        console.log('ImagePicker Error: ', response.error);
+                    } else if (response.customButton) {
+                        console.log('User tapped custom button: ', response.customButton);
+                    } else {
+                        this.setState({
+                            avatarSource: response,
+                            data: response.data,
+                            modalVisible: true
+                        })
+                    }
+                })
+                break;
+            default:
+                break;
+        }
+    }
+
+    updateImage = () => {
+        const { avatarSource } = this.state;
+        const { userEmail } = this.props;
+        let formData = new FormData();
+        formData.append("avatar", {
+            uri: avatarSource.uri,
+            type: avatarSource.type,
+            name: avatarSource.fileName
+        });
+        formData.append("userEmail", userEmail);
+        fetch(`${HOST}/api/users/updateImage`, {
+            method: "POST",
+            headers: new Headers({
+                "Content-category": "multipart/form-data"
+            }),
+            body: formData
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json);
+            // this.setState({url: json.url})
+            // if (json.success) {
+            //     this.showAlert(json.message);
+            // } else {
+            //     console.log('Error')
+            // }
+        })
+        // RNFetchBlob.fetch('POST', `${HOST}/api/users/updateImage`, {
+        //     Authorization : "Bearer access-token",
+        //     otherHeader : "foo",
+        //     'Content-Type' : 'multipart/form-data',
+        //     }, [
+        //         { name : "userEmail", data : userEmail},
+        //         { name : "avatar", filename : 'avatar.png', data: data}
+        //     ])
+        // .then(res => console.log(res))
+        // .catch(err => console.log(err))
+        this.setState({modalVisible:false})
+    }
+
+    render() {
+        const { avatarSource, url } = this.state;
+        const { userEmail } = this.props;
+        return (
+            <View style={styles.container}>
+                <CustomModal 
+                    title="avatar updated!"
+                    btnText="ok"
+                    visible={this.state.modalVisible}
+                    onPress={this.updateImage}
+                />
+                <ImageBackground style={styles.bg} source={bg}>
+                    <TouchableOpacity 
+                        style={styles.imgCtn}
+                        onPress={this.showActionSheet}
+                        activeOpacity={.7}
+                    >
+                        {/* {
+                            userImage 
+                            ? <Image style={styles.img} source={this.getAvatar()}/>
+                            : <Image style={styles.img} source={avatarSource ? avatarSource : User}/>
+                        }  */}
+                        {/* {
+                            url 
+                            ? <Image style={styles.img} source={url} />
+                            : <Image style={styles.img} source={User} />
+                        } */}
+                    <Image style={styles.img} source={avatarSource ? avatarSource : User}/> 
+                    </TouchableOpacity>
+                    { userEmail
+                        ?   <View style={styles.greeting}>
+                                <Text style={styles.hi}>Welcome back,</Text>
+                                <Text style={styles.userName}>{userEmail.split("@")[0] || "new member"}</Text>
+                            </View>
+                        :   <View style={styles.greeting}>
+                                <Text style={styles.hi}>Hi there!</Text>
+                            </View>
+                    } 
+                </ImageBackground>
+                <ActionSheet
+                    ref={o => this.ActionSheet = o}
+                    title={"Avatar"}
+                    options={options}
+                    cancelButtonIndex={2}
+                    destructiveButtonIndex={1}
+                    onPress={index => {
+                        this.onActionSelectPhotoDone(index);
+                    }}
+                />
+            </View>
+        )
+    }
 }
 
 const styles = EStyleSheet.create({
@@ -44,11 +238,14 @@ const styles = EStyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    avatar: {
-        width: "20rem",
-        height: "20rem",
+    imgCtn: {
         borderRadius: 99,
         marginLeft: "8rem"
+    },
+    img: {
+        width: "20rem",
+        height: "20rem",
+        borderRadius: 99
     },
     greeting: {
         marginLeft: "5rem",

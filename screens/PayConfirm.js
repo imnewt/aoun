@@ -1,42 +1,81 @@
 import React, { useState, useEffect } from "react"
-import { Text } from "react-native"
+import { Text, AsyncStorage } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import firebase from "firebase"
 import Container from "../components/Container"
 import InputContainer from "../components/InputContainer"
 import Input from "../components/Input"
 import ErrorBlock from "../components/ErrorBlock"
 import LinearButton from "../components/LinearButton"
-
+import { HOST } from "../env"
 
 export default function PayConfirm(props) {
-    const { cartItems, totalMoney, clearCart } = props.route.params
     const navigation = useNavigation();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState("");
+    const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [errMessage, setErrMessage] = useState(null);
+    const { cartItems, totalMoney, clearCart } = props.route.params;
 
     useEffect(() => {
-        const user = firebase.auth().currentUser;
-        setUser(user);
-        //REMOVE
-        setAddress("28 Hung Vuong");
-        setPhone("0854374769");
+        getData();
     }, []);
+
+    const getData = async () => {
+        const userEmail = await AsyncStorage.getItem("userEmail");
+        fetch(`${HOST}/api/users`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userEmail
+            })
+        }).then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                setUser(json.user[0]);
+                setEmail(json.user[0].email)
+                setPhone(json.user[0].phone);
+                setAddress(json.user[0].address);
+            }
+            else {
+                setErrMessage(json.message);
+            }
+        })
+    }
 
     const validate = () => {
         if (address === "" || phone === "") {
             setErrMessage("Fields can not be blank!")
         }
         else {
-            confirm(user, address, phone)
+            confirm()
         }
     }
 
     const confirm = () => {
-        navigation.navigate("PaySuccess", { address, phone, cartItems, totalMoney, clearCart });
+        fetch(`${HOST}/api/users/update`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user, email, phone, address
+            })
+        }).then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                console.log(json)
+            }
+            else {
+                setErrMessage(json.message);
+            }
+        })
+        navigation.navigate("PaySuccess", { user, cartItems, totalMoney, clearCart });
     }
 
     return (
@@ -44,14 +83,15 @@ export default function PayConfirm(props) {
             <InputContainer>
                 <Text style={styles.text}>Hi there, we need a little more information to complete your order.</Text>
                 <Input 
+                    label="Your phone number"
+                    isNumeric={true}
+                    setValue={setPhone}
+                    value={phone}
+                />
+                <Input 
                     label="Your address"
                     setValue={setAddress}
                     value={address}
-                />
-                <Input 
-                    label="Your phone number"
-                    setValue={setPhone}
-                    value={phone}
                 />
             </InputContainer>
             <ErrorBlock errMessage={errMessage}/>

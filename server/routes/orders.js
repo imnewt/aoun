@@ -6,20 +6,10 @@ mongoose.connect("mongodb://localhost/aoun", { useNewUrlParser: true, useUnified
 
 const Order = require("../models/order.model");
 
-router.get('/orders', async (req, res) => {
-    // const orders = await Order.find();
-    // res.send(orders);
-    const { authorization } = req.headers;
-    // console.log("authorization: ", authorization);
-    if(!authorization) {
-        res.send({
-            success: false,
-            message: "Server Error 1"
-        })
-    }
-    const id = authorization.replace('Bearer ', "");
-    // console.log(id);
-    if (id === "Wbthx7q7xJXohFu4VuhXDPPLEPw1") {
+// GET ORDERS
+router.post('/orders', async (req, res) => {
+    const { user } = req.body;
+    if (user.email === "admin@aoun.com") {
         await Order.find({ isChecked: false }, (err, order) => {
             if(err) {
                 res.send({
@@ -34,7 +24,7 @@ router.get('/orders', async (req, res) => {
         })
     }
     else {
-        await Order.find({ userId: id }, (err, order) => {
+        await Order.find({ userEmail: user.email }, (err, order) => {
             if(err) {
                 res.send({
                     success: false,
@@ -49,13 +39,12 @@ router.get('/orders', async (req, res) => {
     }
 })
 
+// CREATE NEW ORDER
 router.post('/orders/create', async (req, res) => {
-    const { userId, cartItems, phone, address, no, date, totalMoney } = req.body;
+    const { user, cartItems, no, date, totalMoney } = req.body;
     let newOrder = new Order();
-    newOrder.userId = userId;
-    newOrder.phone = phone;
+    newOrder.userEmail = user.email;
     newOrder.cartItems = cartItems;
-    newOrder.address = address;
     newOrder.date = date;
     newOrder.no = no;
     newOrder.totalMoney = totalMoney;
@@ -75,6 +64,7 @@ router.post('/orders/create', async (req, res) => {
     })
 })
 
+// ACCEPT ORDER
 router.post('/orders/accept', async (req, res) => {
     const { order } = req.body;
     await Order.findByIdAndUpdate(
@@ -82,6 +72,7 @@ router.post('/orders/accept', async (req, res) => {
         { $set: { isChecked: true }})
 })
 
+// DELETE ORDER
 router.post('/orders/delete', async (req, res) => {
     const { order } = req.body;
     await Order.findByIdAndRemove({ _id: order._id })
