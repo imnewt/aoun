@@ -63,7 +63,7 @@ export default function Settings(props){
                 }
                 
                 <SettingsTag iconName="ios-settings" title="settings" color="#999"/>
-                <SettingsOption title="notifications"/>
+                {/* <SettingsOption title="notifications"/> */}
                 <SettingsOption title="privacy policy" func={() => navigateTo("Policy")}/>
 
                 <SettingsTag iconName="ios-call" title="contact" color="#5cb85c"/>

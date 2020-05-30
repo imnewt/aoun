@@ -4,8 +4,9 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
+const { HOST, MONGO_URL } = require("../../env");
 
-mongoose.connect("mongodb://localhost/aoun", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 const User = require("../models/user.model");
 
 const storage = multer.diskStorage({
@@ -117,22 +118,11 @@ router.post('/users', async (req, res) => {
             })
         }
         else {
-            if (user.length > 0) {
-                // const { imageUrl } = user[0];
-                // const test = require(`../public/uploads/${imageUrl}`);
-                return res.send({
-                    success: true,
-                    user: user,
-                    // imageUrl: `../public/uploads/${imageUrl}`,
-                    message: "Get data success!"
-                })
-            }
-            else {
-                return res.send({
-                    success: false,
-                    message: "Error while getting user data 2!"
-                })
-            }
+            return res.send({
+                success: true,
+                user: user,
+                message: "Get data success!"
+            })
         }
     })
 })
@@ -194,8 +184,7 @@ router.post("/users/updateImage", async (req, res) => {
         } else {
             User.findOneAndUpdate(
                 { email: userEmail},
-                { $set: { imageUrl: file.filename}},
-                // { $set: { imageUrl: `http://192.168.1.8:3000/api/open_image?image_name=${file.filename}`}},
+                { $set: { imageUrl: `${HOST}/api/open_image?image_name=${file.filename}`}},
                 (err, user) => {
                     if (err) {
                         res.send({
@@ -214,34 +203,9 @@ router.post("/users/updateImage", async (req, res) => {
     })
 })
 
-// router.post("/users/getImage", async (req, res) => {
-//         const { userEmail } = req.body;
-//         if (err) {
-//             res.send({
-//                 success: false,
-//                 msg: err
-//             })
-//         } else {
-//             await User.find({ email: userEmail }, (err, user) => {
-//                 if(err) {
-//                     return res.send({
-//                         success: false,
-//                         message: "Error while getting user data!"
-//                     })
-//                 }
-//                 else {
-//                     return res.send({
-//                         success: true,
-//                         user: user,
-//                         message: "Get data success!"
-//                     })
-//                 }
-//             })
-//         }
-// })
-
-module.exports.getImage = async (req, res, next) => {
-    let imageName = 'public/uploads/' + req.query.image_name;
+// CREATE URL FOR IMAGES
+router.get("/open_image", async (req, res, next) => {
+    let imageName = "public/uploads/" + req.query.image_name;
     fs.readFile(imageName, (err, imageData) => {
         if (err) {
             res.send({
@@ -250,9 +214,9 @@ module.exports.getImage = async (req, res, next) => {
             });
             return;
         }
-        res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+        res.writeHead(200, { "Content-Type": "image/jpeg" });
         res.end(imageData);
     })
-};
+});
 
 module.exports = router;

@@ -2,14 +2,12 @@ import React from "react"
 import { View, ImageBackground, Image, Text, TouchableOpacity } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ActionSheet from "react-native-actionsheet"
+import Ionicons from "react-native-vector-icons/Ionicons"
 import ImagePicker from "react-native-image-picker"
-import RNFetchBlob from "rn-fetch-blob"
 import CustomModal from "../components/CustomModal"
-import User from "../images/user.jpg"
+import dft from "../images/book.jpg"
 import bg from "../images/info-bg.jpg"
 import { HOST } from "../env"
-
-import test from "../server/public/uploads/avatar-1590595479674.jpg"
 
 const options = [
     <Text style={{ color: "#147EFB", fontSize: 18 }}>Take Photo</Text>,
@@ -18,11 +16,9 @@ const options = [
 ]
 
 export default class UserNameBlock extends React.Component {
-    state= {
+    state = {
+        url: "",
         avatarSource: null,
-        data: null,
-        // userImage: "",
-        // url: "",
         modalVisible: false
     }
 
@@ -30,51 +26,49 @@ export default class UserNameBlock extends React.Component {
         this.ActionSheet.show()
     }
 
-    // componentDidMount() {
-    //     this.getData();
-    //     console.log("DID MOUNT!", this.state.url)
-    // }
+    componentDidMount() {
+        this.getData();
+    }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     // if (nextProps.userEmail === this.props.userEmail) {
-    //     //     return false
-    //     // }
-    //     if (nextState.url === this.state.url) {
-    //         return false
-    //     }
-    //     return true
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.userEmail === this.props.userEmail && nextState.url === this.state.url) {
+            return false
+        }
+        return true
+    }
 
-    
+    componentDidUpdate() {
+        this.getData();
+    }
 
-    // componentDidUpdate() {
-    //     this.getData();
-    //     console.log("UPDATED!", this.state.url)
-    // }
-
-    // getData = async () => {
-    //     const { userEmail } = this.props;
-    //     fetch(`${HOST}/api/users`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Accept": "application/json",
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             userEmail
-    //         })
-    //     }).then(res => res.json())
-    //     .then(json => {
-    //         if (json.success) {
-    //             // const url = "../server/public/" + json.user[0].imageUrl;
-    //             // this.setState({userImage: url})
-    //             console.log(json.imageUrl);
-    //             this.setState({
-    //                 url: json.imageUrl
-    //             })
-    //         }
-    //     })
-    // }
+    getData = async () => {
+        const { userEmail } = this.props;
+        fetch(`${HOST}/api/users`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userEmail
+            })
+        }).then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                if (json.user[0]) {
+                    this.setState({
+                        url: json.user[0].imageUrl
+                    })
+                }
+                else {
+                    this.setState({
+                        url: "",
+                        avatarSource:null
+                    })
+                }
+            }
+        })
+    }
 
     onActionSelectPhotoDone = (index) => {
         const options = {
@@ -96,7 +90,6 @@ export default class UserNameBlock extends React.Component {
                     } else {
                         this.setState({
                             avatarSource: response,
-                            data: response.data,
                             modalVisible: true
                         })
                     }
@@ -113,7 +106,6 @@ export default class UserNameBlock extends React.Component {
                     } else {
                         this.setState({
                             avatarSource: response,
-                            data: response.data,
                             modalVisible: true
                         })
                     }
@@ -143,36 +135,20 @@ export default class UserNameBlock extends React.Component {
         })
         .then(res => res.json())
         .then(json => {
-            console.log(json);
-            // this.setState({url: json.url})
-            // if (json.success) {
-            //     this.showAlert(json.message);
-            // } else {
-            //     console.log('Error')
-            // }
+            console.log(json)
         })
-        // RNFetchBlob.fetch('POST', `${HOST}/api/users/updateImage`, {
-        //     Authorization : "Bearer access-token",
-        //     otherHeader : "foo",
-        //     'Content-Type' : 'multipart/form-data',
-        //     }, [
-        //         { name : "userEmail", data : userEmail},
-        //         { name : "avatar", filename : 'avatar.png', data: data}
-        //     ])
-        // .then(res => console.log(res))
-        // .catch(err => console.log(err))
-        this.setState({modalVisible:false})
+        this.setState({ modalVisible: false })
     }
 
     render() {
-        const { avatarSource, url } = this.state;
+        const { url, avatarSource, modalVisible } = this.state;
         const { userEmail } = this.props;
         return (
             <View style={styles.container}>
                 <CustomModal 
                     title="avatar updated!"
                     btnText="ok"
-                    visible={this.state.modalVisible}
+                    visible={modalVisible}
                     onPress={this.updateImage}
                 />
                 <ImageBackground style={styles.bg} source={bg}>
@@ -180,18 +156,18 @@ export default class UserNameBlock extends React.Component {
                         style={styles.imgCtn}
                         onPress={this.showActionSheet}
                         activeOpacity={.7}
+                        disabled={!userEmail ? true : false}
                     >
-                        {/* {
-                            userImage 
-                            ? <Image style={styles.img} source={this.getAvatar()}/>
-                            : <Image style={styles.img} source={avatarSource ? avatarSource : User}/>
-                        }  */}
-                        {/* {
-                            url 
-                            ? <Image style={styles.img} source={url} />
-                            : <Image style={styles.img} source={User} />
-                        } */}
-                    <Image style={styles.img} source={avatarSource ? avatarSource : User}/> 
+                    {
+                        url
+                        ? <Image style={styles.img} source={{ uri: url }} />
+                        : avatarSource 
+                            ? <Image style={styles.img} source={avatarSource} />
+                            : <Image style={styles.img} source={dft}/>
+                    }
+                    {
+                        userEmail ? <Ionicons name="ios-color-wand" size={30} style={styles.icon}/> : null 
+                    }
                     </TouchableOpacity>
                     { userEmail
                         ?   <View style={styles.greeting}>
@@ -240,12 +216,18 @@ const styles = EStyleSheet.create({
     },
     imgCtn: {
         borderRadius: 99,
-        marginLeft: "8rem"
+        marginLeft: "8rem",
+        position: "relative"
     },
     img: {
         width: "20rem",
         height: "20rem",
         borderRadius: 99
+    },
+    icon: {
+        position: "absolute",
+        right: "1rem",
+        bottom: "-1rem"
     },
     greeting: {
         marginLeft: "5rem",

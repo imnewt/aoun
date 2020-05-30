@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/aoun", { useNewUrlParser: true, useUnifiedTopology: true });
+const { MONGO_URL } = require("../../env");
+mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const Order = require("../models/order.model");
 
