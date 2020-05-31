@@ -31,7 +31,7 @@ export default class UserNameBlock extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.userEmail === this.props.userEmail && nextState.url === this.state.url) {
+        if (nextProps.userEmail === this.props.userEmail && nextState.url === this.state.url && nextState.avatarSource === this.state.avatarSource) {
             return false
         }
         return true
@@ -92,6 +92,7 @@ export default class UserNameBlock extends React.Component {
                             avatarSource: response,
                             modalVisible: true
                         })
+                        this.updateImage();
                     }
                 })
                 break;
@@ -108,6 +109,7 @@ export default class UserNameBlock extends React.Component {
                             avatarSource: response,
                             modalVisible: true
                         })
+                        this.updateImage();
                     }
                 })
                 break;
@@ -134,10 +136,12 @@ export default class UserNameBlock extends React.Component {
             body: formData
         })
         .then(res => res.json())
-        .then(json => {
-            console.log(json)
-        })
-        this.setState({ modalVisible: false })
+        // .then(json => {
+        //     console.log(json);
+        //     if (json.success) {
+        //         this.setState({ modalVisible: false })
+        //     }
+        // })
     }
 
     render() {
@@ -145,12 +149,12 @@ export default class UserNameBlock extends React.Component {
         const { userEmail } = this.props;
         return (
             <View style={styles.container}>
-                <CustomModal 
+                {/* <CustomModal 
                     title="avatar updated!"
                     btnText="ok"
                     visible={modalVisible}
                     onPress={this.updateImage}
-                />
+                /> */}
                 <ImageBackground style={styles.bg} source={bg}>
                     <TouchableOpacity 
                         style={styles.imgCtn}
@@ -242,5 +246,5 @@ const styles = EStyleSheet.create({
     userName: {
         fontSize: "7.2rem",
         fontWeight: "700"
-    },
+    }
 }) 

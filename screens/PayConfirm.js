@@ -51,6 +51,9 @@ export default function PayConfirm(props) {
         if (address === "" || phone === "") {
             setErrMessage("Fields can not be blank!")
         }
+        if (phone.length !== 10) {
+            setErrMessage("Phone number must has 10 numbers!!")
+        }
         else {
             confirm()
         }

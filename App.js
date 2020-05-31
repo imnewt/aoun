@@ -5,8 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
 import Ionicons from "react-native-vector-icons/Ionicons"
 import LinearGradient from "react-native-linear-gradient"
-import firebase from "firebase"
-// import "firebase/firestore"
 
 import WelcomeScreen from "./screens/Welcome"
 
@@ -38,19 +36,6 @@ import { Dimensions } from 'react-native';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({$rem: entireScreenWidth / 100});
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAcD_b5Z3GWIJpYl4ZJKGy--2QerLDeivg",
-//   authDomain: "aoun-27f28.firebaseapp.com",
-//   databaseURL: "https://aoun-27f28.firebaseio.com",
-//   projectId: "aoun-27f28",
-//   storageBucket: "aoun-27f28.appspot.com",
-//   messagingSenderId: "182184946839",
-//   appId: "1:182184946839:web:e945961e6c433a685b0dd2",
-//   measurementId: "G-Z1Y8JF7ZNM"
-// };
-// // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
 
 // HOME TAB
 const HomeStack = createStackNavigator();

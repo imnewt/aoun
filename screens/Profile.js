@@ -51,6 +51,9 @@ export default function Profile() {
         if (email === "" || phone === "" || address === "") {
             setErrMessage("Fields can not be blank!")
         }
+        else if (phone.length !== 10) {
+            setErrMessage("Phone number must has 10 numbers!")
+        }
         else if (password === "") {
             setErrMessage("Password is requied!")
         }

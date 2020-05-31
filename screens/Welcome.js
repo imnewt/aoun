@@ -1,86 +1,85 @@
 import React from "react"
-import { View, Image, Text, TouchableOpacity } from "react-native"
+import { View, Text, TouchableOpacity, ImageBackground } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import Container from "../components/Container"
-import LinearGradient from "react-native-linear-gradient"
 import EStyleSheet from "react-native-extended-stylesheet"
 
-import WelcomeImg from "../images/welcome.jpg"
+import bg from "../images/welcome.jpg"
 
 export default function Welcome() {
     const navigation = useNavigation();
     return (
-        <Container>
-            <View style={styles.imgCtn}>
-                <Image source={WelcomeImg} style={styles.img}/>
-            </View>
-            <View style={styles.content}>
-                <Text style={styles.sayHi}>Welcome to Aoun</Text>
-                <Text style={styles.present}>Aoun is the place to discover fun, exciting and colorful books for your life. Join our community to approach a huge collection of books, meet new friends and enjoy the world's best books with no effort.</Text>
-                <View style={styles.navBlock}>
-                    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#83a4d4", "#b6fbff"]} style={styles.linearBtn}>
-                        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("HomeTabs")}>
-                            <Text style={styles.btnText}>Get started</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-                    <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={["#FF9966", "#FF5E62"]} style={styles.linearBtn}>
-                        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("Login", { from: "Welcome" })}>
-                            <Text style={[styles.btnText, { color: "#FFF" }]}>Log in</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
+        <ImageBackground resizeMode="stretch" style={styles.bg} source={bg}>
+            <View style={styles.container}>
+                <View style={styles.empty}></View>
+                <View style={styles.content}>
+                    <Text style={styles.greeting}>Welcome to Aoun</Text>
+                    <Text style={styles.text}>Aoun is the place to discover fun, exciting and colorful books for your life. Join our community to approach a huge collection of books, meet new friends and enjoy the world's best books with no effort.</Text>
                 </View>
+                <TouchableOpacity
+                    style={styles.btn}
+                    activeOpacity={.7}
+                    onPress={() => navigation.navigate("HomeTabs")}
+                >
+                    <Text style={styles.btnText}>Get Started</Text>
+                </TouchableOpacity>
             </View>
-        </Container>
+        </ImageBackground>
     )
 }
 
 const styles = EStyleSheet.create({
-    imgCtn: {
-        width: "100%",
-        aspectRatio: 1/1,
+    bg: {
+        flex: 1,
+        alignItems: "center",
+        position: "relative"
     },
-    img: {
-        width: "100%",
-        height: "100%"
+    container: {
+        alignItems: "center",
+        position: "absolute",
+        bottom: "8rem"
+    },
+    empty: {
+        width: "95%",
+        height: "85rem",
+        opacity: .5,
+        position: "relative",
+        backgroundColor: "#FFF",
+        borderTopRightRadius: 15,
+        borderTopLeftRadius: 15
     },
     content: {
-        flex: 1,
-        paddingHorizontal: "5rem",
+        position: "absolute"
     },
-    sayHi: {
-        flex: 2,
-        fontSize: "10rem",
+    greeting: {
+        color: "#3A3335",
         fontWeight: "700",
-        textAlignVertical: "center",
-        marginTop: "4rem"
+        fontSize: "10rem",
+        textAlign: "center",
+        marginVertical: "4rem"
     },
-    present: {
-        flex: 4,
-        fontSize: "5.5rem",
-        marginVertical: "2rem"
-    },
-    navBlock: {
-        flex: 3,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginTop: "3rem",
-        marginBottom: "5rem"
-    },
-    linearBtn: {
-        width: "47%",
-        aspectRatio: 1/0.45,
-        borderRadius: 20,
-        backgroundColor: "#DDECFF"
+    text: {
+        color: "#3A3335",
+        fontWeight: "700",
+        fontSize: "6rem",
+        marginHorizontal: "7rem"
     },
     btn: {
-        flex: 1,
+        width: "95%",
+        aspectRatio: 1/0.17,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        backgroundColor: "#FFF5F0",
+        borderBottomRightRadius: 15,
+        borderBottomLeftRadius: 15,
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 0 },
+        elevation: 2
     },
     btnText: {
+        color: "#DD5A5A",
         fontSize: "5rem",
-        fontWeight: "700",
-        color: "#242424"
+        fontWeight: "700"
     }
 })
