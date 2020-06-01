@@ -72,7 +72,7 @@ export default function PayConfirm(props) {
         }).then(res => res.json())
         .then(json => {
             if (json.success) {
-                console.log(json)
+                // console.log(json)
             }
             else {
                 setErrMessage(json.message);

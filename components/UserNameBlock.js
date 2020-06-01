@@ -2,7 +2,6 @@ import React from "react"
 import { View, ImageBackground, Image, Text, TouchableOpacity } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import ActionSheet from "react-native-actionsheet"
-import Ionicons from "react-native-vector-icons/Ionicons"
 import ImagePicker from "react-native-image-picker"
 import CustomModal from "../components/CustomModal"
 import dft from "../images/book.jpg"
@@ -136,12 +135,6 @@ export default class UserNameBlock extends React.Component {
             body: formData
         })
         .then(res => res.json())
-        // .then(json => {
-        //     console.log(json);
-        //     if (json.success) {
-        //         this.setState({ modalVisible: false })
-        //     }
-        // })
     }
 
     render() {
@@ -168,9 +161,6 @@ export default class UserNameBlock extends React.Component {
                         : avatarSource 
                             ? <Image style={styles.img} source={avatarSource} />
                             : <Image style={styles.img} source={dft}/>
-                    }
-                    {
-                        userEmail ? <Ionicons name="ios-color-wand" size={30} style={styles.icon}/> : null 
                     }
                     </TouchableOpacity>
                     { userEmail
