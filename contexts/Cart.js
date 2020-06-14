@@ -1,24 +1,23 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import { AsyncStorage } from "react-native"
-import { ThemeConsumer } from "react-native-elements";
 
 export const CartContext = React.createContext();
 
 export class CartProvider extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        cartItems: [],
-        totalAmount: 0,
-        totalMoney: 0
-    }
-    this.addToCart = this.addToCart.bind(this);
-    this.increaseAmount = this.increaseAmount.bind(this);
-    this.decreaseAmount = this.decreaseAmount.bind(this);
-    this.clearCart = this.clearCart.bind(this);
+    constructor(props) {
+        super(props);
+        this.state = {
+            cartItems: [],
+            totalAmount: 0,
+            totalMoney: 0
+        }
+        this.addToCart = this.addToCart.bind(this);
+        this.increaseAmount = this.increaseAmount.bind(this);
+        this.decreaseAmount = this.decreaseAmount.bind(this);
+        this.clearCart = this.clearCart.bind(this);
     }
 
-    addToCart = (book) => {
+    addToCart =  (book) => {
         let check = this.state.cartItems.find(item => item._id === book._id);
         if(!check) {
             const bookWithQuantity = { ...book, quantity: 1 };
@@ -27,7 +26,6 @@ export class CartProvider extends Component {
                 totalAmount: this.state.totalAmount + 1,
                 totalMoney: this.state.totalMoney += parseFloat(book.price)
             });
-        // this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
         } else {
             this.increaseAmount(book);
         }
@@ -44,10 +42,9 @@ export class CartProvider extends Component {
             totalAmount: this.state.totalAmount + 1,
             totaltotalMoney: this.state.totalMoney += parseFloat(book.price)
         });
-        //await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
     }
 
-    decreaseAmount = (book) => {
+    decreaseAmount =  (book) => {
         if (book.quantity > 1) {
             this.setState({
                 cartItems: this.state.cartItems.map(item => {
@@ -59,7 +56,6 @@ export class CartProvider extends Component {
                 totalAmount: this.state.totalAmount - 1,
                 totalMoney: this.state.totalMoney -= parseFloat(book.price)
             });
-        //await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
         }
         else {
             this.setState({
@@ -67,7 +63,6 @@ export class CartProvider extends Component {
                 totalAmount: this.state.totalAmount - 1,
                 totalMoney: this.state.totalMoney -= parseFloat(book.price)
             })
-        //await this._saveDataToAsyncStorage(this.state.cartItems, this.state.totalAmount, this.state.totalMoney);
         }
     }
 
@@ -79,51 +74,56 @@ export class CartProvider extends Component {
         })
     }
 
-    clearCart = () => {
+    clearCart = async () => {
         this.setState({
             cartItems: [],
             totalAmount: 0,
             totalMoney: 0
+        });
+    }
+
+    saveDataToAsyncStorage = async () => {
+        const { cartItems, totalAmount, totalMoney } = this.state;
+        await AsyncStorage.setItem('cartItems', JSON.stringify(cartItems));
+        await AsyncStorage.setItem('totalAmount', JSON.stringify(totalAmount));
+        await AsyncStorage.setItem('totalMoney', JSON.stringify(totalMoney));
+    }
+
+    getDataFromAsyncStorage = async () => {
+        const cartItems = await AsyncStorage.getItem('cartItems');
+        const totalAmount = await AsyncStorage.getItem('totalAmount');
+        const totalMoney = await AsyncStorage.getItem('totalMoney');
+        this.setState({
+            cartItems: JSON.parse(cartItems) || [],
+            totalAmount: Number(totalAmount) || 0,
+            totalMoney: Number(totalMoney)
         })
     }
 
-//   _saveDataToAsyncStorage = async (cartItems, totalAmount, totalMoney) => {
-//     await AsyncStorage.setItem('cartItems', JSON.stringify(cartItems));
-//     await AsyncStorage.setItem('totalAmount', JSON.stringify(totalAmount));
-//     await AsyncStorage.setItem('totalMoney', JSON.stringify(totalMoney));
-//   }
+    componentDidMount() {
+        this.getDataFromAsyncStorage();
+    }
 
-//   _getDataFromAsyncStorage = async () => {
-//       const cartItems = await AsyncStorage.getItem('cartItems');
-//       const totalAmount = await AsyncStorage.getItem('totalAmount');
-//       const totalMoney = await AsyncStorage.getItem('totalMoney');
-//       await this.setState({
-//         cartItems: JSON.parse(cartItems) || [],
-//         totalAmount: Number(totalAmount) || 0,
-//         totalMoney: Number(totalMoney)
-//       })
-//   }
+    componentDidUpdate() {
+        this.saveDataToAsyncStorage();
+    }
 
-//   componentDidMount() {
-//     this._getDataFromAsyncStorage();
-//   }
-
-  render() {
-    return (
-      <CartContext.Provider
-        value={{
-            totalAmount: this.state.totalAmount,
-            totalMoney: this.state.totalMoney,
-            cartItems: this.state.cartItems,
-            addToCart: this.addToCart,
-            increaseAmount: this.increaseAmount,
-            decreaseAmount: this.decreaseAmount,
-            removeBook: this.removeBook,
-            clearCart: this.clearCart
-        }}
-      >
-        {this.props.children}
-      </CartContext.Provider>
-    );
-  }
+    render() {
+        return (
+            <CartContext.Provider
+                value={{
+                    totalAmount: this.state.totalAmount,
+                    totalMoney: this.state.totalMoney,
+                    cartItems: this.state.cartItems,
+                    addToCart: this.addToCart,
+                    increaseAmount: this.increaseAmount,
+                    decreaseAmount: this.decreaseAmount,
+                    removeBook: this.removeBook,
+                    clearCart: this.clearCart
+                }}
+            >
+                {this.props.children}
+            </CartContext.Provider>
+        )
+    }
 }
