@@ -36,7 +36,8 @@ export default function HomeTabs() {
           labelStyle: {
             fontSize: 14,
             paddingBottom: 3
-          }
+          },
+          keyboardHidesTabBar: true
         }}
       >
         <Tab.Screen name="Home" component={HomeStackScreen} />
